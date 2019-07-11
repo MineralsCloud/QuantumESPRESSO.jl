@@ -15,6 +15,8 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
 
+export INPUTPHNamelist
+
 @with_kw struct INPUTPHNamelist <: Namelist
     amass::Vector{Float64} = zeros(5)
     outdir::String = "./"
