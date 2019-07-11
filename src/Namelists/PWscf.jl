@@ -55,7 +55,7 @@ end
 
 @with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
-    # celldm::Vector{Float64}
+    celldm::Vector{Float64}
     A::Float64 = 0.0
     B::Float64 = 0.0
     C::Float64 = 0.0
@@ -170,7 +170,7 @@ end
     diago_david_ndim::Int = 4
     diago_full_acc::Bool = false
     efield::Float64 = 0.0
-    efield_cart::tuple = (0.0, 0.0, 0.0)
+    efield_cart::Vector{Float64} = [0.0, 0.0, 0.0]
     efield_phase::String = "none"
     startingpot::String = "atomic"
     startingwfc::String = "atomic+random"
