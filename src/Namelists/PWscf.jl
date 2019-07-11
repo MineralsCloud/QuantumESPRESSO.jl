@@ -51,7 +51,7 @@ export ControlNamelist,
     nppstr::Int = 1
     lfcpopt::Bool = false
     gate::Bool = false
-end
+end  # struct ControlNamelist
 
 @with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
@@ -150,7 +150,7 @@ end
     block_1::Float64 = 0.45
     block_2::Float64 = 0.55
     block_height::Float64 = 0.1
-end
+end  # struct SystemNamelist
 
 @with_kw struct ElectronsNamelist <: Namelist
     electron_maxstep::Int = 100
