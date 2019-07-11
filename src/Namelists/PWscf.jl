@@ -15,6 +15,12 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
 
+export ControlNamelist,
+    SystemNamelist,
+    ElectronsNamelist,
+    IonsNamelist,
+    CellNamelist
+
 @with_kw struct ControlNamelist <: Namelist
     calculation::String = "scf"
     title::String = " "
@@ -46,5 +52,159 @@ using QuantumESPRESSO.Namelists
     lfcpopt::Bool = false
     gate::Bool = false
 end
+
+struct SystemNamelist <: Namelist
+    ibrav::Int = 0
+    celldm::Vector[Float64]
+    A::Float64 = 0.0
+    B::Float64 = 0.0
+    C::Float64 = 0.0
+    cosAB::Float64 = 0.0
+    cosAC::Float64 = 0.0
+    cosBC::Float64 = 0.0
+    nat::Int = 1
+    ntyp::Int = 1
+    nbnd::Int = 20
+    tot_charge::Float64 = 0.0
+    starting_charge::Vector[Float64] = zeros(ntyp)
+    tot_magnetization::Float64 = -1.0
+    starting_magnetization::Vector[Float64] = ones(ntyp)
+    ecutwfc::Float64 = 90.0
+    ecutrho::Float64 = 360.0
+    ecutfock::Float64 = 120.0
+    nr1::Int = 24
+    nr2::Int = 24
+    nr3::Int = 24
+    nr1s::Int = 24
+    nr2s::Int = 24
+    nr3s::Int = 24
+    nosym::Bool = false
+    nosym_evc::Bool = false
+    noinv::Bool = false
+    no_t_rev::Bool = false
+    force_symmorphic::Bool = false
+    use_all_frac::Bool = false
+    occupations::String = "smearing"
+    one_atom_occupations::Bool = false
+    starting_spin_angle::Bool = false
+    degauss::Float64 = 0.0
+    smearing::String = "gaussian"
+    nspin::Int = 1
+    noncolin::Bool = false
+    ecfixed::Float64 = 0.0
+    qcutz::Float64 = 0.0
+    q2sigma::Float64 = 0.1
+    input_dft::String = "PBE0"
+    exx_fraction::Float64 = 0.25
+    screening_parameter::Float64 = 0.106
+    exxdiv_treatment::String = "gygi-baldereschi"
+    x_gamma_extrapolation::Bool = true
+    ecutvcut::Float64 = 0.0
+    nqx1::Int = 1
+    nqx2::Int = 1
+    nqx3::Int = 1
+    lda_plus_u::Bool = false
+    lda_plus_u_kind::Int = 0
+    Hubbard_U::Vector[Float64] = zeros(ntyp)
+    Hubbard_J0::Vector[Float64] = zeros(ntyp)
+    Hubbard_alpha::Vector[Float64] = zeros(ntyp)
+    Hubbard_beta::Vector[Float64] = zeros(ntyp)
+    Hubbard_J::Vector[Float64] = zeros(ntyp)
+    starting_ns_eigenvalue::Float64 = -1.0
+    U_projection_type::String = "atomic"
+    edir::Int = 1
+    emaxpos::Float64 = 0.5
+    eopreg::Float64 = 0.1
+    eamp::Float64 = 0.001
+    angle1::Vector[Float64] = zeros(ntyp)
+    angle2::Vector[Float64] = zeros(ntyp)
+    constrained_magnetization::String = "none"
+    fixed_magnetization::Vector[Float64] = zeros(3)
+    lambda::Float64 = 1.0
+    report::Int = 100
+    lspinorb::Bool = false
+    assume_isolated::String = "none"
+    esm_bc::String = "pbc"
+    esm_w::Float64 = 0.0
+    esm_efield::Float64 = 0.0
+    esm_nfit::Int = 4
+    fcp_mu::Float64 = 0.0
+    vdw_corr::String = "none"
+    london::Bool = false
+    london_s6::Float64 = 0.75
+    london_c6::Vector[Float64] = zeros(ntyp)
+    london_rvdw::Vector[Float64] = zeros(ntyp)
+    london_rcut::Int = 200
+    ts_vdw_econv_thr::Float64 = 1e-06
+    ts_vdw_isolated::Bool = false
+    xdm::Bool = false
+    xdm_a1::Float64 = 0.6836
+    xdm_a2::Float64 = 1.5045
+    space_group::Int = 0
+    uniqueb::Bool = false
+    origin_choice::Int = 1
+    rhombohedral::Bool = true
+    zgate::Float64 = 0.5
+    relaxz::Bool = false
+    block::Bool = false
+    block_1::Float64 = 0.45
+    block_2::Float64 = 0.55
+    block_height::Float64 = 0.1
+end
+
+@with_kw struct ElectronsNamelist <: Namelist
+    electron_maxstep::Int = 100
+    scf_must_converge::Bool = true
+    conv_thr::Float64 = 1e-06
+    adaptive_thr::Bool = false
+    conv_thr_init::Float64 = 0.001
+    conv_thr_multi::Float64 = 0.1
+    mixing_mode::String = "plain"
+    mixing_beta::Float64 = 0.7
+    mixing_ndim::Int = 8
+    mixing_fixed_ns::Int = 0
+    diagonalization::String = "david"
+    ortho_para::Int = 0
+    diago_thr_init::Float64 = 1e-06
+    diago_cg_maxiter::Int = 400
+    diago_david_ndim::Int = 4
+    diago_full_acc::Bool = false
+    efield::Float64 = 0.0
+    efield_cart::tuple = (0.0, 0.0, 0.0)
+    efield_phase::String = "none"
+    startingpot::String = "atomic"
+    startingwfc::String = "atomic+random"
+    tqr::Bool = false
+end  # struct ElectronsNamelist
+
+@with_kw struct IonsNamelist <: Namelist
+    ion_dynamics::String = "bfgs"
+    ion_positions::String = "default"
+    pot_extrapolation::String = "atomic"
+    wfc_extrapolation::String = "none"
+    remove_rigid_rot::Bool = false
+    ion_temperature::String = "not_controlled"
+    tempw::Float64 = 300.0
+    tolp::Float64 = 100.0
+    delta_t::Float64 = 1.0
+    nraise::Int = 1
+    refold_pos::Bool = false
+    upscale::Float64 = 100.0
+    bfgs_ndim::Int = 1
+    trust_radius_max::Float64 = 0.8
+    trust_radius_min::Float64 = 0.001
+    trust_radius_ini::Float64 = 0.5
+    w_1::Float64 = 0.01
+    w_2::Float64 = 0.5
+end  # struct IonsNamelist
+
+@with_kw struct CellNamelist <: Namelist
+    cell_dynamics::String = "none"
+    press::Float64 = 0.0
+    wmass::Float64 = 0.001
+    cell_factor::Float64 = 2.0
+    press_conv_thr::Float64 = 0.5
+    cell_dofree::String = "all"
+end  # struct CellNamelist
 
 end
