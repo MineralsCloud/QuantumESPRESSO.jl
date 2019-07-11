@@ -50,8 +50,8 @@ end  # struct AtomicPosition
 end  # struct AtomicPositionCard
 
 @with_kw struct CellParametersCard <: Card
-    option::String = "alat"
-    lattice::Crystal = Crystal(eye(3)u"nm")
+    option::String = "alat"; @assert option in allowed_options(CellParametersCard)
+    lattice::Crystal = Crystal(rand(3,3)u"nm")
 end  # struct CellParametersCard
 
 abstract type KPoint end
@@ -69,13 +69,13 @@ struct GammaPoint <: KPoint end
 end  # struct SpecialKPoint
 
 @with_kw struct KPointsCard <: Card
-    option::String = "tpiba"
+    option::String = "tpiba"; @assert option in allowed_options(KPointsCard)
     points::Vector{KPoint}
 end  # struct KPointsCard
 
-allowed_options(::Card) = nothing
-allowed_options(::AtomicPositionCard) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
-allowed_options(::CellParametersCard) = ("alat", "bohr", "angstrom")
-allowed_options(::KPointsCard) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+allowed_options(::Type{<: Card}) = nothing
+allowed_options(::Type{AtomicPositionCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
+allowed_options(::Type{CellParametersCard}) = ("alat", "bohr", "angstrom")
+allowed_options(::Type{KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
 
 end
