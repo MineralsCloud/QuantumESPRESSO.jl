@@ -53,7 +53,7 @@ export ControlNamelist,
     gate::Bool = false
 end
 
-struct SystemNamelist <: Namelist
+@with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
     celldm::Vector[Float64]
     A::Float64 = 0.0
