@@ -55,7 +55,7 @@ end
 
 @with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
-    celldm::Vector[Float64]
+    # celldm::Vector{Float64}
     A::Float64 = 0.0
     B::Float64 = 0.0
     C::Float64 = 0.0
@@ -66,9 +66,9 @@ end
     ntyp::Int = 1
     nbnd::Int = 20
     tot_charge::Float64 = 0.0
-    starting_charge::Vector[Float64] = zeros(ntyp)
+    starting_charge::Vector{Float64} = zeros(ntyp)
     tot_magnetization::Float64 = -1.0
-    starting_magnetization::Vector[Float64] = ones(ntyp)
+    starting_magnetization::Vector{Float64} = ones(ntyp)
     ecutwfc::Float64 = 90.0
     ecutrho::Float64 = 360.0
     ecutfock::Float64 = 120.0
@@ -105,21 +105,21 @@ end
     nqx3::Int = 1
     lda_plus_u::Bool = false
     lda_plus_u_kind::Int = 0
-    Hubbard_U::Vector[Float64] = zeros(ntyp)
-    Hubbard_J0::Vector[Float64] = zeros(ntyp)
-    Hubbard_alpha::Vector[Float64] = zeros(ntyp)
-    Hubbard_beta::Vector[Float64] = zeros(ntyp)
-    Hubbard_J::Vector[Float64] = zeros(ntyp)
+    Hubbard_U::Vector{Float64} = zeros(ntyp)
+    Hubbard_J0::Vector{Float64} = zeros(ntyp)
+    Hubbard_alpha::Vector{Float64} = zeros(ntyp)
+    Hubbard_beta::Vector{Float64} = zeros(ntyp)
+    Hubbard_J::Vector{Float64} = zeros(ntyp)
     starting_ns_eigenvalue::Float64 = -1.0
     U_projection_type::String = "atomic"
     edir::Int = 1
     emaxpos::Float64 = 0.5
     eopreg::Float64 = 0.1
     eamp::Float64 = 0.001
-    angle1::Vector[Float64] = zeros(ntyp)
-    angle2::Vector[Float64] = zeros(ntyp)
+    angle1::Vector{Float64} = zeros(ntyp)
+    angle2::Vector{Float64} = zeros(ntyp)
     constrained_magnetization::String = "none"
-    fixed_magnetization::Vector[Float64] = zeros(3)
+    fixed_magnetization::Vector{Float64} = zeros(3)
     lambda::Float64 = 1.0
     report::Int = 100
     lspinorb::Bool = false
@@ -132,8 +132,8 @@ end
     vdw_corr::String = "none"
     london::Bool = false
     london_s6::Float64 = 0.75
-    london_c6::Vector[Float64] = zeros(ntyp)
-    london_rvdw::Vector[Float64] = zeros(ntyp)
+    london_c6::Vector{Float64} = zeros(ntyp)
+    london_rvdw::Vector{Float64} = zeros(ntyp)
     london_rcut::Int = 200
     ts_vdw_econv_thr::Float64 = 1e-06
     ts_vdw_isolated::Bool = false
