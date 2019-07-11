@@ -17,7 +17,7 @@ using QuantumESPRESSO.QuantumESPRESSOInput
 
 export PWscfInput
 
-@with_kw struct PWscfInput <: QuantumESPRESSOInput
+@with_kw struct PWscfInput <: Input
     namelists::Dict
     cards::Dict
 end  # struct PWscfInput

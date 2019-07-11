@@ -11,9 +11,9 @@ julia>
 """
 module QuantumESPRESSOInput
 
-export QuantumESPRESSOInput
+export Input
 
-abstract type QuantumESPRESSOInput end
+abstract type Input end
 
 include("PWscf.jl")
 
