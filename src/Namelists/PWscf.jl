@@ -13,6 +13,8 @@ module PWscf
 
 using Parameters: @with_kw
 
+using QuantumESPRESSO.Namelists
+
 @with_kw struct ControlNamelist <: Namelist
     calculation::String = "scf"
     title::String = " "

@@ -11,6 +11,8 @@ julia>
 """
 module Namelists
 
+export Namelist
+
 abstract type Namelist end
 
 include("PWscf.jl")

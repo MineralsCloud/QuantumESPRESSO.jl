@@ -1,5 +1,5 @@
 module QuantumESPRESSO
 
-greet() = print("Hello World!")
+include("Namelists/Namelists.jl")
 
 end # module
