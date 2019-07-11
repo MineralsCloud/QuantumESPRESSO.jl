@@ -16,5 +16,6 @@ export Namelist
 abstract type Namelist end
 
 include("PWscf.jl")
+include("Phonon.jl")
 
 end
