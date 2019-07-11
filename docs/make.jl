@@ -1,17 +1,17 @@
-using Documenter, GitHubJuliaMITTemplate
+using Documenter, QuantumESPRESSO
 
 makedocs(;
-    modules=[GitHubJuliaMITTemplate],
+    modules=[QuantumESPRESSO],
     format=Documenter.HTML(),
     pages=[
         "Home" => "index.md",
     ],
-    repo="https://github.com/singularitti/GitHubJuliaMITTemplate.jl/blob/{commit}{path}#L{line}",
-    sitename="GitHubJuliaMITTemplate.jl",
+    repo="https://github.com/singularitti/QuantumESPRESSO.jl/blob/{commit}{path}#L{line}",
+    sitename="QuantumESPRESSO.jl",
     authors="Qi Zhang <singularitti@outlook.com>",
     assets=String[],
 )
 
 deploydocs(;
-    repo="github.com/singularitti/GitHubJuliaMITTemplate.jl",
+    repo="github.com/singularitti/QuantumESPRESSO.jl",
 )

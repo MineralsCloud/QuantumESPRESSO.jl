@@ -1,6 +1,6 @@
-using GitHubJuliaMITTemplate
+using QuantumESPRESSO
 using Test
 
-@testset "GitHubJuliaMITTemplate.jl" begin
+@testset "QuantumESPRESSO.jl" begin
     # Write your own tests here.
 end

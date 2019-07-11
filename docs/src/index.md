@@ -1,8 +1,8 @@
-# GitHubJuliaMITTemplate.jl
+# QuantumESPRESSO.jl
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [GitHubJuliaMITTemplate]
+Modules = [QuantumESPRESSO]
 ```
