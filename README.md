@@ -1,4 +1,4 @@
-# QuantumESPRESSO
+# QuantumESPRESSO.jl
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://MineralsCloud.github.io/QuantumESPRESSO.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://MineralsCloud.github.io/QuantumESPRESSO.jl/dev)
@@ -8,4 +8,4 @@
 [![Coveralls](https://coveralls.io/repos/github/MineralsCloud/QuantumESPRESSO.jl/badge.svg?branch=master)](https://coveralls.io/github/MineralsCloud/QuantumESPRESSO.jl?branch=master)
 [![Build Status](https://api.cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl.svg)](https://cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl)
 
-GitHub now allows users to generate a repo from a template. And this is my Julia template with an MIT license.
+This package could handle the interaction with [Quantum ESPRESSO](https://www.quantum-espresso.org) software.
