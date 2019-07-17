@@ -18,11 +18,11 @@ function read_atomicspecies(io::IOStream)
     for line in io[2:end]
         # Skip the title line, any empty line, or a line of comment.
         isempty(line) || startswith(strip(line), '!') && continue
-        match = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", strip(line))
-        if match === nothing
+        m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", strip(line))
+        if m === nothing
             @warn "No match found in the line $(line)!"
         else
-            name, mass, pseudopotential = match.captures
+            name, mass, pseudopotential = m.captures
             push!(atomic_species, AtomicSpecies(name, mass, pseudopotential))
         end
     end
