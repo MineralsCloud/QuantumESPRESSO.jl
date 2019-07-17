@@ -1,16 +1,9 @@
-"""
-# module CardReaders
-
-
-
-# Examples
-
-```jldoctest
-julia>
-```
-"""
-module CardReaders
-
+#=
+cards:
+- Julia version: 1.0
+- Author: qz
+- Date: 2019-07-17
+=#
 using Crystals
 
 using QuantumESPRESSO.Cards.PWscf
@@ -118,5 +111,3 @@ function read_cellparameters(io::IOStream)
     end
     return CellParametersCard(option, Crystal(cell_params))
 end  # function read_cellparameters
-
-end
