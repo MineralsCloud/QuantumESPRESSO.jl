@@ -64,4 +64,30 @@ function read_atomicpositions(io::IOStream)
     return AtomicPositionCard(option = option, data = atomic_positions)
 end  # function read_atomicpositions
 
+function read_kpoints(io::IOStream)
+    title_line = first(io)
+    m = match(r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
+    m === nothing && error("Match not found! Check your option!")
+    option = match.captures[2]  # The second parenthesized subgroup will be `option`.
+
+    isempty(option) && error("Option is not given! you must give one!")
+
+    option == "gamma" && return KPointsCard(option = option, points = GammaPoint())
+
+    if option == "automatic"
+        for line in io[2:end]
+            # If this line is an empty line or a line of comment.
+            isempty(line) || startswith(strip(line), '!') && continue
+            strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
+            line = split(line)
+            grid, offsets = map(x -> parse(Int, x), line[1:3]), map(x -> parse(Int, x), line[4:7])
+            return KPointsCard(option = option, points = MonkhorstPackGrid(grid = grid, offsets = offsets))
+        end
+    end
+
+    option in ("tpiba", "crystal", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c") && return nothing
+
+    error("Unknown option '$option' given!")
+end  # function read_kpoints
+
 end
