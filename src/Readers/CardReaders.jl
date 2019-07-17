@@ -48,18 +48,18 @@ function read_atomicpositions(io::IOStream)
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\\{\s*([01])?\s*([01])?\s*([01])?\s*\\}",
                 strip(line))
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(atom = name, position = [x, y, z]))
+            push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
         else
             m = match("(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", strip(line))
             if m === nothing
                 @warn "No match found in the line $(line)!"
             else
                 name, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom = name, position = [x, y, z]))
+                push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
             end
         end
     end
-    return AtomicPositionCard(option = option, data = atomic_positions)
+    return AtomicPositionCard(option=option, data=atomic_positions)
 end  # function read_atomicpositions
 
 function read_kpoints(io::IOStream)
@@ -70,7 +70,7 @@ function read_kpoints(io::IOStream)
 
     isempty(option) && error("Option is not given! you must give one!")
 
-    option == "gamma" && return KPointsCard(option = option, points = GammaPoint())
+    option == "gamma" && return KPointsCard(option=option, points=GammaPoint())
 
     if option == "automatic"
         for line in io[2:end]
@@ -79,7 +79,7 @@ function read_kpoints(io::IOStream)
             strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
             line = split(line)
             grid, offsets = map(x -> parse(Int, x), line[1:3]), map(x -> parse(Int, x), line[4:7])
-            return KPointsCard(option = option, points = MonkhorstPackGrid(grid = grid, offsets = offsets))
+            return KPointsCard(option=option, points=MonkhorstPackGrid(grid=grid, offsets=offsets))
         end
     end
 
