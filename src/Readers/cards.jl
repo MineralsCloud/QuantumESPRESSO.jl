@@ -26,7 +26,7 @@ function read_atomicspecies(io::IOStream)
             push!(atomic_species, AtomicSpecies(name, mass, pseudopotential))
         end
     end
-    return AtomicSpeciesCard(data = atomic_species)
+    return AtomicSpeciesCard(data=atomic_species)
 end  # function read_atomicspecies
 
 function read_atomicpositions(io::IOStream)
