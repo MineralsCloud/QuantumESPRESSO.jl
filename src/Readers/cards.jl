@@ -1,7 +1,7 @@
 #=
 cards:
 - Julia version: 1.0
-- Author: qz
+- Author: singularitti
 - Date: 2019-07-17
 =#
 using Crystals
