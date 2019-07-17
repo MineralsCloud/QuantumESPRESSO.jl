@@ -1,16 +1,9 @@
-"""
-# module NamelistReaders
-
-
-
-# Examples
-
-```jldoctest
-julia>
-```
-"""
-module NamelistReaders
-
+#=
+namelists:
+- Julia version: 1.0
+- Author: qz
+- Date: 2019-07-17
+=#
 export read_namelists
 
 function read_namelists(io::IOStream)
@@ -28,5 +21,3 @@ function read_namelists(io::IOStream)
     end
     return result
 end  # function read_namelist
-
-end

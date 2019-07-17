@@ -1,16 +1,9 @@
-"""
-# module CardReaders
-
-
-
-# Examples
-
-```jldoctest
-julia>
-```
-"""
-module CardReaders
-
+#=
+cards:
+- Julia version: 1.0
+- Author: qz
+- Date: 2019-07-17
+=#
 using Crystals
 
 using QuantumESPRESSO.Cards.PWscf
@@ -57,7 +50,7 @@ function read_atomicpositions(io::IOStream)
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
             push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
         else
-            m = match("(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", strip(line))
+            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", strip(line))
             if m === nothing
                 @warn "No match found in the line $(line)!"
             else
@@ -118,5 +111,3 @@ function read_cellparameters(io::IOStream)
     end
     return CellParametersCard(option, Crystal(cell_params))
 end  # function read_cellparameters
-
-end
