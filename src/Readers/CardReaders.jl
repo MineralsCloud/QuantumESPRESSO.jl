@@ -11,7 +11,14 @@ julia>
 """
 module CardReaders
 
+using Crystals
+
 using QuantumESPRESSO.Cards.PWscf
+
+export read_atomicspecies,
+    read_atomicpositions,
+    read_kpoints,
+    read_cellparameters
 
 function read_atomicspecies(io::IOStream)
     atomic_species = []
