@@ -88,4 +88,28 @@ function read_kpoints(io::IOStream)
     error("Unknown option '$option' given!")
 end  # function read_kpoints
 
+function read_cellparameters(io::IOStream)
+    cell_params = []
+    title_line = first(io)
+    m = match(r"CELL_PARAMETERS\s*\\{?\s*(\w*)\s*\\}?"i, title_line)
+    if match === nothing
+        # The first line should be 'CELL_PARAMETERS blahblahblah', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found! Check you 'CELL_PARAMETERS' line!")
+    end
+    option = match.captures[2]  # The second parenthesized subgroup will be `option`.
+    if isempty(option)
+        @warn "Not specifying unit is DEPRECATED and will no longer be allowed in the future!"
+        option = "bohr"
+    end
+    for line in io[2:end]
+        strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
+        if match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line))
+            v1, v2, v3 = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line)).captures
+            push!(cell_params, [v1, v2, v3])
+        end
+    end
+    return CellParametersCard(option, Crystal(cell_params))
+end  # function read_cellparameters
+
 end
