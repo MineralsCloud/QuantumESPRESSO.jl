@@ -31,7 +31,7 @@ end  # function read_atomicspecies
 
 function read_atomicpositions(io::IOStream)
     atomic_positions = []
-    title_line = io[1]
+    title_line = first(io)
     m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?", title_line, flags = re.IGNORECASE)
     m === nothing && error("No match found in the line '$(title_line)'! Something went wrong!")
     option = m.captures[2]
