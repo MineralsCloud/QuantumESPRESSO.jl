@@ -18,7 +18,7 @@ function read_namelists(io::IOStream)
         # Use '=' as the delimiter, split the stripped line into a key and a value.
         # Skip this line if a line starts with '&' (namelist caption) or '!' (comment) or
         # this line is empty ('').
-        startswith(s, '&') || startswith(s, '!') or isempty(s) && continue
+        startswith(s, '&') || startswith(s, '!') || isempty(s) && continue
         k, v = split(s, '=')  # FIXME: maxsplit=1
         k = strip(k)
         v = split(strip(rstrip(',', strip(v))), '!') |> first  # Ignore trailing comma of the line
