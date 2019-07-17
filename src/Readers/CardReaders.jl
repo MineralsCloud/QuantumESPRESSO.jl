@@ -43,9 +43,7 @@ function read_atomicpositions(io::IOStream)
     for line in io[2:end]
         # If this line is an empty line or a line of comment.
         isempty(line) || startswith(strip(line), '!') && continue
-        if strip(line) == '/'
-            error("Do not start any line in cards with a '/' character!")
-        end
+        strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
         if match(r"\\{.*\\}", line)
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\\{\s*([01])?\s*([01])?\s*([01])?\s*\\}",
                 strip(line))
