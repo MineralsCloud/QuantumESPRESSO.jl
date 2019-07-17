@@ -11,6 +11,8 @@ julia>
 """
 module NamelistReaders
 
+export read_namelists
+
 function read_namelists(io::IOStream)
     result = Dict()
     for line in eachline(io)  # Read each line in the namelist until '/'
