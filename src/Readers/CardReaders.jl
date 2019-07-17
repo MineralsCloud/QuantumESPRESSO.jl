@@ -32,7 +32,7 @@ end  # function read_atomicspecies
 function read_atomicpositions(io::IOStream)
     atomic_positions = []
     title_line = first(io)
-    m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?", title_line, flags = re.IGNORECASE)
+    m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
     m === nothing && error("No match found in the line '$(title_line)'! Something went wrong!")
     option = m.captures[2]
     if isempty(option)
@@ -40,13 +40,13 @@ function read_atomicpositions(io::IOStream)
               "Not specifying units is DEPRECATED and will no longer be allowed in the future"
         option = "alat"
     end
-    for line in s[2:end]
+    for line in io[2:end]
         # If this line is an empty line or a line of comment.
         isempty(line) || startswith(strip(line), '!') && continue
         if strip(line) == '/'
             error("Do not start any line in cards with a '/' character!")
         end
-        if match(r"\\{.*\\}", line):
+        if match(r"\\{.*\\}", line)
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\\{\s*([01])?\s*([01])?\s*([01])?\s*\\}",
                 strip(line))
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
