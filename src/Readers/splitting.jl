@@ -23,6 +23,10 @@ function get_card_identifier_indices(io::IOStream)
         cardname = throw_which_occursin(CARD_STARTS, str)
         cardname === nothing ? continue : records[cardname] = i
     end  # for
+    if haskey(r"OCCUPATIONS"i)
+        index = last(values(get_namelist_identifier_indices(io)))
+        records[r"OCCUPATIONS"i] < index && pop!(records, r"OCCUPATIONS"i)
+    end  # if
     return records
 end  # function get_namelist_identifier_indices
 function get_card_identifier_indices(path::AbstractPath)
