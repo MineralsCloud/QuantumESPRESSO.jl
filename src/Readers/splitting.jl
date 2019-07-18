@@ -9,7 +9,8 @@ using FilePaths: AbstractPath
 
 export namelist_identifier_linenumbers,
     card_identifier_linenumbers,
-    input_identifier_linenumbers
+    input_identifier_linenumbers,
+    dispatch_readers
 
 const NAMELIST_END = r"/\s*[\r\n]"
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
@@ -86,4 +87,10 @@ function dispatch_readers(io::IOStream)
         end
     end  # for
     return Dict("namelists" => namelists, "cards" => cards)
+end  # function dispatch_readers
+function dispatch_readers(path::AbstractPath)
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
+    open(path, "r") do io
+        dispatch_readers(io)
+    end
 end  # function dispatch_readers
