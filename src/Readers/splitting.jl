@@ -41,9 +41,9 @@ function namelist_identifier_linenumbers(path::AbstractPath)
     end
 end  # function namelist_identifier_linenumbers
 
-function namelist_lineranges(io::IOStream)
+function namelist_lineranges(lines)
     records = OrderedDict()
-    for (i, line) in enumerate(eachline(io))
+    for (i, line) in enumerate(lines)
         str = strip(line)
         isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         for namelistname in NAMELIST_STARTS
@@ -59,6 +59,9 @@ function namelist_lineranges(io::IOStream)
     else
         error("Something went wrong!")
     end  # if-else
+end  # function namelist_lineranges
+function namelist_lineranges(io::IOStream)
+    namelist_lineranges(readlines(io))
 end  # function namelist_lineranges
 function namelist_lineranges(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
