@@ -45,7 +45,7 @@ function card_identifier_linenumbers(io::IOStream)
     end  # for
     if haskey(records, "OCCUPATIONS")
         # Remember to rewind the `io`
-        linenumber = last(collect(values(namelist_identifier_linenumbers(seek(io, 1)))))
+        linenumber = last(collect(values(namelist_identifier_linenumbers(seekstart(io)))))
         records["OCCUPATIONS"] < linenumber && pop!(records, "OCCUPATIONS")
     end  # if
     return records
@@ -59,7 +59,7 @@ end  # function card_identifier_linenumbers
 
 function input_identifier_linenumbers(io::IOStream)
     # Remember to rewind the `io`
-    Dict("namelists" => namelist_identifier_linenumbers(io), "cards" => card_identifier_linenumbers(seek(io, 1)))
+    Dict("namelists" => namelist_identifier_linenumbers(io), "cards" => card_identifier_linenumbers(seekstart(io)))
 end  # function input_identifier_linenumbers
 function input_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
