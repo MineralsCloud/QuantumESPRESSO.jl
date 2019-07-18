@@ -4,9 +4,9 @@ namelists:
 - Author: singularitti
 - Date: 2019-07-17
 =#
-export read_namelists
+export read_namelist
 
-function read_namelists(io::IOStream)
+function read_namelist(io::IOStream)
     result = Dict()
     for line in eachline(io)  # Read each line in the namelist until '/'
         s = strip(line)
