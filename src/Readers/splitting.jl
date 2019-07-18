@@ -145,20 +145,20 @@ function input_lineranges(path::AbstractPath)
 end  # function input_lineranges
 
 function dispatch_readers(io::IOStream)
-    linenumbers = input_identifier_linenumbers(io)
-    namelist_linenumbers = linenumbers["namelists"]
-    card_linenumbers = linenumbers["cards"]
+    lineranges = input_lineranges(io)
+    namelist_lineranges = lineranges["namelists"]
+    card_lineranges = lineranges["cards"]
     namelists = Dict()
     cards = Dict()
-    for (k, v) in namelist_linenumbers
-        namelists[k] = read_namelist(io[v])
+    for (k, v) in namelist_lineranges
+        namelists[k] = read_namelist(iterate_io_between(io, v))
     end  # for
-    for (k, v) in card_linenumbers
+    for (k, v) in card_lineranges
         card[k] = begin
-            k == "ATOMIC_SPECIES" && read_atomicspecies(io[v])
-            k == "ATOMIC_POSITIONS" && read_atomicpositions(io[v])
-            k == "K_POINTS" && read_kpoints(io[v])
-            k == "CELL_PARAMETERS" && read_cellparameters(io[v])
+            k == "ATOMIC_SPECIES" && read_atomicspecies(iterate_io_between(io, v))
+            k == "ATOMIC_POSITIONS" && read_atomicpositions(iterate_io_between(io, v))
+            k == "K_POINTS" && read_kpoints(iterate_io_between(io, v))
+            k == "CELL_PARAMETERS" && read_cellparameters(iterate_io_between(io, v))
             # TODO: Other cards
         end
     end  # for
