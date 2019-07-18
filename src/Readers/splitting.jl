@@ -4,47 +4,60 @@ splitting:
 - Author: singularitti
 - Date: 2019-07-17
 =#
-using DataStructures: SortedDict, OrderedDict
+using DataStructures
 using FilePaths: AbstractPath
-using IterUtils: throw_which_occursin
 
-export get_namelist_identifier_indices,
-    get_card_identifier_indices
+export namelist_identifier_linenumbers,
+    card_identifier_linenumbers
 
 const NAMELIST_END = r"/\s*[\r\n]"
-const NAMELIST_STARTS = r"CONTROL"i, r"SYSTEM"i, r"ELECTRONS"i, r"IONS"i, r"CELL"i  # regex: "&(.[^,]*)"
-const CARD_STARTS = r"ATOMIC_SPECIES"i, r"ATOMIC_POSITIONS"i, r"K_POINTS"i, r"CELL_PARAMETERS"i, r"OCCUPATIONS"i, r"CONSTRAINTS"i, r"ATOMIC_FORCES"i,
+const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
+const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
-function get_card_identifier_indices(io::IOStream)
+function card_identifier_linenumbers(io::IOStream)
     records = OrderedDict()
     for (i, line) in enumerate(eachline(io))
         str = strip(line)
-        isempty(str) || startswith(str, r"[!#]") && continue
-        cardname = throw_which_occursin(CARD_STARTS, str)
-        cardname === nothing ? continue : records[cardname] = i
+        isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
+        for cardname in CARD_STARTS
+            if occursin(Regex("$cardname", "i"), str)
+                records[cardname] = i
+            else
+                continue
+            end  # if-else
+        end  # for
     end  # for
+    if haskey(records, "OCCUPATIONS")
+        linenumber = last(collect(values(namelist_identifier_linenumbers(seek(io, 1)))))
+        records["OCCUPATIONS"] < linenumber && pop!(records, "OCCUPATIONS")
+    end  # if
     return records
-end  # function get_namelist_identifier_indices
-function get_card_identifier_indices(path::AbstractPath)
-#     isfile(path) && isreadable(path) || error("File $(path) not readable!")
+end  # function card_identifier_linenumbers
+function card_identifier_linenumbers(path::AbstractPath)
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
         get_card_identifier_indices(io)
     end
-end  # function get_card_identifier_indices
+end  # function card_identifier_linenumbers
 
-function get_namelist_identifier_indices(io::IOStream)
+function namelist_identifier_linenumbers(io::IOStream)
     records = OrderedDict()
     for (i, line) in enumerate(eachline(io))
         str = strip(line)
-        isempty(str) || startswith(str, r"[!#]") && continue
-        namelistname = throw_which_occursin(NAMELIST_STARTS, str)
-        namelistname === nothing ? continue : records[namelistname] = i
+        isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
+        for namelistname in NAMELIST_STARTS
+            if occursin(Regex("$namelistname", "i"), str)
+                records[namelistname] = i
+            else
+                continue
+            end  # if-else
+        end  # for
     end  # for
     return records
-end  # function get_namelist_identifier_indices
-function get_namelist_identifier_indices(path::AbstractPath)
+end  # function namelist_identifier_linenumbers
+function namelist_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
-        get_namelist_identifier_indices(io)
+        namelist_identifier_linenumbers(io)
     end
-end  # function get_card_identifier_indices
+end  # function namelist_identifier_linenumbers
