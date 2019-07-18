@@ -6,6 +6,7 @@ splitting:
 =#
 using DataStructures
 using FilePaths: AbstractPath
+using ResumableFunctions
 
 export namelist_identifier_linenumbers,
     card_identifier_linenumbers,
@@ -94,3 +95,11 @@ function dispatch_readers(path::AbstractPath)
         dispatch_readers(io)
     end
 end  # function dispatch_readers
+
+@resumable function iterate_io_between(io::IOStream, m::Int, n::Int)
+    io = seek(io, m)
+    while pos != n
+        pos = position(io)
+        @yield io
+    end
+end  # function iterate_io_between
