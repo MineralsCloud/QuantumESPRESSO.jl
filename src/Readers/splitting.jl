@@ -14,7 +14,7 @@ export namelist_identifier_linenumbers,
     input_identifier_linenumbers,
     dispatch_readers
 
-const NAMELIST_END = '/'
+const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
