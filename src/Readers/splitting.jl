@@ -20,11 +20,7 @@ function namelist_identifier_linenumbers(io::IOStream)
         str = strip(line)
         isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         for namelistname in NAMELIST_STARTS
-            if occursin(Regex("$namelistname", "i"), str)
-                records[namelistname] = i
-            else
-                continue
-            end  # if-else
+            occursin(Regex("$namelistname", "i"), str) ? records[namelistname] = i : continue
         end  # for
     end  # for
     return records
@@ -42,11 +38,7 @@ function card_identifier_linenumbers(io::IOStream)
         str = strip(line)
         isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         for cardname in CARD_STARTS
-            if occursin(Regex("$cardname", "i"), str)
-                records[cardname] = i
-            else
-                continue
-            end  # if-else
+            occursin(Regex("$cardname", "i"), str) ? records[cardname] = i : continue
         end  # for
     end  # for
     if haskey(records, "OCCUPATIONS")
