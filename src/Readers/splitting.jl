@@ -70,9 +70,9 @@ function namelist_lineranges(path::AbstractPath)
     end
 end  # function namelist_lineranges
 
-function card_identifier_linenumbers(io::IOStream)
+function card_identifier_linenumbers(lines)
     records = OrderedDict()
-    for (i, line) in enumerate(eachline(io))
+    for (i, line) in enumerate(lines)
         str = strip(line)
         isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         for cardname in CARD_STARTS
@@ -80,12 +80,13 @@ function card_identifier_linenumbers(io::IOStream)
         end  # for
     end  # for
     if haskey(records, "OCCUPATIONS")
-        # Remember to rewind the `io`
-        linenumber = last(collect(values(namelist_identifier_linenumbers(seekstart(io)))))
+        linenumber = last(collect(values(namelist_identifier_linenumbers(lines))))
         records["OCCUPATIONS"] < linenumber && pop!(records, "OCCUPATIONS")
     end  # if
     return records
 end  # function card_identifier_linenumbers
+function card_identifier_linenumbers(io::IOStream)
+    card_identifier_linenumbers(readlines(io))
 function card_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
