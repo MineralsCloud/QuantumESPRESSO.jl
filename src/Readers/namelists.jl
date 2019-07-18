@@ -8,16 +8,16 @@ export read_namelist
 
 function read_namelist(lines)
     result = Dict()
-    for line in lines  # Read each line in the namelist until '/'
+    for line in lines
         s = strip(line)
         # Use '=' as the delimiter, split the stripped line into a key and a value.
         # Skip this line if a line starts with '&' (namelist caption) or '!' (comment) or
         # this line is empty ('').
-        startswith(s, '&') || startswith(s, '!') || isempty(s) && continue
+        (startswith(s, '&') || startswith(s, '!') || startswith(s, '/') || isempty(s)) && continue
         k, v = split(s, '=', limit=2)
         k = strip(k)
-        v = split(strip(rstrip(',', strip(v))), '!') |> first  # Ignore trailing comma of the line
-        push!(result[k],v)
+        v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
+        result[k] = v
     end
     return result
 end  # function read_namelist
