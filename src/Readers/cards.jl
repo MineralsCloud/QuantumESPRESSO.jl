@@ -15,15 +15,16 @@ export read_atomicspecies,
 
 function read_atomicspecies(lines)
     atomic_species = []
-    for line in lines[2:end]
+    for line in lines
+        str = strip(line)
         # Skip the title line, any empty line, or a line of comment.
-        isempty(line) || startswith(strip(line), '!') && continue
-        m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", strip(line))
+        (isempty(str) || startswith(strip(str), '!') || occursin(r"ATOMIC_SPECIES"i, str)) && continue
+        m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", str)
         if m === nothing
             @warn "No match found in the line $(line)!"
         else
             name, mass, pseudopotential = m.captures
-            push!(atomic_species, AtomicSpecies(name, mass, pseudopotential))
+            push!(atomic_species, AtomicSpecies(name, parse(Float64, mass), pseudopotential))
         end
     end
     return AtomicSpeciesCard(data=atomic_species)
