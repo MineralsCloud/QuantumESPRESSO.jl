@@ -13,9 +13,9 @@ export read_atomicspecies,
     read_kpoints,
     read_cellparameters
 
-function read_atomicspecies(io::IOStream)
+function read_atomicspecies(lines)
     atomic_species = []
-    for line in io[2:end]
+    for line in lines[2:end]
         # Skip the title line, any empty line, or a line of comment.
         isempty(line) || startswith(strip(line), '!') && continue
         m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", strip(line))
@@ -29,9 +29,9 @@ function read_atomicspecies(io::IOStream)
     return AtomicSpeciesCard(data=atomic_species)
 end  # function read_atomicspecies
 
-function read_atomicpositions(io::IOStream)
+function read_atomicpositions(lines)
     atomic_positions = []
-    title_line = first(io)
+    title_line = first(lines)
     m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
     m === nothing && error("No match found in the line '$(title_line)'! Something went wrong!")
     option = m.captures[2]
@@ -40,7 +40,7 @@ function read_atomicpositions(io::IOStream)
               "Not specifying units is DEPRECATED and will no longer be allowed in the future"
         option = "alat"
     end
-    for line in io[2:end]
+    for line in lines[2:end]
         # If this line is an empty line or a line of comment.
         isempty(line) || startswith(strip(line), '!') && continue
         strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
@@ -62,8 +62,8 @@ function read_atomicpositions(io::IOStream)
     return AtomicPositionCard(option=option, data=atomic_positions)
 end  # function read_atomicpositions
 
-function read_kpoints(io::IOStream)
-    title_line = first(io)
+function read_kpoints(lines)
+    title_line = first(lines)
     m = match(r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
     m === nothing && error("Match not found! Check your option!")
     option = match.captures[2]  # The second parenthesized subgroup will be `option`.
@@ -73,7 +73,7 @@ function read_kpoints(io::IOStream)
     option == "gamma" && return KPointsCard(option=option, points=GammaPoint())
 
     if option == "automatic"
-        for line in io[2:end]
+        for line in lines[2:end]
             # If this line is an empty line or a line of comment.
             isempty(line) || startswith(strip(line), '!') && continue
             strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
@@ -88,9 +88,9 @@ function read_kpoints(io::IOStream)
     error("Unknown option '$option' given!")
 end  # function read_kpoints
 
-function read_cellparameters(io::IOStream)
+function read_cellparameters(lines)
     cell_params = []
-    title_line = first(io)
+    title_line = first(lines)
     m = match(r"CELL_PARAMETERS\s*\\{?\s*(\w*)\s*\\}?"i, title_line)
     if match === nothing
         # The first line should be 'CELL_PARAMETERS blahblahblah', if it is not, either the regular expression
@@ -102,7 +102,7 @@ function read_cellparameters(io::IOStream)
         @warn "Not specifying unit is DEPRECATED and will no longer be allowed in the future!"
         option = "bohr"
     end
-    for line in io[2:end]
+    for line in lines[2:end]
         strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
         if match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line))
             v1, v2, v3 = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line)).captures

@@ -4,11 +4,11 @@ namelists:
 - Author: singularitti
 - Date: 2019-07-17
 =#
-export read_namelists
+export read_namelist
 
-function read_namelists(io::IOStream)
+function read_namelist(lines)
     result = Dict()
-    for line in eachline(io)  # Read each line in the namelist until '/'
+    for line in lines  # Read each line in the namelist until '/'
         s = strip(line)
         # Use '=' as the delimiter, split the stripped line into a key and a value.
         # Skip this line if a line starts with '&' (namelist caption) or '!' (comment) or
