@@ -9,11 +9,12 @@ using FilePaths: AbstractPath
 using ResumableFunctions
 
 export namelist_identifier_linenumbers,
+    namelist_lineranges,
     card_identifier_linenumbers,
     input_identifier_linenumbers,
     dispatch_readers
 
-const NAMELIST_END = r"/\s*[\r\n]"
+const NAMELIST_END = '/'
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
@@ -34,6 +35,28 @@ function namelist_identifier_linenumbers(path::AbstractPath)
         namelist_identifier_linenumbers(io)
     end
 end  # function namelist_identifier_linenumbers
+
+function namelist_lineranges(io::IOStream)
+    records = OrderedDict()
+    for (i, line) in enumerate(eachline(io))
+        str = strip(line)
+        isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
+        for namelistname in NAMELIST_STARTS
+            occursin(Regex("$namelistname", "i"), str) ? records[namelistname] = i : continue
+        end  # for
+        if startswith(str, NAMELIST_END)
+            lastkey = last(collect(keys(records)))
+            records[lastkey] = range(records[lastkey]; stop = i)
+        end  # if
+    end  # for
+    return records
+end  # function namelist_lineranges
+function namelist_lineranges(path::AbstractPath)
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
+    open(path, "r") do io
+        namelist_lineranges(io)
+    end
+end  # function namelist_lineranges
 
 function card_identifier_linenumbers(io::IOStream)
     records = OrderedDict()
