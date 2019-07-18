@@ -19,14 +19,14 @@ function get_card_identifier_indices(io::IOStream)
     records = OrderedDict()
     for (i, line) in enumerate(eachline(io))
         str = strip(line)
-        isempty(str) || startswith(str, r"[!#]") && continue
+        isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         cardname = throw_which_occursin(CARD_STARTS, str)
         cardname === nothing ? continue : records[cardname] = i
     end  # for
     return records
 end  # function get_namelist_identifier_indices
 function get_card_identifier_indices(path::AbstractPath)
-#     isfile(path) && isreadable(path) || error("File $(path) not readable!")
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
         get_card_identifier_indices(io)
     end
@@ -36,7 +36,7 @@ function get_namelist_identifier_indices(io::IOStream)
     records = OrderedDict()
     for (i, line) in enumerate(eachline(io))
         str = strip(line)
-        isempty(str) || startswith(str, r"[!#]") && continue
+        isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         namelistname = throw_which_occursin(NAMELIST_STARTS, str)
         namelistname === nothing ? continue : records[namelistname] = i
     end  # for
