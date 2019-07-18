@@ -6,7 +6,6 @@ splitting:
 =#
 using DataStructures
 using FilePaths: AbstractPath
-using IterUtils: throw_which_occursin
 
 export get_namelist_identifier_indices,
     get_card_identifier_indices
