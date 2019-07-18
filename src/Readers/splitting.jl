@@ -66,3 +66,24 @@ function input_identifier_linenumbers(path::AbstractPath)
         input_identifier_linenumbers(io)
     end
 end  # function input_identifier_linenumbers
+
+function dispatch_readers(io::IOStream)
+    linenumbers = input_identifier_linenumbers(io)
+    namelist_linenumbers = linenumbers["namelists"]
+    card_linenumbers = linenumbers["cards"]
+    namelists = Dict()
+    cards = Dict()
+    for (k, v) in namelist_linenumbers
+        namelists[k] = read_namelist(io[v])
+    end  # for
+    for (k, v) in card_linenumbers
+        card[k] = begin
+            k == "ATOMIC_SPECIES" && read_atomicspecies(io[v])
+            k == "ATOMIC_POSITIONS" && read_atomicpositions(io[v])
+            k == "K_POINTS" && read_kpoints(io[v])
+            k == "CELL_PARAMETERS" && read_cellparameters(io[v])
+            # TODO: Other cards
+        end
+    end  # for
+    return Dict("namelists" => namelists, "cards" => cards)
+end  # function dispatch_readers
