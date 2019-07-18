@@ -58,7 +58,7 @@ end  # function card_identifier_linenumbers
 
 function input_identifier_linenumbers(io::IOStream)
     # Remember to rewind the `io`
-    merge(namelist_identifier_linenumbers(io), card_identifier_linenumbers(seek(io, 1)))
+    Dict("namelists" => namelist_identifier_linenumbers(io), "cards" => card_identifier_linenumbers(seek(io, 1)))
 end  # function input_identifier_linenumbers
 function input_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
