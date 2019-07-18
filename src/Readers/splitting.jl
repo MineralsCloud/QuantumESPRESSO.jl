@@ -7,7 +7,8 @@ splitting:
 using DataStructures: SortedDict, OrderedDict
 using IterUtils: throw_which_occursin
 
-export get_namelist_identifier_indices
+export get_namelist_identifier_indices,
+    get_card_identifier_indices
 
 const NAMELIST_END = r"/\s*[\r\n]"
 const NAMELIST_STARTS = r"CONTROL"i, r"SYSTEM"i, r"ELECTRONS"i, r"IONS"i, r"CELL"i  # regex: "&(.[^,]*)"
