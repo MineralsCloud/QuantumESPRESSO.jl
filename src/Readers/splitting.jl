@@ -20,9 +20,9 @@ const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
-function namelist_identifier_linenumbers(io::IOStream)
+function namelist_identifier_linenumbers(lines)
     records = OrderedDict()
-    for (i, line) in enumerate(eachline(io))
+    for (i, line) in enumerate(lines)
         str = strip(line)
         isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
         for namelistname in NAMELIST_STARTS
@@ -30,6 +30,9 @@ function namelist_identifier_linenumbers(io::IOStream)
         end  # for
     end  # for
     return records
+end  # function namelist_identifier_linenumbers
+function namelist_identifier_linenumbers(io::IOStream)
+    namelist_identifier_linenumbers(readlines(io))
 end  # function namelist_identifier_linenumbers
 function namelist_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
