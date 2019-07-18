@@ -157,25 +157,28 @@ function input_lineranges(path::AbstractPath)
     end
 end  # function input_lineranges
 
-function dispatch_readers(io::IOStream)
-    lineranges = input_lineranges(io)
+function dispatch_readers(lines)
+    lineranges = input_lineranges(lines)
     namelist_lineranges = lineranges["namelists"]
     card_lineranges = lineranges["cards"]
     namelists = Dict()
     cards = Dict()
     for (k, v) in namelist_lineranges
-        namelists[k] = read_namelist(iterate_io_between(io, v))
+        namelists[k] = read_namelist(iterate_lines_between(lines, v))
     end  # for
     for (k, v) in card_lineranges
         card[k] = begin
-            k == "ATOMIC_SPECIES" && read_atomicspecies(iterate_io_between(io, v))
-            k == "ATOMIC_POSITIONS" && read_atomicpositions(iterate_io_between(io, v))
-            k == "K_POINTS" && read_kpoints(iterate_io_between(io, v))
-            k == "CELL_PARAMETERS" && read_cellparameters(iterate_io_between(io, v))
+            k == "ATOMIC_SPECIES" && read_atomicspecies(iterate_lines_between(lines, v))
+            k == "ATOMIC_POSITIONS" && read_atomicpositions(iterate_lines_between(lines, v))
+            k == "K_POINTS" && read_kpoints(iterate_lines_between(lines, v))
+            k == "CELL_PARAMETERS" && read_cellparameters(iterate_lines_between(lines, v))
             # TODO: Other cards
         end
     end  # for
     return Dict("namelists" => namelists, "cards" => cards)
+end  # function dispatch_readers
+function dispatch_readers(io::IOStream)
+    dispatch_readers(readlines(io))
 end  # function dispatch_readers
 function dispatch_readers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
@@ -186,7 +189,7 @@ end  # function dispatch_readers
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 
-function iterate_io_between(io::IOStream, start::Int, stop::Int)
+function iterate_lines_between(io::IOStream, start::Int, stop::Int)
     Iterators.take(Iterators.drop(eachline(io), start - 1), stop - start + 1)
-end  # function iterate_io_between
-iterate_io_between(io::IOStream, r::UnitRange) = iterate_io_between(io, r.start, r.stop)
+end  # function iterate_lines_between
+iterate_lines_between(io::IOStream, r::UnitRange) = iterate_lines_between(io, r.start, r.stop)
