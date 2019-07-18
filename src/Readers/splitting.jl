@@ -144,9 +144,11 @@ function input_identifier_linenumbers(path::AbstractPath)
     end
 end  # function input_identifier_linenumbers
 
+function input_lineranges(lines)
+    Dict("namelists" => namelist_lineranges(lines), "cards" => card_lineranges(lines))
+end  # function input_lineranges
 function input_lineranges(io::IOStream)
-    # Remember to rewind the `io`
-    Dict("namelists" => namelist_lineranges(io), "cards" => card_lineranges(seekstart(io)))
+    input_lineranges(readlines(io))
 end  # function input_lineranges
 function input_lineranges(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
