@@ -7,14 +7,14 @@ splitting:
 using DataStructures
 using FilePaths: AbstractPath
 
-export get_namelist_identifier_indices,
-    get_card_identifier_indices
+export namelist_identifier_linenumbers,
+    card_identifier_linenumbers
 
 const NAMELIST_END = r"/\s*[\r\n]"
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
-function get_card_identifier_indices(io::IOStream)
+function card_identifier_linenumbers(io::IOStream)
     records = OrderedDict()
     for (i, line) in enumerate(eachline(io))
         str = strip(line)
@@ -28,19 +28,19 @@ function get_card_identifier_indices(io::IOStream)
         end  # for
     end  # for
     if haskey(records, "OCCUPATIONS")
-        index = last(collect(values(get_namelist_identifier_indices(seek(io, 1)))))
-        records["OCCUPATIONS"] < index && pop!(records, "OCCUPATIONS")
+        linenumber = last(collect(values(namelist_identifier_linenumbers(seek(io, 1)))))
+        records["OCCUPATIONS"] < linenumber && pop!(records, "OCCUPATIONS")
     end  # if
     return records
-end  # function get_namelist_identifier_indices
-function get_card_identifier_indices(path::AbstractPath)
+end  # function card_identifier_linenumbers
+function card_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
         get_card_identifier_indices(io)
     end
-end  # function get_card_identifier_indices
+end  # function card_identifier_linenumbers
 
-function get_namelist_identifier_indices(io::IOStream)
+function namelist_identifier_linenumbers(io::IOStream)
     records = OrderedDict()
     for (i, line) in enumerate(eachline(io))
         str = strip(line)
@@ -54,10 +54,10 @@ function get_namelist_identifier_indices(io::IOStream)
         end  # for
     end  # for
     return records
-end  # function get_namelist_identifier_indices
-function get_namelist_identifier_indices(path::AbstractPath)
+end  # function namelist_identifier_linenumbers
+function namelist_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
-        get_namelist_identifier_indices(io)
+        namelist_identifier_linenumbers(io)
     end
-end  # function get_card_identifier_indices
+end  # function namelist_identifier_linenumbers
