@@ -6,6 +6,8 @@ splitting:
 =#
 using DataStructures: SortedDict
 
+export get_namelist_identifier_indices
+
 const NAMELIST_SEP = r"/\s*[\r\n]"
 const NAMELIST_IDENTIFIERS = r"&CONTROL"i, r"&SYSTEM"i, r"&ELECTRONS"i, r"&IONS"i, r"&CELL"i
 const CARD_IDENTIFIERS = r"ATOMIC_SPECIES"i, r"ATOMIC_POSITIONS"i, r"K_POINTS"i, r"CELL_PARAMETERS"i, r"OCCUPATIONS"i, r"CONSTRAINTS"i, r"ATOMIC_FORCES"i
