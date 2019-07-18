@@ -87,6 +87,7 @@ function card_identifier_linenumbers(lines)
 end  # function card_identifier_linenumbers
 function card_identifier_linenumbers(io::IOStream)
     card_identifier_linenumbers(readlines(io))
+end  # function card_identifier_linenumbers
 function card_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
