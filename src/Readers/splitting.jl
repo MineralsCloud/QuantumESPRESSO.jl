@@ -11,6 +11,7 @@ using ResumableFunctions
 export namelist_identifier_linenumbers,
     namelist_lineranges,
     card_identifier_linenumbers,
+    card_lineranges,
     input_identifier_linenumbers,
     dispatch_readers
 
@@ -80,6 +81,37 @@ function card_identifier_linenumbers(path::AbstractPath)
         card_identifier_linenumbers(io)
     end
 end  # function card_identifier_linenumbers
+
+function card_lineranges(io::IOStream)
+    records = OrderedDict()
+    for (i, line) in enumerate(eachline(io))
+        str = strip(line)
+        isempty(str) || startswith(str, '!') || startswith(str, '#') && continue
+        for cardname in CARD_STARTS
+            occursin(Regex("$cardname", "i"), str) ? records[cardname] = i : continue
+        end  # for
+    end  # for
+    if haskey(records, "OCCUPATIONS")
+        # Remember to rewind the `io`
+        linenumber = last(collect(values(namelist_identifier_linenumbers(seekstart(io)))))
+        records["OCCUPATIONS"] < linenumber && pop!(records, "OCCUPATIONS")
+    end  # if
+    for (i, (k, v)) in enumerate(records)
+        if i == length(values(records))
+            records[k] = v:length(readlines(seekstart(io)))
+        else
+            nextkey = collect(keys(records))[i + 1]
+            records[k] = v:(records[nextkey] - 1)
+        end  # if
+    end  # for
+    return records
+end  # function card_lineranges
+function card_lineranges(path::AbstractPath)
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
+    open(path, "r") do io
+        card_lineranges(io)
+    end
+end  # function card_lineranges
 
 function input_identifier_linenumbers(io::IOStream)
     # Remember to rewind the `io`
