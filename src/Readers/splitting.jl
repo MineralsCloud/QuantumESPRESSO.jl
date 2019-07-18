@@ -167,7 +167,7 @@ function dispatch_readers(lines)
         namelists[k] = read_namelist(iterate_lines_between(lines, v))
     end  # for
     for (k, v) in card_lineranges
-        card[k] = begin
+        cards[k] = begin
             k == "ATOMIC_SPECIES" && read_atomicspecies(iterate_lines_between(lines, v))
             k == "ATOMIC_POSITIONS" && read_atomicpositions(iterate_lines_between(lines, v))
             k == "K_POINTS" && read_kpoints(iterate_lines_between(lines, v))
