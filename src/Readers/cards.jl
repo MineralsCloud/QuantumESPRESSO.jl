@@ -92,13 +92,14 @@ end  # function read_kpoints
 function read_cellparameters(lines)
     cell_params = []
     title_line = first(lines)
-    m = match(r"CELL_PARAMETERS\s*\\{?\s*(\w*)\s*\\}?"i, title_line)
+    m = match(r"CELL_PARAMETERS\s*[\{\(]?\s*(\w*)\s*[\}\)]?"i, title_line)
     if match === nothing
         # The first line should be 'CELL_PARAMETERS blahblahblah', if it is not, either the regular expression
         # wrong or something worse happened.
         error("No match found! Check you 'CELL_PARAMETERS' line!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
     end
-    option = match.captures[2]  # The second parenthesized subgroup will be `option`.
     if isempty(option)
         @warn "Not specifying unit is DEPRECATED and will no longer be allowed in the future!"
         option = "bohr"
