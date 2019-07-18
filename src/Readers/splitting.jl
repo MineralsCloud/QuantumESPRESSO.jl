@@ -8,17 +8,16 @@ using DataStructures: SortedDict
 
 export get_namelist_identifier_indices
 
-const NAMELIST_SEP = r"/\s*[\r\n]"
-const NAMELIST_IDENTIFIERS = r"&CONTROL"i, r"&SYSTEM"i, r"&ELECTRONS"i, r"&IONS"i, r"&CELL"i
-const CARD_IDENTIFIERS = r"ATOMIC_SPECIES"i, r"ATOMIC_POSITIONS"i, r"K_POINTS"i, r"CELL_PARAMETERS"i, r"OCCUPATIONS"i, r"CONSTRAINTS"i, r"ATOMIC_FORCES"i
+const NAMELIST_END = raw"/\s*[\r\n]"
+const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"
+const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
 function get_namelist_identifier_indices(io::IOStream)
     match_records = Dict()
-    for pattern in NAMELIST_IDENTIFIERS
-        m0 = findall(str -> occursin(pattern, str), io)
-        m0 === nothing && continue
-        m1 = findnext(str -> occursin(NAMELIST_SEP, str), io, m0)
-        match_records[pattern] = range(m0, m1)
+    str = read(io, String)
+    for pattern in NAMELIST_STARTS
+        m = match(Regex("($(pattern))(.*)($(NAMELIST_END))", "i"), str)
+        m === nothing ? continue : match_records[pattern] = range(m.offsets[1]; stop=m.offsets[3])
     end
     return SortedDict(sort(collect(match_records), by=x->x[2]))
 end  # function get_namelist_identifier_indices
