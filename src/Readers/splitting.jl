@@ -25,11 +25,12 @@ function get_card_identifier_indices(io::IOStream)
 end  # function get_namelist_identifier_indices
 
 function get_namelist_identifier_indices(io::IOStream)
-    match_records = Dict()
-    str = read(io, String)
-    for pattern in NAMELIST_STARTS
-        m = match(Regex("($(pattern))(.*)($(NAMELIST_END))", "i"), str)
-        m === nothing ? continue : match_records[pattern] = range(m.offsets[1]; stop=m.offsets[3])
-    end
-    return SortedDict(sort(collect(match_records), by=x->x[2]))
+    records = OrderedDict()
+    for (i, line) in enumerate(eachline(io))
+        str = strip(line)
+        isempty(str) || startswith(str, r"[!#]") && continue
+        namelistname = throw_which_occursin(NAMELIST_STARTS, str)
+        namelistname === nothing ? continue : records[namelistname] = i
+    end  # for
+    return records
 end  # function get_namelist_identifier_indices
