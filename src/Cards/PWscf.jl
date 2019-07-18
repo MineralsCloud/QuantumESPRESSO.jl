@@ -29,9 +29,9 @@ export AtomicSpecies,
     allowed_options
 
 struct AtomicSpecies
-    atom::String
+    atom::AbstractString
     mass::Float64
-    pseudopotential::String
+    pseudopotential::AbstractString
 end  # struct AtomicSpecies
 
 @with_kw struct AtomicSpeciesCard <: Card
@@ -40,18 +40,18 @@ end  # struct AtomicSpecies
 end  # struct AtomicSpeciesCard
 
 struct AtomicPosition
-    atom::String
+    atom::AbstractString
     position::Vector{Float64}
 end  # struct AtomicPosition
 
 @with_kw struct AtomicPositionCard <: Card
-    option::String = "alat"; @assert option in allowed_options(AtomicPositionCard)
+    option::AbstractString = "alat"; @assert option in allowed_options(AtomicPositionCard)
     data::Vector{AtomicPosition}
 end  # struct AtomicPositionCard
 
 @with_kw struct CellParametersCard <: Card
-    option::String = "alat"; @assert option in allowed_options(CellParametersCard)
-    lattice::Crystal = Crystal(rand(3,3)u"nm")
+    option::AbstractString = "alat"; @assert option in allowed_options(CellParametersCard)
+    lattice::AbstractMatrix
 end  # struct CellParametersCard
 
 abstract type KPoint end
@@ -69,7 +69,7 @@ struct GammaPoint <: KPoint end
 end  # struct SpecialKPoint
 
 @with_kw struct KPointsCard <: Card
-    option::String = "tpiba"; @assert option in allowed_options(KPointsCard)
+    option::AbstractString = "tpiba"; @assert option in allowed_options(KPointsCard)
     points::Vector{KPoint}
 end  # struct KPointsCard
 
