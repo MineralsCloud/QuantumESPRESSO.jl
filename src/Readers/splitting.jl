@@ -190,7 +190,8 @@ end  # function dispatch_readers
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 
-function iterate_lines_between(io::IOStream, start::Int, stop::Int)
-    Iterators.take(Iterators.drop(eachline(io), start - 1), stop - start + 1)
+function iterate_lines_between(lines, start::Int, stop::Int)
+    println(lines)
+    Iterators.take(Iterators.drop(lines, start - 1), stop - start + 1)
 end  # function iterate_lines_between
-iterate_lines_between(io::IOStream, r::UnitRange) = iterate_lines_between(io, r.start, r.stop)
+iterate_lines_between(lines, r::UnitRange) = iterate_lines_between(lines, r.start, r.stop)
