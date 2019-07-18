@@ -104,12 +104,16 @@ function read_cellparameters(lines)
         @warn "Not specifying unit is DEPRECATED and will no longer be allowed in the future!"
         option = "bohr"
     end
-    for line in lines[2:end]
-        strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
-        if match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line))
-            v1, v2, v3 = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line)).captures
-            push!(cell_params, [v1, v2, v3])
+
+    for line in Iterators.drop(lines, 1)  # Drop the title line
+        str = strip(line)
+        isempty(str) || startswith(strip(str), '!') && continue
+        str == '/' && error("Do not start any line in cards with a '/' character!")
+        m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
+        if m !== nothing
+            v1, v2, v3 = m.captures
+            cell_params = vcat(cell_params, map(x->parse(Float64, x), [v1, v2, v3]))
         end
     end
-    return CellParametersCard(option, Crystal(cell_params))
+    return CellParametersCard(option, reshape(cell_params, (3, 3)))
 end  # function read_cellparameters
