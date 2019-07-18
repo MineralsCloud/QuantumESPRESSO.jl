@@ -9,9 +9,9 @@ using IterUtils: throw_which_occursin
 
 export get_namelist_identifier_indices
 
-const NAMELIST_END = raw"/\s*[\r\n]"
-const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"
-const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
+const NAMELIST_END = r"/\s*[\r\n]"
+const NAMELIST_STARTS = r"CONTROL"i, r"SYSTEM"i, r"ELECTRONS"i, r"IONS"i, r"CELL"i  # regex: "&(.[^,]*)"
+const CARD_STARTS = r"ATOMIC_SPECIES"i, r"ATOMIC_POSITIONS"i, r"K_POINTS"i, r"CELL_PARAMETERS"i, r"OCCUPATIONS"i, r"CONSTRAINTS"i, r"ATOMIC_FORCES"i,
 
 function get_card_identifier_indices(io::IOStream)
     records = OrderedDict()
