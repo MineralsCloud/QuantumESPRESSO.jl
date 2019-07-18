@@ -50,7 +50,11 @@ function namelist_lineranges(io::IOStream)
             records[lastkey] = range(records[lastkey]; stop = i)
         end  # if
     end  # for
-    return records
+    if all(isincreasing(x) for x in values(records))
+        return records
+    else
+        error("Something went wrong!")
+    end  # if-else
 end  # function namelist_lineranges
 function namelist_lineranges(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
@@ -104,7 +108,11 @@ function card_lineranges(io::IOStream)
             records[k] = v:(records[nextkey] - 1)
         end  # if
     end  # for
-    return records
+    if all(isincreasing(x) for x in values(records))
+        return records
+    else
+        error("Something went wrong!")
+    end  # if-else
 end  # function card_lineranges
 function card_lineranges(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
@@ -150,6 +158,8 @@ function dispatch_readers(path::AbstractPath)
         dispatch_readers(io)
     end
 end  # function dispatch_readers
+
+isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 
 @resumable function iterate_io_between(io::IOStream, start::Int, stop::Int)
     for i in eachindex(1:stop)
