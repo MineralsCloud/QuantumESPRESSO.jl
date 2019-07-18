@@ -43,6 +43,7 @@ function card_identifier_linenumbers(io::IOStream)
         end  # for
     end  # for
     if haskey(records, "OCCUPATIONS")
+        # Remember to rewind the `io`
         linenumber = last(collect(values(namelist_identifier_linenumbers(seek(io, 1)))))
         records["OCCUPATIONS"] < linenumber && pop!(records, "OCCUPATIONS")
     end  # if
