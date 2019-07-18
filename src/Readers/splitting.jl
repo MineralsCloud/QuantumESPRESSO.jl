@@ -96,10 +96,12 @@ function dispatch_readers(path::AbstractPath)
     end
 end  # function dispatch_readers
 
-@resumable function iterate_io_between(io::IOStream, m::Int, n::Int)
-    io = seek(io, m)
-    while pos != n
-        pos = position(io)
-        @yield io
-    end
+@resumable function iterate_io_between(io::IOStream, start::Int, stop::Int)
+    for i in eachindex(1:stop)
+        if i == start
+            @yield io
+        else
+            continue
+        end  # if-else
+    end  # for
 end  # function iterate_io_between
