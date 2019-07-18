@@ -8,7 +8,8 @@ using DataStructures
 using FilePaths: AbstractPath
 
 export namelist_identifier_linenumbers,
-    card_identifier_linenumbers
+    card_identifier_linenumbers,
+    input_identifier_linenumbers
 
 const NAMELIST_END = r"/\s*[\r\n]"
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
@@ -53,3 +54,14 @@ function card_identifier_linenumbers(path::AbstractPath)
         card_identifier_linenumbers(io)
     end
 end  # function card_identifier_linenumbers
+
+function input_identifier_linenumbers(io::IOStream)
+    # Remember to rewind the `io`
+    merge(namelist_identifier_linenumbers(io), card_identifier_linenumbers(seek(io, 1)))
+end  # function input_identifier_linenumbers
+function input_identifier_linenumbers(path::AbstractPath)
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
+    open(path, "r") do io
+        input_identifier_linenumbers(io)
+    end
+end  # function input_identifier_linenumbers
