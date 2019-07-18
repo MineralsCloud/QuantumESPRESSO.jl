@@ -6,7 +6,6 @@ splitting:
 =#
 using DataStructures
 using FilePaths: AbstractPath
-using ResumableFunctions
 
 export namelist_identifier_linenumbers,
     namelist_lineranges,
