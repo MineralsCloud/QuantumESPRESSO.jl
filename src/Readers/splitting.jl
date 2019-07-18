@@ -13,6 +13,7 @@ export namelist_identifier_linenumbers,
     card_identifier_linenumbers,
     card_lineranges,
     input_identifier_linenumbers,
+    input_lineranges,
     dispatch_readers
 
 const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
@@ -131,6 +132,17 @@ function input_identifier_linenumbers(path::AbstractPath)
         input_identifier_linenumbers(io)
     end
 end  # function input_identifier_linenumbers
+
+function input_lineranges(io::IOStream)
+    # Remember to rewind the `io`
+    Dict("namelists" => namelist_lineranges(io), "cards" => card_lineranges(seekstart(io)))
+end  # function input_lineranges
+function input_lineranges(path::AbstractPath)
+    isfile(path) && isreadable(path) || error("File $(path) not readable!")
+    open(path, "r") do io
+        input_lineranges(io)
+    end
+end  # function input_lineranges
 
 function dispatch_readers(io::IOStream)
     linenumbers = input_identifier_linenumbers(io)
