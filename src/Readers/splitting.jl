@@ -173,12 +173,6 @@ end  # function dispatch_readers
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 
-@resumable function iterate_io_between(io::IOStream, start::Int, stop::Int)
-    for i in eachindex(1:stop)
-        if i == start
-            @yield io
-        else
-            continue
-        end  # if-else
-    end  # for
+function iterate_io_between(io::IOStream, start::Int, stop::Int)
+    Iterators.take(Iterators.drop(eachline(io), start - 1), stop - start + 1)
 end  # function iterate_io_between
