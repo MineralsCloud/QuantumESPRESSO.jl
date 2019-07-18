@@ -50,6 +50,6 @@ end  # function card_identifier_linenumbers
 function card_identifier_linenumbers(path::AbstractPath)
     isfile(path) && isreadable(path) || error("File $(path) not readable!")
     open(path, "r") do io
-        get_card_identifier_indices(io)
+        card_identifier_linenumbers(io)
     end
 end  # function card_identifier_linenumbers
