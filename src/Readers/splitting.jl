@@ -176,3 +176,4 @@ isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 function iterate_io_between(io::IOStream, start::Int, stop::Int)
     Iterators.take(Iterators.drop(eachline(io), start - 1), stop - start + 1)
 end  # function iterate_io_between
+iterate_io_between(io::IOStream, r::UnitRange) = iterate_io_between(io, r.start, r.stop)
