@@ -19,6 +19,14 @@ const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
+macro iostream_to_lines(methodname)
+    return quote
+        function $methodname(io::IOStream)
+            $methodname(readlines(io))
+        end
+    end
+end  # macro iostream_to_lines
+
 function namelist_identifier_linenumbers(lines)
     records = OrderedDict()
     for (i, line) in enumerate(lines)
