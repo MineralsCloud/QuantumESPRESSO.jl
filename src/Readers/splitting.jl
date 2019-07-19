@@ -19,6 +19,25 @@ const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
 
+macro iostream_to_lines(methodname)
+    return quote
+        function $(esc(methodname))(io::IOStream)
+            $(esc(methodname))(readlines(io))
+        end
+    end
+end  # macro iostream_to_lines
+
+macro path_to_iostream(methodname)
+    return quote
+        function $(esc(methodname))(path::AbstractPath)
+            isfile(path) && isreadable(path) || error("File $(path) not readable!")
+            open(path, "r") do io
+                $(esc(methodname))(io)
+            end
+        end
+    end
+end  # macro path_to_iostream
+
 function namelist_identifier_linenumbers(lines)
     records = OrderedDict()
     for (i, line) in enumerate(lines)
@@ -30,15 +49,8 @@ function namelist_identifier_linenumbers(lines)
     end  # for
     return records
 end  # function namelist_identifier_linenumbers
-function namelist_identifier_linenumbers(io::IOStream)
-    namelist_identifier_linenumbers(readlines(io))
-end  # function namelist_identifier_linenumbers
-function namelist_identifier_linenumbers(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        namelist_identifier_linenumbers(io)
-    end
-end  # function namelist_identifier_linenumbers
+@iostream_to_lines namelist_identifier_linenumbers
+@path_to_iostream namelist_identifier_linenumbers
 
 function namelist_lineranges(lines)
     records = OrderedDict()
@@ -59,15 +71,8 @@ function namelist_lineranges(lines)
         error("Something went wrong!")
     end  # if-else
 end  # function namelist_lineranges
-function namelist_lineranges(io::IOStream)
-    namelist_lineranges(readlines(io))
-end  # function namelist_lineranges
-function namelist_lineranges(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        namelist_lineranges(io)
-    end
-end  # function namelist_lineranges
+@iostream_to_lines namelist_lineranges
+@path_to_iostream namelist_lineranges
 
 function card_identifier_linenumbers(lines)
     records = OrderedDict()
@@ -84,15 +89,8 @@ function card_identifier_linenumbers(lines)
     end  # if
     return records
 end  # function card_identifier_linenumbers
-function card_identifier_linenumbers(io::IOStream)
-    card_identifier_linenumbers(readlines(io))
-end  # function card_identifier_linenumbers
-function card_identifier_linenumbers(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        card_identifier_linenumbers(io)
-    end
-end  # function card_identifier_linenumbers
+@iostream_to_lines card_identifier_linenumbers
+@path_to_iostream card_identifier_linenumbers
 
 function card_lineranges(lines)
     records = OrderedDict()
@@ -121,41 +119,20 @@ function card_lineranges(lines)
         error("Something went wrong!")
     end  # if-else
 end  # function card_lineranges
-function card_lineranges(io::IOStream)
-    card_lineranges(readlines(io))
-end  # function card_lineranges
-function card_lineranges(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        card_lineranges(io)
-    end
-end  # function card_lineranges
+@iostream_to_lines card_lineranges
+@path_to_iostream card_identifier_linenumbers
 
 function input_identifier_linenumbers(lines)
     Dict("namelists" => namelist_identifier_linenumbers(lines), "cards" => card_identifier_linenumbers(lines))
 end  # function input_identifier_linenumbers
-function input_identifier_linenumbers(io::IOStream)
-    input_identifier_linenumbers(readlines(io))
-end  # function input_identifier_linenumbers
-function input_identifier_linenumbers(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        input_identifier_linenumbers(io)
-    end
-end  # function input_identifier_linenumbers
+@iostream_to_lines input_identifier_linenumbers
+@path_to_iostream input_identifier_linenumbers
 
 function input_lineranges(lines)
     Dict("namelists" => namelist_lineranges(lines), "cards" => card_lineranges(lines))
 end  # function input_lineranges
-function input_lineranges(io::IOStream)
-    input_lineranges(readlines(io))
-end  # function input_lineranges
-function input_lineranges(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        input_lineranges(io)
-    end
-end  # function input_lineranges
+@iostream_to_lines input_lineranges
+@path_to_iostream input_lineranges
 
 function dispatch_readers(lines)
     lineranges = input_lineranges(lines)
@@ -184,15 +161,8 @@ function dispatch_readers(lines)
     end  # for
     return Dict("namelists" => namelists, "cards" => cards)
 end  # function dispatch_readers
-function dispatch_readers(io::IOStream)
-    dispatch_readers(readlines(io))
-end  # function dispatch_readers
-function dispatch_readers(path::AbstractPath)
-    isfile(path) && isreadable(path) || error("File $(path) not readable!")
-    open(path, "r") do io
-        dispatch_readers(io)
-    end
-end  # function dispatch_readers
+@iostream_to_lines dispatch_readers
+@path_to_iostream dispatch_readers
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 
