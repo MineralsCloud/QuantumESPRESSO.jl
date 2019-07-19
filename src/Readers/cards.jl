@@ -41,10 +41,10 @@ end  # function preprocess_line
 
 function read_atomicspecies(lines)
     atomic_species = []
-    for line in lines
-        str = strip(line)
-        # Skip the title line, any empty line, or a line of comment.
-        (isempty(str) || startswith(strip(str), '!') || occursin(r"ATOMIC_SPECIES"i, str)) && continue
+    for line in Iterators.drop(lines, 1)  # Drop the title line
+        str = preprocess_line(line)
+        str === nothing && continue
+
         m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", str)
         if m === nothing
             @warn "No match found in the line $(line)!"
