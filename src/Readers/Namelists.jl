@@ -1,9 +1,16 @@
-#=
-namelists:
-- Julia version: 1.0
-- Author: singularitti
-- Date: 2019-07-17
-=#
+"""
+# module Namelists
+
+
+
+# Examples
+
+```jldoctest
+julia>
+```
+"""
+module Namelists
+
 export read_namelist
 
 function read_namelist(lines)
@@ -21,3 +28,5 @@ function read_namelist(lines)
     end
     return result
 end  # function read_namelist
+
+end
