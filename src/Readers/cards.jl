@@ -13,12 +13,38 @@ export read_atomicspecies,
     read_kpoints,
     read_cellparameters
 
+function read_title_line(title_line, regex, default_option)
+    m = match(regex, title_line)
+    if m === nothing
+        # The first line should be '<CARD> {<option>}', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found in $(title_line)!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
+    end
+    if isempty(option)
+        @warn "No option is found, default option '$(default_option)' will be set!"
+        option = default_option
+    end
+    return option
+end  # function read_title_line
+
+function preprocess_line(line)
+    str = strip(line)
+    # If this line is an empty line or a line of comment.
+    # Comments lines in cards can be introduced by either a "!" or a "#" character in the first position of a line.
+    isempty(str) || any(startswith(str, x) for x in ('!', '#')) && return nothing
+    # Do not start any line in cards with a "/" character.
+    str == '/' && error("Do not start any line in cards with a '/' character!")
+    return str
+end  # function preprocess_line
+
 function read_atomicspecies(lines)
     atomic_species = []
-    for line in lines
-        str = strip(line)
-        # Skip the title line, any empty line, or a line of comment.
-        (isempty(str) || startswith(strip(str), '!') || occursin(r"ATOMIC_SPECIES"i, str)) && continue
+    for line in Iterators.drop(lines, 1)  # Drop the title line
+        str = preprocess_line(line)
+        str === nothing && continue
+
         m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", str)
         if m === nothing
             @warn "No match found in the line $(line)!"
@@ -32,25 +58,11 @@ end  # function read_atomicspecies
 
 function read_atomicpositions(lines)
     atomic_positions = []
-    title_line = first(lines)
-    m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    if m === nothing
-        # The first line should be 'ATOMIC_SPECIES blahblahblah', if it is not, either the regular expression
-        # wrong or something worse happened.
-        error("No match found! Check you 'ATOMIC_SPECIES' line!")
-    else
-        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
-    end
-    if isempty(option)
-        @warn "No option is found, default option 'alat' will be set! " *
-              "Not specifying units is DEPRECATED and will no longer be allowed in the future"
-        option = "alat"
-    end
+    option = read_title_line(first(lines), r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "alat")
     for line in Iterators.drop(lines, 1)  # Drop the title line
-        # If this line is an empty line or a line of comment.
-        str = strip(line)
-        isempty(str) || startswith(str, '!') && continue
-        str == '/' && error("Do not start any line in cards with a '/' character!")
+        str = preprocess_line(line)
+        str === nothing && continue
+
         if match(r"\{.*\}", str) !== nothing
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
@@ -69,27 +81,14 @@ function read_atomicpositions(lines)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
-    title_line = first(lines)
-    m = match(r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    if m === nothing
-        # The first line should be 'K_POINTS blahblahblah', if it is not, either the regular expression
-        # wrong or something worse happened.
-        error("No match found! Check you 'K_POINTS' line!")
-    else
-        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
-    end
-    if isempty(option)
-        error("Option is not given! you must give one!")
-    end
+    option = read_title_line(first(lines), r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "tbipa")
 
     option == "gamma" && return KPointsCard(option=option, points=GammaPoint())
 
     if option == "automatic"
         for line in Iterators.drop(lines, 1)  # Drop the title line
-            # If this line is an empty line or a line of comment.
-            str = strip(line)
-            isempty(str) || startswith(str, '!') && continue
-            str == '/' && error("Do not start any line in cards with a '/' character!")
+            str = preprocess_line(line)
+
             sp = split(str)
             grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
             return KPointsCard(option=option, points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
@@ -103,24 +102,12 @@ end  # function read_kpoints
 
 function read_cellparameters(lines)
     cell_params = []
-    title_line = first(lines)
-    m = match(r"CELL_PARAMETERS\s*[\{\(]?\s*(\w*)\s*[\}\)]?"i, title_line)
-    if match === nothing
-        # The first line should be 'CELL_PARAMETERS blahblahblah', if it is not, either the regular expression
-        # wrong or something worse happened.
-        error("No match found! Check you 'CELL_PARAMETERS' line!")
-    else
-        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
-    end
-    if isempty(option)
-        @warn "Not specifying unit is DEPRECATED and will no longer be allowed in the future!"
-        option = "bohr"
-    end
+    option = read_title_line(first(lines), r"CELL_PARAMETERS\s*[\{\(]?\s*(\w*)\s*[\}\)]?"i, "bohr")
 
     for line in Iterators.drop(lines, 1)  # Drop the title line
-        str = strip(line)
-        isempty(str) || startswith(strip(str), '!') && continue
-        str == '/' && error("Do not start any line in cards with a '/' character!")
+        str = preprocess_line(line)
+        str === nothing && continue
+
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
         if m !== nothing
             v1, v2, v3 = m.captures
