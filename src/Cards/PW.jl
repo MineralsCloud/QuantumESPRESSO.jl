@@ -76,9 +76,9 @@ struct GammaPoint <: KPoint end
     weight::B
 end  # struct SpecialKPoint
 
-@with_kw struct KPointsCard <: Card
-    option::AbstractString = "tpiba"; @assert option in allowed_options(KPointsCard)
-    points::AbstractVector{KPoint}
+@with_kw struct KPointsCard{A <: AbstractString, B <: AbstractVector{KPoint}} <: Card
+    option::A = "tpiba"; @assert option in allowed_options(KPointsCard)
+    points::B
 end  # struct KPointsCard
 # ============================================================================ #
 
