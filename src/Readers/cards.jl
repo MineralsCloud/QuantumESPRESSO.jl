@@ -13,6 +13,22 @@ export read_atomicspecies,
     read_kpoints,
     read_cellparameters
 
+function read_title_line(title_line, regex, default_option)
+    m = match(regex, title_line)
+    if m === nothing
+        # The first line should be '<CARD> {<option>}', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found in (title_line)!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
+    end
+    if isempty(option)
+        @warn "No option is found, default option '(default_option)' will be set!"
+        option = default_option
+    end
+    return option
+end  # function read_title_line
+
 function read_atomicspecies(lines)
     atomic_species = []
     for line in lines
@@ -32,20 +48,7 @@ end  # function read_atomicspecies
 
 function read_atomicpositions(lines)
     atomic_positions = []
-    title_line = first(lines)
-    m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    if m === nothing
-        # The first line should be 'ATOMIC_SPECIES blahblahblah', if it is not, either the regular expression
-        # wrong or something worse happened.
-        error("No match found! Check you 'ATOMIC_SPECIES' line!")
-    else
-        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
-    end
-    if isempty(option)
-        @warn "No option is found, default option 'alat' will be set! " *
-              "Not specifying units is DEPRECATED and will no longer be allowed in the future"
-        option = "alat"
-    end
+    option = read_title_line(first(lines), r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "alat")
     for line in Iterators.drop(lines, 1)  # Drop the title line
         # If this line is an empty line or a line of comment.
         str = strip(line)
