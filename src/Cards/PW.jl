@@ -55,9 +55,9 @@ end  # struct AtomicPositionCard
 # ============================================================================ #
 
 # ============================== CellParameters ============================== #
-@with_kw struct CellParametersCard <: Card
-    option::AbstractString = "alat"; @assert option in allowed_options(CellParametersCard)
-    lattice::AbstractMatrix
+@with_kw struct CellParametersCard{A <: AbstractString, B <: AbstractMatrix} <: Card
+    option::A = "alat"; @assert option in allowed_options(CellParametersCard)
+    data::B; @assert size(lattice) == (3, 3)
 end  # struct CellParametersCard
 # ============================================================================ #
 
