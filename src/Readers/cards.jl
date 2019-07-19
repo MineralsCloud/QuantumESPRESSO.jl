@@ -71,21 +71,28 @@ end  # function read_atomicpositions
 function read_kpoints(lines)
     title_line = first(lines)
     m = match(r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    m === nothing && error("Match not found! Check your option!")
-    option = match.captures[2]  # The second parenthesized subgroup will be `option`.
-
-    isempty(option) && error("Option is not given! you must give one!")
+    if m === nothing
+        # The first line should be 'K_POINTS blahblahblah', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found! Check you 'K_POINTS' line!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
+    end
+    if isempty(option)
+        error("Option is not given! you must give one!")
+    end
 
     option == "gamma" && return KPointsCard(option=option, points=GammaPoint())
 
     if option == "automatic"
-        for line in lines[2:end]
+        for line in Iterators.drop(lines, 1)  # Drop the title line
             # If this line is an empty line or a line of comment.
-            isempty(line) || startswith(strip(line), '!') && continue
-            strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
-            line = split(line)
-            grid, offsets = map(x -> parse(Int, x), line[1:3]), map(x -> parse(Int, x), line[4:7])
-            return KPointsCard(option=option, points=MonkhorstPackGrid(grid=grid, offsets=offsets))
+            str = strip(line)
+            isempty(str) || startswith(str, '!') && continue
+            str == '/' && error("Do not start any line in cards with a '/' character!")
+            sp = split(str)
+            grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
+            return KPointsCard(option=option, points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
         end
     end
 
