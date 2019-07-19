@@ -33,7 +33,7 @@ function preprocess_line(line)
     str = strip(line)
     # If this line is an empty line or a line of comment.
     # Comments lines in cards can be introduced by either a "!" or a "#" character in the first position of a line.
-    isempty(str) || any(startswith(str, x) for x in ('!', '#')) && continue
+    isempty(str) || any(startswith(str, x) for x in ('!', '#')) && return nothing
     # Do not start any line in cards with a "/" character.
     str == '/' && error("Do not start any line in cards with a '/' character!")
     return str
@@ -61,6 +61,7 @@ function read_atomicpositions(lines)
     option = read_title_line(first(lines), r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "alat")
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
+        str === nothing && continue
 
         if match(r"\{.*\}", str) !== nothing
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
@@ -105,6 +106,7 @@ function read_cellparameters(lines)
 
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
+        str === nothing && continue
 
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
         if m !== nothing
