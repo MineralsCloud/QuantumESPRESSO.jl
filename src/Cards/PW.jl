@@ -34,9 +34,9 @@ struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
     pseudopotential::C
 end  # struct AtomicSpecies
 
-@with_kw struct AtomicSpeciesCard <: Card
+@with_kw struct AtomicSpeciesCard{A <: AbstractVector{AtomicSpecies}} <: Card
     option = nothing
-    data::AbstractVector{AtomicSpecies}
+    data::A
 end  # struct AtomicSpeciesCard
 
 struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}}
@@ -49,9 +49,9 @@ struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}}
 end  # struct AtomicPosition
 AtomicPosition(atom::A, position::B) where {A, B} = AtomicPosition{A, B}(atom, position)
 
-@with_kw struct AtomicPositionCard <: Card
-    option::AbstractString = "alat"; @assert option in allowed_options(AtomicPositionCard)
-    data::AbstractVector{AtomicPosition}
+@with_kw struct AtomicPositionCard{A <: AbstractString, B <: AbstractVector{AtomicPosition}} <: Card
+    option::A = "alat"; @assert option in allowed_options(AtomicPositionCard)
+    data::B
 end  # struct AtomicPositionCard
 
 @with_kw struct CellParametersCard <: Card
