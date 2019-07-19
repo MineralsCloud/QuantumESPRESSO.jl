@@ -27,6 +27,17 @@ macro iostream_to_lines(methodname)
     end
 end  # macro iostream_to_lines
 
+macro path_to_iostream(methodname)
+    return quote
+        function $methodname(path::AbstractPath)
+            isfile(path) && isreadable(path) || error("File $(path) not readable!")
+            open(path, "r") do io
+                $methodname(io)
+            end
+        end
+    end
+end  # macro path_to_iostream
+
 function namelist_identifier_linenumbers(lines)
     records = OrderedDict()
     for (i, line) in enumerate(lines)
