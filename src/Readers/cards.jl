@@ -34,29 +34,34 @@ function read_atomicpositions(lines)
     atomic_positions = []
     title_line = first(lines)
     m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    m === nothing && error("No match found in the line '$(title_line)'! Something went wrong!")
-    option = m.captures[2]
+    if m === nothing
+        # The first line should be 'ATOMIC_SPECIES blahblahblah', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found! Check you 'ATOMIC_SPECIES' line!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
+    end
     if isempty(option)
         @warn "No option is found, default option 'alat' will be set! " *
               "Not specifying units is DEPRECATED and will no longer be allowed in the future"
         option = "alat"
     end
-    for line in lines[2:end]
+    for line in Iterators.drop(lines, 1)  # Drop the title line
         # If this line is an empty line or a line of comment.
-        isempty(line) || startswith(strip(line), '!') && continue
-        strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
-        if match(r"\\{.*\\}", line)
-            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\\{\s*([01])?\s*([01])?\s*([01])?\s*\\}",
-                strip(line))
+        str = strip(line)
+        isempty(str) || startswith(str, '!') && continue
+        str == '/' && error("Do not start any line in cards with a '/' character!")
+        if match(r"\{.*\}", str) !== nothing
+            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
+            push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
         else
-            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", strip(line))
+            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if m === nothing
                 @warn "No match found in the line $(line)!"
             else
                 name, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
+                push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
             end
         end
     end
