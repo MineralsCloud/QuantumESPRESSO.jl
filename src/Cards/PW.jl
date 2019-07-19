@@ -64,9 +64,9 @@ end  # struct CellParametersCard
 # ================================== KPoint ================================== #
 abstract type KPoint end
 
-@with_kw struct MonkhorstPackGrid <: KPoint
-    grid::AbstractVector{Int}; @assert length(grid) == 3
-    offsets::AbstractVector{Int}; @assert length(offsets) == 3
+@with_kw struct MonkhorstPackGrid{A <: AbstractVector{Int}, B <: AbstractVector{Int}} <: KPoint
+    grid::A; @assert length(grid) == 3
+    offsets::B; @assert length(offsets) == 3
 end  # struct MonkhorstPackGrid
 
 struct GammaPoint <: KPoint end
