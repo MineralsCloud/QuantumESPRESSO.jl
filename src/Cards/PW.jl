@@ -28,10 +28,10 @@ export AtomicSpecies,
     KPointsCard,
     allowed_options
 
-struct AtomicSpecies
-    atom::AbstractString
-    mass::Float64
-    pseudopotential::AbstractString
+struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
+    atom::A
+    mass::B
+    pseudopotential::C
 end  # struct AtomicSpecies
 
 @with_kw struct AtomicSpeciesCard <: Card
@@ -39,10 +39,15 @@ end  # struct AtomicSpecies
     data::AbstractVector{AtomicSpecies}
 end  # struct AtomicSpeciesCard
 
-struct AtomicPosition
-    atom::AbstractString
-    position::AbstractVector{Float64}
+struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}}
+    atom::A
+    position::B
+    function AtomicPosition{A, B}(atom, position) where {A, B}
+        @assert length(position) == 3
+        new(atom, position)
+    end
 end  # struct AtomicPosition
+AtomicPosition(atom::A, position::B) where {A, B} = AtomicPosition{A, B}(atom, position)
 
 @with_kw struct AtomicPositionCard <: Card
     option::AbstractString = "alat"; @assert option in allowed_options(AtomicPositionCard)
