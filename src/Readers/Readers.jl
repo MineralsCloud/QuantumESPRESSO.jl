@@ -11,8 +11,8 @@ julia>
 """
 module Readers
 
+include("Cards/Cards.jl")
+include("Namelists.jl")
 include("splitting.jl")
-include("namelists.jl")
-include("cards.jl")
 
 end
