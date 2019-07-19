@@ -1,5 +1,5 @@
 """
-# module Phonon
+# module PH
 
 
 
@@ -9,7 +9,7 @@
 julia>
 ```
 """
-module Phonon
+module PH
 
 using Parameters: @with_kw
 

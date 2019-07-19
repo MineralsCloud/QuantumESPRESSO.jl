@@ -8,16 +8,16 @@ module NamelistsTests
 
 using Test
 
-using QuantumESPRESSO.Namelists.PWscf
-using QuantumESPRESSO.Cards.PWscf
-using QuantumESPRESSO.QuantumESPRESSOInput.PWscf
+using QuantumESPRESSO.Namelists.PW
+using QuantumESPRESSO.Cards.PW
+using QuantumESPRESSO.QuantumESPRESSOInput.PW
 
 as = AtomicSpeciesCard(data=[AtomicSpecies("Fe", 55.845, "Fe.pseudopotential")])
 ap = AtomicPositionCard(data=[AtomicPosition("Fe", [0, 0, 0])])
 cell = CellParametersCard()
 k = KPointsCard(points=[GammaPoint()])
 
-pw = PWscfInput(system=SystemNamelist(celldm=ones(6)), atomicspecies=as, atomicpositions=ap,
+pw = PWInput(system=SystemNamelist(celldm=ones(6)), atomicspecies=as, atomicpositions=ap,
     kpoints=k, cellparameters=cell
 )
 

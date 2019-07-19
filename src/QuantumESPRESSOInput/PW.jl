@@ -1,5 +1,5 @@
 """
-# module PWscf
+# module PW
 
 
 
@@ -9,21 +9,21 @@
 julia>
 ```
 """
-module PWscf
+module PW
 
 using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
-using QuantumESPRESSO.Namelists.PWscf
+using QuantumESPRESSO.Namelists.PW
 using QuantumESPRESSO.Cards
-using QuantumESPRESSO.Cards.PWscf
+using QuantumESPRESSO.Cards.PW
 using QuantumESPRESSO.QuantumESPRESSOInput
 
-export PWscfInput,
+export PWInput,
     namelists,
     cards
 
-@with_kw struct PWscfInput <: Input
+@with_kw struct PWInput <: Input
     control::ControlNamelist = ControlNamelist()
     system::SystemNamelist
     electrons::ElectronsNamelist = ElectronsNamelist()
@@ -33,12 +33,12 @@ export PWscfInput,
     atomicpositions::AtomicPositionCard
     kpoints::KPointsCard
     cellparameters::CellParametersCard
-end  # struct PWscfInput
+end  # struct PWInput
 
 filter_field_by_supertype(obj, ::Type{T}) where {T} = filter(x->isa(x, T), map(x->getfild(ob, x), fieldnames(typeof(obj))) |> collect)
 
-namelists(input::PWscfInput) = filter_field_by_supertype(input, Namelist)
+namelists(input::PWInput) = filter_field_by_supertype(input, Namelist)
 
-cards(input::PWscfInput) = filter_field_by_supertype(input, Card)
+cards(input::PWInput) = filter_field_by_supertype(input, Card)
 
 end

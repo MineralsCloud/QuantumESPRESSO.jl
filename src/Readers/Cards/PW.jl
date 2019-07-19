@@ -1,5 +1,5 @@
 """
-# module PWscf
+# module PW
 
 
 
@@ -9,11 +9,11 @@
 julia>
 ```
 """
-module PWscf
+module PW
 
 using Crystals
 
-using QuantumESPRESSO.Cards.PWscf
+using QuantumESPRESSO.Cards.PW
 
 export read_atomicspecies,
     read_atomicpositions,

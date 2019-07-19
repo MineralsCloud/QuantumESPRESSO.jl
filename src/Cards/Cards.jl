@@ -15,6 +15,6 @@ export Card
 
 abstract type Card end
 
-include("PWscf.jl")
+include("PW.jl")
 
 end

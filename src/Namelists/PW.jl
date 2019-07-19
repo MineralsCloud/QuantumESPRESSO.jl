@@ -1,5 +1,5 @@
 """
-# module PWscf
+# module PW
 
 
 
@@ -9,7 +9,7 @@
 julia>
 ```
 """
-module PWscf
+module PW
 
 using Parameters: @with_kw
 
