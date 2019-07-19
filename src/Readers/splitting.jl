@@ -21,18 +21,18 @@ const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARA
 
 macro iostream_to_lines(methodname)
     return quote
-        function $methodname(io::IOStream)
-            $methodname(readlines(io))
+        function $(esc(methodname))(io::IOStream)
+            $(esc(methodname))(readlines(io))
         end
     end
 end  # macro iostream_to_lines
 
 macro path_to_iostream(methodname)
     return quote
-        function $methodname(path::AbstractPath)
+        function $(esc(methodname))(path::AbstractPath)
             isfile(path) && isreadable(path) || error("File $(path) not readable!")
             open(path, "r") do io
-                $methodname(io)
+                $(esc(methodname))(io)
             end
         end
     end
