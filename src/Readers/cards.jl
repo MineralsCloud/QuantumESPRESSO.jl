@@ -72,18 +72,7 @@ function read_atomicpositions(lines)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
-    title_line = first(lines)
-    m = match(r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    if m === nothing
-        # The first line should be 'K_POINTS blahblahblah', if it is not, either the regular expression
-        # wrong or something worse happened.
-        error("No match found! Check you 'K_POINTS' line!")
-    else
-        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
-    end
-    if isempty(option)
-        error("Option is not given! you must give one!")
-    end
+    option = read_title_line(first(lines), r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "tbipa")
 
     option == "gamma" && return KPointsCard(option=option, points=GammaPoint())
 
