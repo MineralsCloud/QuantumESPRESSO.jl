@@ -29,6 +29,16 @@ function read_title_line(title_line, regex, default_option)
     return option
 end  # function read_title_line
 
+function preprocess_line(line)
+    str = strip(line)
+    # If this line is an empty line or a line of comment.
+    # Comments lines in cards can be introduced by either a "!" or a "#" character in the first position of a line.
+    isempty(str) || any(startswith(str, x) for x in ('!', '#')) && continue
+    # Do not start any line in cards with a "/" character.
+    str == '/' && error("Do not start any line in cards with a '/' character!")
+    return str
+end  # function preprocess_line
+
 function read_atomicspecies(lines)
     atomic_species = []
     for line in lines
