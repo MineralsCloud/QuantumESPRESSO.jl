@@ -41,7 +41,7 @@ end  # struct AtomicSpeciesCard
 
 @with_kw struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}, C <: AbstractVector{Int}}
     atom::A
-    position::B; @assert length(position) == 3
+    pos::B; @assert length(pos) == 3
     if_pos::C = [1, 1, 1]; @assert length(if_pos) == 3
 end  # struct AtomicPosition
 
