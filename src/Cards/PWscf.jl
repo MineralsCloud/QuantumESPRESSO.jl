@@ -36,17 +36,17 @@ end  # struct AtomicSpecies
 
 @with_kw struct AtomicSpeciesCard <: Card
     option = nothing
-    data::Vector{AtomicSpecies}
+    data::AbstractVector{AtomicSpecies}
 end  # struct AtomicSpeciesCard
 
 struct AtomicPosition
     atom::AbstractString
-    position::Vector{Float64}
+    position::AbstractVector{Float64}
 end  # struct AtomicPosition
 
 @with_kw struct AtomicPositionCard <: Card
     option::AbstractString = "alat"; @assert option in allowed_options(AtomicPositionCard)
-    data::Vector{AtomicPosition}
+    data::AbstractVector{AtomicPosition}
 end  # struct AtomicPositionCard
 
 @with_kw struct CellParametersCard <: Card
@@ -57,20 +57,20 @@ end  # struct CellParametersCard
 abstract type KPoint end
 
 @with_kw struct MonkhorstPackGrid <: KPoint
-    grid::Vector{Int}; @assert length(grid) == 3
-    offsets::Vector{Int}; @assert length(offsets) == 3
+    grid::AbstractVector{Int}; @assert length(grid) == 3
+    offsets::AbstractVector{Int}; @assert length(offsets) == 3
 end  # struct MonkhorstPackGrid
 
 struct GammaPoint <: KPoint end
 
 @with_kw struct SpecialKPoint <: KPoint
-    coordinates::Vector{Float64}; @assert length(coordinates) == 3
+    coordinates::AbstractVector{Float64}; @assert length(coordinates) == 3
     weight::Real
 end  # struct SpecialKPoint
 
 @with_kw struct KPointsCard <: Card
     option::AbstractString = "tpiba"; @assert option in allowed_options(KPointsCard)
-    points::Vector{KPoint}
+    points::AbstractVector{KPoint}
 end  # struct KPointsCard
 
 allowed_options(::Type{<: Card}) = nothing
