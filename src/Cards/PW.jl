@@ -26,6 +26,7 @@ export AtomicSpecies,
     GammaPoint,
     SpecialKPoint,
     KPointsCard,
+    option,
     allowed_options
 
 # =============================== AtomicSpecies ============================== #
@@ -82,9 +83,13 @@ end  # struct SpecialKPoint
 end  # struct KPointsCard
 # ============================================================================ #
 
+# ================================== Methods ================================= #
+option(card::Card) = getfield(card, :option)
+
 allowed_options(::Type{<: Card}) = nothing
 allowed_options(::Type{AtomicPositionCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
 allowed_options(::Type{CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+# ============================================================================ #
 
 end
