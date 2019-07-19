@@ -18,12 +18,12 @@ function read_title_line(title_line, regex, default_option)
     if m === nothing
         # The first line should be '<CARD> {<option>}', if it is not, either the regular expression
         # wrong or something worse happened.
-        error("No match found in (title_line)!")
+        error("No match found in $(title_line)!")
     else
         option = m.captures[1]  # The first parenthesized subgroup will be `option`.
     end
     if isempty(option)
-        @warn "No option is found, default option '(default_option)' will be set!"
+        @warn "No option is found, default option '$(default_option)' will be set!"
         option = default_option
     end
     return option
