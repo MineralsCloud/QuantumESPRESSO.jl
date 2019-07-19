@@ -39,15 +39,11 @@ end  # struct AtomicSpecies
     data::A
 end  # struct AtomicSpeciesCard
 
-struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}}
+@with_kw struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}, C <: AbstractVector{Int}}
     atom::A
-    position::B
-    function AtomicPosition{A, B}(atom, position) where {A, B}
-        @assert length(position) == 3
-        new(atom, position)
-    end
+    position::B; @assert length(position) == 3
+    if_pos::C = [1, 1, 1]; @assert length(if_pos) == 3
 end  # struct AtomicPosition
-AtomicPosition(atom::A, position::B) where {A, B} = AtomicPosition{A, B}(atom, position)
 
 @with_kw struct AtomicPositionCard{A <: AbstractString, B <: AbstractVector{AtomicPosition}} <: Card
     option::A = "alat"; @assert option in allowed_options(AtomicPositionCard)
