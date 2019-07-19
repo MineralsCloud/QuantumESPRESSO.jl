@@ -34,29 +34,34 @@ function read_atomicpositions(lines)
     atomic_positions = []
     title_line = first(lines)
     m = match(r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    m === nothing && error("No match found in the line '$(title_line)'! Something went wrong!")
-    option = m.captures[2]
+    if m === nothing
+        # The first line should be 'ATOMIC_SPECIES blahblahblah', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found! Check you 'ATOMIC_SPECIES' line!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
+    end
     if isempty(option)
         @warn "No option is found, default option 'alat' will be set! " *
               "Not specifying units is DEPRECATED and will no longer be allowed in the future"
         option = "alat"
     end
-    for line in lines[2:end]
+    for line in Iterators.drop(lines, 1)  # Drop the title line
         # If this line is an empty line or a line of comment.
-        isempty(line) || startswith(strip(line), '!') && continue
-        strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
-        if match(r"\\{.*\\}", line)
-            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\\{\s*([01])?\s*([01])?\s*([01])?\s*\\}",
-                strip(line))
+        str = strip(line)
+        isempty(str) || startswith(str, '!') && continue
+        str == '/' && error("Do not start any line in cards with a '/' character!")
+        if match(r"\{.*\}", str) !== nothing
+            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
+            push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
         else
-            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", strip(line))
+            m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if m === nothing
                 @warn "No match found in the line $(line)!"
             else
                 name, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom=name, position=[x, y, z]))
+                push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
             end
         end
     end
@@ -66,21 +71,28 @@ end  # function read_atomicpositions
 function read_kpoints(lines)
     title_line = first(lines)
     m = match(r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, title_line)
-    m === nothing && error("Match not found! Check your option!")
-    option = match.captures[2]  # The second parenthesized subgroup will be `option`.
-
-    isempty(option) && error("Option is not given! you must give one!")
+    if m === nothing
+        # The first line should be 'K_POINTS blahblahblah', if it is not, either the regular expression
+        # wrong or something worse happened.
+        error("No match found! Check you 'K_POINTS' line!")
+    else
+        option = m.captures[1]  # The first parenthesized subgroup will be `option`.
+    end
+    if isempty(option)
+        error("Option is not given! you must give one!")
+    end
 
     option == "gamma" && return KPointsCard(option=option, points=GammaPoint())
 
     if option == "automatic"
-        for line in lines[2:end]
+        for line in Iterators.drop(lines, 1)  # Drop the title line
             # If this line is an empty line or a line of comment.
-            isempty(line) || startswith(strip(line), '!') && continue
-            strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
-            line = split(line)
-            grid, offsets = map(x -> parse(Int, x), line[1:3]), map(x -> parse(Int, x), line[4:7])
-            return KPointsCard(option=option, points=MonkhorstPackGrid(grid=grid, offsets=offsets))
+            str = strip(line)
+            isempty(str) || startswith(str, '!') && continue
+            str == '/' && error("Do not start any line in cards with a '/' character!")
+            sp = split(str)
+            grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
+            return KPointsCard(option=option, points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
         end
     end
 
@@ -104,12 +116,16 @@ function read_cellparameters(lines)
         @warn "Not specifying unit is DEPRECATED and will no longer be allowed in the future!"
         option = "bohr"
     end
-    for line in lines[2:end]
-        strip(line) == '/' && error("Do not start any line in cards with a '/' character!")
-        if match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line))
-            v1, v2, v3 = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", strip(line)).captures
-            push!(cell_params, [v1, v2, v3])
+
+    for line in Iterators.drop(lines, 1)  # Drop the title line
+        str = strip(line)
+        isempty(str) || startswith(strip(str), '!') && continue
+        str == '/' && error("Do not start any line in cards with a '/' character!")
+        m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
+        if m !== nothing
+            v1, v2, v3 = m.captures
+            cell_params = vcat(cell_params, map(x->parse(Float64, x), [v1, v2, v3]))
         end
     end
-    return CellParametersCard(option, Crystal(cell_params))
+    return CellParametersCard(option, reshape(cell_params, (3, 3)))
 end  # function read_cellparameters
