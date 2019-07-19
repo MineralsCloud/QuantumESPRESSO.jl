@@ -1,9 +1,16 @@
-#=
-cards:
-- Julia version: 1.0
-- Author: singularitti
-- Date: 2019-07-17
-=#
+"""
+# module PWscf
+
+
+
+# Examples
+
+```jldoctest
+julia>
+```
+"""
+module PWscf
+
 using Crystals
 
 using QuantumESPRESSO.Cards.PWscf
@@ -116,3 +123,5 @@ function read_cellparameters(lines)
     end
     return CellParametersCard(option, reshape(cell_params, (3, 3)))
 end  # function read_cellparameters
+
+end
