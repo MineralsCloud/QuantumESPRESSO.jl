@@ -15,7 +15,7 @@ export read_atomicspecies,
 
 function read_title_line(title_line, regex, default_option)
     m = match(regex, title_line)
-    if m === nothing
+    if isnothing(m)
         # The first line should be '<CARD> {<option>}', if it is not, either the regular expression
         # wrong or something worse happened.
         error("No match found in $(title_line)!")
@@ -43,10 +43,10 @@ function read_atomicspecies(lines)
     atomic_species = []
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
-        str === nothing && continue
+        isnothing(str) && continue
 
         m = match(r"(\S+)\s*(-?\d*\.?\d*)\s*(\S+)\s*", str)
-        if m === nothing
+        if isnothing(m)
             @warn "No match found in the line $(line)!"
         else
             name, mass, pseudopotential = m.captures
@@ -61,15 +61,15 @@ function read_atomicpositions(lines)
     option = read_title_line(first(lines), r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "alat")
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
-        str === nothing && continue
+        isnothing(str) && continue
 
-        if match(r"\{.*\}", str) !== nothing
+        if !isnothing(match(r"\{.*\}", str))
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
             push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
         else
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
-            if m === nothing
+            if isnothing(m)
                 @warn "No match found in the line $(line)!"
             else
                 name, x, y, z = m.captures
@@ -106,10 +106,10 @@ function read_cellparameters(lines)
 
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
-        str === nothing && continue
+        isnothing(str) && continue
 
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
-        if m !== nothing
+        if !isnothing(m)
             v1, v2, v3 = m.captures
             cell_params = vcat(cell_params, map(x->parse(Float64, x), [v1, v2, v3]))
         end
