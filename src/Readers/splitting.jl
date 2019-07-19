@@ -168,10 +168,17 @@ function dispatch_readers(lines)
     end  # for
     for (k, v) in card_lineranges
         cards[k] = begin
-            k == "ATOMIC_SPECIES" && read_atomicspecies(iterate_lines_between(lines, v))
-            k == "ATOMIC_POSITIONS" && read_atomicpositions(iterate_lines_between(lines, v))
-            k == "K_POINTS" && read_kpoints(iterate_lines_between(lines, v))
-            k == "CELL_PARAMETERS" && read_cellparameters(iterate_lines_between(lines, v))
+            if k == "ATOMIC_SPECIES"
+                read_atomicspecies(iterate_lines_between(lines, v))
+            elseif k == "ATOMIC_POSITIONS"
+                read_atomicpositions(iterate_lines_between(lines, v))
+            elseif k == "K_POINTS"
+                read_kpoints(iterate_lines_between(lines, v))
+            elseif k == "CELL_PARAMETERS"
+                read_cellparameters(iterate_lines_between(lines, v))
+            else
+                error("Unrecognized card name $(k)!")
+            end  # if-elseif-else
             # TODO: Other cards
         end
     end  # for
