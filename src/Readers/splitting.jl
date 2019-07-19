@@ -7,6 +7,9 @@ splitting:
 using DataStructures
 using FilePaths: AbstractPath
 
+using QuantumESPRESSO.Readers.Namelists
+using QuantumESPRESSO.Readers.Cards.PWscf
+
 export namelist_identifier_linenumbers,
     namelist_lineranges,
     card_identifier_linenumbers,
