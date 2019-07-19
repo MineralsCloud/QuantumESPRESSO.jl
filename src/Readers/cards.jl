@@ -60,10 +60,8 @@ function read_atomicpositions(lines)
     atomic_positions = []
     option = read_title_line(first(lines), r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "alat")
     for line in Iterators.drop(lines, 1)  # Drop the title line
-        # If this line is an empty line or a line of comment.
-        str = strip(line)
-        isempty(str) || startswith(str, '!') && continue
-        str == '/' && error("Do not start any line in cards with a '/' character!")
+        str = preprocess_line(line)
+
         if match(r"\{.*\}", str) !== nothing
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
@@ -88,10 +86,8 @@ function read_kpoints(lines)
 
     if option == "automatic"
         for line in Iterators.drop(lines, 1)  # Drop the title line
-            # If this line is an empty line or a line of comment.
-            str = strip(line)
-            isempty(str) || startswith(str, '!') && continue
-            str == '/' && error("Do not start any line in cards with a '/' character!")
+            str = preprocess_line(line)
+
             sp = split(str)
             grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
             return KPointsCard(option=option, points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
@@ -108,9 +104,8 @@ function read_cellparameters(lines)
     option = read_title_line(first(lines), r"CELL_PARAMETERS\s*[\{\(]?\s*(\w*)\s*[\}\)]?"i, "bohr")
 
     for line in Iterators.drop(lines, 1)  # Drop the title line
-        str = strip(line)
-        isempty(str) || startswith(strip(str), '!') && continue
-        str == '/' && error("Do not start any line in cards with a '/' character!")
+        str = preprocess_line(line)
+
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
         if m !== nothing
             v1, v2, v3 = m.captures
