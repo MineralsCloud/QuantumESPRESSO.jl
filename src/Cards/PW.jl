@@ -28,6 +28,7 @@ export AtomicSpecies,
     KPointsCard,
     allowed_options
 
+# =============================== AtomicSpecies ============================== #
 struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
     atom::A
     mass::B
@@ -38,7 +39,9 @@ end  # struct AtomicSpecies
     option = nothing
     data::A
 end  # struct AtomicSpeciesCard
+# ============================================================================ #
 
+# ============================== AtomicPosition ============================== #
 @with_kw struct AtomicPosition{A <: AbstractString, B <: AbstractVector{<: Real}, C <: AbstractVector{Int}}
     atom::A
     pos::B; @assert length(pos) == 3
@@ -49,12 +52,16 @@ end  # struct AtomicPosition
     option::A = "alat"; @assert option in allowed_options(AtomicPositionCard)
     data::B
 end  # struct AtomicPositionCard
+# ============================================================================ #
 
+# ============================== CellParameters ============================== #
 @with_kw struct CellParametersCard <: Card
     option::AbstractString = "alat"; @assert option in allowed_options(CellParametersCard)
     lattice::AbstractMatrix
 end  # struct CellParametersCard
+# ============================================================================ #
 
+# ================================== KPoint ================================== #
 abstract type KPoint end
 
 @with_kw struct MonkhorstPackGrid <: KPoint
@@ -73,6 +80,7 @@ end  # struct SpecialKPoint
     option::AbstractString = "tpiba"; @assert option in allowed_options(KPointsCard)
     points::AbstractVector{KPoint}
 end  # struct KPointsCard
+# ============================================================================ #
 
 allowed_options(::Type{<: Card}) = nothing
 allowed_options(::Type{AtomicPositionCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
