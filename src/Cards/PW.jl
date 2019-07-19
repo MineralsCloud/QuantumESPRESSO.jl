@@ -71,9 +71,9 @@ end  # struct MonkhorstPackGrid
 
 struct GammaPoint <: KPoint end
 
-@with_kw struct SpecialKPoint <: KPoint
-    coordinates::AbstractVector{Float64}; @assert length(coordinates) == 3
-    weight::Real
+@with_kw struct SpecialKPoint{A <: AbstractVector{Float64}, B <: Real} <: KPoint
+    coordinates::A; @assert length(coordinates) == 3
+    weight::B
 end  # struct SpecialKPoint
 
 @with_kw struct KPointsCard <: Card
