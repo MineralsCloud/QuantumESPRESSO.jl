@@ -8,7 +8,7 @@ using DataStructures
 using FilePaths: AbstractPath
 
 using QuantumESPRESSO.Readers.Namelists
-using QuantumESPRESSO.Readers.Cards.PWscf
+using QuantumESPRESSO.Readers.Cards.PW
 
 export namelist_identifier_linenumbers,
     namelist_lineranges,
