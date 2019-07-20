@@ -36,7 +36,7 @@ struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
     pseudopotential::C
 end  # struct AtomicSpecies
 
-@with_kw struct AtomicSpeciesCard{A <: AbstractVector{AtomicSpecies}} <: Card
+@with_kw struct AtomicSpeciesCard{A <: AbstractVector{<: AtomicSpecies}} <: Card
     option = nothing
     data::A
 end  # struct AtomicSpeciesCard
@@ -49,7 +49,7 @@ end  # struct AtomicSpeciesCard
     if_pos::C = [1, 1, 1]; @assert length(if_pos) == 3
 end  # struct AtomicPosition
 
-@with_kw struct AtomicPositionCard{A <: AbstractString, B <: AbstractVector{AtomicPosition}} <: Card
+@with_kw struct AtomicPositionCard{A <: AbstractString, B <: AbstractVector{<: AtomicPosition}} <: Card
     option::A = "alat"; @assert option in allowed_options(AtomicPositionCard)
     data::B
 end  # struct AtomicPositionCard
@@ -77,7 +77,7 @@ struct GammaPoint <: KPoint end
     weight::B
 end  # struct SpecialKPoint
 
-@with_kw struct KPointsCard{A <: AbstractString, B <: AbstractVector{KPoint}} <: Card
+@with_kw struct KPointsCard{A <: AbstractString, B <: AbstractVector{<: KPoint}} <: Card
     option::A = "tpiba"; @assert option in allowed_options(KPointsCard)
     points::B
 end  # struct KPointsCard
