@@ -73,18 +73,18 @@ function read_atomicpositions(lines)
         if !isnothing(match(r"\{.*\}", str))
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             atom, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(atom=atom, pos=map(x->parse(Float64, x), [x, y, z]), if_pos=map(x->parse(Float64, x), [if_pos1, if_pos2, if_pos3])))
+            push!(atomic_positions, AtomicPosition(atom=string(atom), pos=map(x->parse(Float64, x), [x, y, z]), if_pos=map(x->parse(Float64, x), [if_pos1, if_pos2, if_pos3])))
         else
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if isnothing(m)
                 @warn "No match found in the line $(line)!"
             else
                 atom, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom=atom, pos=map(x->parse(Float64, x), [x, y, z])))
+                push!(atomic_positions, AtomicPosition(atom=string(atom), pos=map(x->parse(Float64, x), [x, y, z])))
             end
         end
     end
-    return AtomicPositionCard(option=option, data=atomic_positions)
+    return AtomicPositionCard(option=string(option), data=atomic_positions)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
@@ -98,7 +98,7 @@ function read_kpoints(lines)
 
             sp = split(str)
             grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
-            return KPointsCard(option=option, points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
+            return KPointsCard(option=string(option), points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
         end
     end
 
@@ -121,7 +121,7 @@ function read_cellparameters(lines)
             cell_params = vcat(cell_params, map(x->parse(Float64, x), [v1, v2, v3]))
         end
     end
-    return CellParametersCard(option, reshape(cell_params, (3, 3)))
+    return CellParametersCard(string(option), reshape(cell_params, (3, 3)))
 end  # function read_cellparameters
 
 end
