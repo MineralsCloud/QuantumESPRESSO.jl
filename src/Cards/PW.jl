@@ -79,7 +79,7 @@ end  # struct SpecialKPoint
 
 @with_kw struct KPointsCard{A <: AbstractString, B <: AbstractVector{<: KPoint}} <: Card
     option::A = "tpiba"; @assert option in allowed_options(KPointsCard)
-    points::B
+    data::B
 end  # struct KPointsCard
 # ============================================================================ #
 
