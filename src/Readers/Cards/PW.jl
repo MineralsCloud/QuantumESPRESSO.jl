@@ -47,7 +47,7 @@ function preprocess_line(line)
 end  # function preprocess_line
 
 function read_atomicspecies(lines)
-    atomic_species = []
+    atomic_species = AtomicSpecies[]
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
         isnothing(str) && continue
@@ -57,14 +57,14 @@ function read_atomicspecies(lines)
             @warn "No match found in the line $(line)!"
         else
             name, mass, pseudopotential = m.captures
-            push!(atomic_species, AtomicSpecies(name, parse(Float64, mass), pseudopotential))
+            push!(atomic_species, AtomicSpecies(string(name), parse(Float64, mass), string(pseudopotential)))
         end
     end
-    return AtomicSpeciesCard(data=atomic_species)
+    return AtomicSpeciesCard(option=nothing, data=atomic_species)
 end  # function read_atomicspecies
 
 function read_atomicpositions(lines)
-    atomic_positions = []
+    atomic_positions = AtomicPosition[]
     option = read_title_line(first(lines), r"ATOMIC_POSITIONS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "alat")
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = preprocess_line(line)
@@ -72,15 +72,15 @@ function read_atomicpositions(lines)
 
         if !isnothing(match(r"\{.*\}", str))
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
-            name, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
+            atom, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
+            push!(atomic_positions, AtomicPosition(atom=atom, pos=map(x->parse(Float64, x), [x, y, z]), if_pos=map(x->parse(Float64, x), [if_pos1, if_pos2, if_pos3])))
         else
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if isnothing(m)
                 @warn "No match found in the line $(line)!"
             else
-                name, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(name, map(x->parse(Float64, x), [x, y, z])))
+                atom, x, y, z = m.captures
+                push!(atomic_positions, AtomicPosition(atom=atom, pos=map(x->parse(Float64, x), [x, y, z])))
             end
         end
     end
