@@ -6,6 +6,7 @@ NamelistsTests.jl:
 =#
 module NamelistsTests
 
+using LinearAlgebra
 using Test
 
 using QuantumESPRESSO.Namelists.PW
@@ -13,8 +14,8 @@ using QuantumESPRESSO.Cards.PW
 using QuantumESPRESSO.QuantumESPRESSOInput.PW
 
 as = AtomicSpeciesCard(data=[AtomicSpecies("Fe", 55.845, "Fe.pseudopotential")])
-ap = AtomicPositionCard(data=[AtomicPosition("Fe", [0, 0, 0])])
-cell = CellParametersCard()
+ap = AtomicPositionCard(data=[AtomicPosition(atom="Fe", pos=[0, 0, 0])])
+cell = CellParametersCard(data=diagm(0=>[1, 1, 1]))
 k = KPointsCard(points=[GammaPoint()])
 
 pw = PWInput(system=SystemNamelist(celldm=ones(6)), atomicspecies=as, atomicpositions=ap,
