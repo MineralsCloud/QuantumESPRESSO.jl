@@ -37,7 +37,7 @@ struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
 end  # struct AtomicSpecies
 
 @with_kw struct AtomicSpeciesCard{A <: AbstractVector{<: AtomicSpecies}} <: Card
-    option = nothing
+    option::Nothing = nothing
     data::A
 end  # struct AtomicSpeciesCard
 # ============================================================================ #
