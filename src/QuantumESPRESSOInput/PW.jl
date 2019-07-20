@@ -12,7 +12,6 @@ julia>
 module PW
 
 using Parameters: @with_kw
-using Rematch: @match
 
 using QuantumESPRESSO.Namelists
 using QuantumESPRESSO.Namelists.PW
