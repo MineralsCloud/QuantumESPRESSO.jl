@@ -9,6 +9,7 @@ using FilePaths: AbstractPath
 
 using QuantumESPRESSO.Readers.Namelists
 using QuantumESPRESSO.Readers.Cards.PW
+using QuantumESPRESSO.QuantumESPRESSOInput.PW
 
 export namelist_identifier_linenumbers,
     namelist_lineranges,
@@ -16,7 +17,8 @@ export namelist_identifier_linenumbers,
     card_lineranges,
     input_identifier_linenumbers,
     input_lineranges,
-    dispatch_readers
+    dispatch_readers,
+    form_input_object
 
 const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
@@ -166,6 +168,19 @@ function dispatch_readers(lines)
 end  # function dispatch_readers
 @iostream_to_lines dispatch_readers
 @path_to_iostream dispatch_readers
+
+function form_input_object(lines)
+    dict = dispatch_readers(lines)
+    d = Dict()
+    # for v in values(dict["namelists"])
+    #     println(typefield(v))
+    #     d[typefield(typeof(v))] = v
+    # end  # for
+    for v in values(dict["cards"])
+        d[typefield(typeof(v))] = v
+    end  # for
+    return PWInput(d...)
+end  # function form_input_object
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 

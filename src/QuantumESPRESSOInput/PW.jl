@@ -20,6 +20,7 @@ using QuantumESPRESSO.Cards.PW
 using QuantumESPRESSO.QuantumESPRESSOInput
 
 export PWInput,
+    typefield,
     namelists,
     cards
 
@@ -34,6 +35,16 @@ export PWInput,
     kpoints::KPointsCard
     cellparameters::CellParametersCard
 end  # struct PWInput
+
+function typefield(type::Type{T}) where {T <: Union{Namelist, Card}}
+    if T <: Namelist
+        index = findfirst([T <: X for X in (ControlNamelist, SystemNamelist, ElectronsNamelist, IonsNamelist, CellNamelist)])
+        return [:control, :system, :electrons, :ions, :cell][index]
+    else  # T <: Card
+        index = findfirst([T <: X for X in (AtomicSpeciesCard, AtomicPositionCard, KPointsCard, CellParametersCard)])
+        return [:atomicspecies, :atomicpositions, :kpoints, :cellparameters][index]
+    end  # if-else
+end  # function typefield
 
 filter_field_by_supertype(obj, ::Type{T}) where {T} = filter(x->isa(x, T), map(x->getfild(ob, x), fieldnames(typeof(obj))) |> collect)
 
