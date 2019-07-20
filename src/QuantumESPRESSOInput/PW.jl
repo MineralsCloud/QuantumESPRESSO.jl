@@ -38,7 +38,6 @@ export PWInput,
 end  # struct PWInput
 
 function typefield(type::Type{T}) where {T <: Union{Namelist, Card}}
-    println(T)
     if T <: Namelist
         index = findfirst([T <: X for X in (ControlNamelist, SystemNamelist, ElectronsNamelist, IonsNamelist, CellNamelist)])
         return [:control, :system, :electrons, :ions, :cell][index]
