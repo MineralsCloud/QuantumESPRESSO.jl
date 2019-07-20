@@ -95,6 +95,7 @@ function read_kpoints(lines)
     if option == "automatic"
         for line in Iterators.drop(lines, 1)  # Drop the title line
             str = preprocess_line(line)
+            isnothing(str) && continue
 
             sp = split(str)
             grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
