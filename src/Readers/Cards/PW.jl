@@ -99,11 +99,31 @@ function read_kpoints(lines)
 
             sp = split(str)
             grid, offsets = map(x -> parse(Int, x), sp[1:3]), map(x -> parse(Int, x), sp[4:6])
-            return KPointsCard(option=string(option), points=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
+            return KPointsCard(option=string(option), data=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
         end
     end
 
-    option in ("tpiba", "crystal", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c") && return nothing
+    if option in ("tpiba", "crystal", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+        kpoints = SpecialKPoint[]
+        for line in Iterators.drop(lines, 1)  # Drop the title line
+            str = preprocess_line(line)
+            isnothing(str) && continue
+
+            sp = split(str)
+            length(sp) == 1 && (nks = parse(Int, first(sp)))
+            (@isdefined nks) && break
+        end
+        for line in lines
+            str = preprocess_line(line)
+            isnothing(str) && continue
+
+            sp = split(str)
+            length ≠ 4 && error("Unknown input given!")
+            push!(kpoints, SpecialKPoint(collect(parse(Float64, x) for x in sp[1:3]), parse(Float64, sp[4])))
+        end
+        length(kpoints) ≠ nks && throw(DimensionMismatch("The length of k-points $(length(kpoints)) is not equal to $(nks)!"))
+        return KPointsCard(option=string(option), data=kpoints)
+    end
 
     error("Unknown option '$option' given!")
 end  # function read_kpoints
