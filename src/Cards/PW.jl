@@ -11,7 +11,6 @@ julia>
 """
 module PW
 
-using Crystals
 using Parameters: @with_kw
 
 using QuantumESPRESSO.Cards

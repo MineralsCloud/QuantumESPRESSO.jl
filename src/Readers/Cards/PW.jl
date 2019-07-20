@@ -11,8 +11,6 @@ julia>
 """
 module PW
 
-using Crystals
-
 using QuantumESPRESSO.Cards.PW
 
 export read_atomicspecies,
