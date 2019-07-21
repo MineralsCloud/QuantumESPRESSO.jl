@@ -66,8 +66,8 @@ end  # testset
 
     @test parsecomplex(Complex{Float64}, "(5.229, -4.78)") === Complex(5.229, -4.78)
     @test parsecomplex(Complex{Float64}, "(0.0,1.0)") === Complex(0.0,1.0)
-    @test parsecomplex(Complex{Real}, "(0.0,1)") === Complex(0.0,1)
-    @test parsecomplex(Complex{Float32}, "(3.2767e+2, -0.65e-2)") === Complex(3.2767e2, -0.65e-2)
+    @test parsecomplex(Complex{Float64}, "(0.0,1)") === Complex(0.0,1)
+    @test parsecomplex(Complex{Float32}, "(3.2767e+2, -0.65e-2)") === Complex{Float32}(3.2767e2, -0.65e-2)
 
     @test parseint(Int, "124") === 124
     @test parseint(Int, "-448") === -448
@@ -76,14 +76,14 @@ end  # testset
     @test parseint(Int, "2147483647") === 2147483647
     @test parseint(Int, "-9874") === -9874
 
-    @test parsebool(Bool, ".true.") === true
-    @test parsebool(Bool, ".t.") === true
-    @test parsebool(Bool, ".false.") === false
-    @test parsebool(Bool, ".f.") === false
+    @test parsebool(".true.") === true
+    @test parsebool(".t.") === true
+    @test parsebool(".false.") === false
+    @test parsebool(".f.") === false
 
-    @test parsestring(String, "''") === ""
-    @test parsestring(String, "\"./tmp234\"") === "./tmp234"
-    @test parsestring(String, "david") === "david"
+    @test parsestring("''") === ""
+    @test parsestring("\"./tmp234\"") === "./tmp234"
+    @test parsestring("'david'") === "david"
 end  # testset
 
 end
