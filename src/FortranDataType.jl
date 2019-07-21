@@ -77,6 +77,7 @@ end  # function captured
 function Base.parse(::Type{T}, s::FortranCode) where {T <: Integer}
     str = s.data
     captures = captured(FORTRAN_INT, str)
+    isabstracttype(T) && return parse(Int, captures[1])
     return parse(T, captures[1])
 end
 function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractFloat}
