@@ -92,7 +92,7 @@ function parsebool(str)
     captures[1] in ("false", "f") && return false
 end  # function parsebool
 
-function parsestring(s)
+function parsestring(str)
     captures = captured(FORTRAN_STRING, str)
     return "$(captures[1])"
 end  # function parsestring
