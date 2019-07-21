@@ -24,7 +24,7 @@ export guesstype,
 
 const FORTRAN_INT = r"(?<=\s|^)([-+]?\d+)(?=\s|$)"
 const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?"i
-const FORTRAN_BOOL = r"(\.(true|false|t|f)\.)"i
+const FORTRAN_BOOL = r"\.((true|false|t|f))\."i
 const FORTRAN_STRING = r"[\'\"](.*)[\'\"]"
 const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?\)"i
 
@@ -68,7 +68,7 @@ end  # function guesstype
 
 function captured(regex, str)
     m = match(regex, str)
-    isnothing(m) && throw(ParseError("Cannot parse Fortran data $(str)!"))
+    isnothing(m) && throw(MatchFailure("Cannot match Fortran data $(str)!"))
     return m.captures
 end  # function captured
 
