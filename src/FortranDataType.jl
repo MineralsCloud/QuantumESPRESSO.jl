@@ -13,7 +13,7 @@ module FortranDataType
 
 using Rematch: MatchFailure
 
-export whattype,
+export guesstype,
     parseint,
     parsefloat,
     parsebool,
@@ -34,17 +34,17 @@ end  # macro f_str
 
 # Examples
 ```jldoctest
-julia> whattype("1.0E-6")
+julia> guesstype("1.0E-6")
 Float32
 
-julia> whattype("1.0D-6")
+julia> guesstype("1.0D-6")
 Float64
 
-julia> whattype("1.039624557")
+julia> guesstype("1.039624557")
 Float64
 ```
 """
-function whattype(str::AbstractString)
+function guesstype(str::AbstractString)
     for (regex, type) in zip((FORTRAN_INT, FORTRAN_FLOAT, FORTRAN_COMPLEX, FORTRAN_BOOL, FORTRAN_STRING), (Integer, AbstractFloat, Complex, Bool, String))
         if !isnothing(match(regex, str))
             if regex == FORTRAN_FLOAT
@@ -56,7 +56,7 @@ function whattype(str::AbstractString)
         end  # if
     end
     throw(MatchFailure("No type could be suggested for '$(str)'!"))
-end
+end  # function guesstype
 
 function captured(regex, s)
     m = match(regex, s)
