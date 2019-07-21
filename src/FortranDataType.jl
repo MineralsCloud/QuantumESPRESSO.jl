@@ -14,18 +14,24 @@ module FortranDataType
 using Compat: isnothing
 using Rematch: MatchFailure
 
-export guesstype,
-    parseint,
-    parsefloat,
-    parsecomplex,
-    parsebool,
-    parsestring
+export FortranCode,
+    @f_str,
+    guesstype
 
 const FORTRAN_INT = r"(?<=\s|^)([-+]?\d+)(?=\s|$)"
 const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?"i
 const FORTRAN_BOOL = r"\.(true|false|t|f)\."i
 const FORTRAN_STRING = r"[\'\"](.*)[\'\"]"
 const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?\)"i
+
+struct FortranCode{T <: AbstractString}
+    data::T
+end  # struct FortranCode
+
+macro f_str(str)
+    # Must escape the variable to return it to the calling context and executed there.
+    return :(FortranCode($(esc(str))))
+end  # macro f_str
 
 """
 
@@ -41,7 +47,8 @@ julia> guesstype("1.039624557")
 Float64
 ```
 """
-function guesstype(str::AbstractString)
+function guesstype(s::FortranCode)
+    str = s.data
     # Must put `Complex` in front of `AbstractFloat`, or the complex number will be matched by 2
     # floats. Must put `String` in front of `Number`s, or strings containing numbers will be matched.
     for (regex, type) in zip((FORTRAN_STRING, FORTRAN_INT, FORTRAN_COMPLEX, FORTRAN_FLOAT, FORTRAN_BOOL), (String, Integer, Complex, AbstractFloat, Bool))
@@ -51,7 +58,7 @@ function guesstype(str::AbstractString)
                 occursin(r"e"i, str) ? (return Float32) : return Float64
             elseif regex == FORTRAN_COMPLEX
                 r1, r2 = split(str, ",")
-                T1, T2 = guesstype(r1[2:end]), guesstype(r2[1:end - 1])
+                T1, T2 = guesstype(@f_str(r1[2:end])), guesstype(@f_str(r2[1:end - 1]))
                 return Complex{Base.promote_type(T1, T2)}
             else
                 return type
@@ -67,30 +74,31 @@ function captured(regex, str)
     return m.captures
 end  # function captured
 
-function parseint(::Type{T}, str) where {T <: Integer}
+function Base.parse(::Type{T}, s::FortranCode) where {T <: Integer}
+    str = s.data
     captures = captured(FORTRAN_INT, str)
     return parse(T, captures[1])
-end  # function parseint
-
-function parsefloat(::Type{T}, str) where {T <: AbstractFloat}
+end
+function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractFloat}
+    str = s.data
     parse(T, replace(str, r"d"i => "e"))
-end  # function parsefloat
-
-function parsecomplex(::Type{Complex{T}}, str) where {T <: AbstractFloat}
+end
+function Base.parse(::Type{Complex{T}}, s::FortranCode) where {T <: AbstractFloat}
+    str = s.data
     r1, r2 = split(str, ",")
-    a, b = parsefloat(T, r1[2:end]), parsefloat(T, r2[1:end - 1])
+    a, b = parse(T, @f_str(r1[2:end])), parse(T, @f_str(r2[1:end - 1]))
     return Complex(a, b)
-end  # function parsecomplex
-
-function parsebool(str)
+end
+function Base.parse(::Type{Bool}, s::FortranCode) where {T <: AbstractFloat}
+    str = s.data
     captures = captured(FORTRAN_BOOL, str)
     captures[1] in ("true", "t") && return true
     captures[1] in ("false", "f") && return false
-end  # function parsebool
-
-function parsestring(str)
+end
+function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractString}
+    str = s.data
     captures = captured(FORTRAN_STRING, str)
     return "$(captures[1])"
-end  # function parsestring
+end
 
 end
