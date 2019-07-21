@@ -81,6 +81,12 @@ function parsefloat(::Type{T}, s) where {T <: AbstractFloat}
     return parse(T, string(captures[1], ".", captures[3]))
 end  # function parsefloat
 
+function parsecomplex(::Type{Tuple{T1, T2}}, s) where {T1 <: AbstractFloat, T2 <: AbstractFloat}
+    r1, r2 = split(s, ",")
+    a, b = parsefloat(T1, r1[2:end]), parsefloat(T2, r2[1:end - 1])
+    return Complex(a, b)
+end  # function parsecomplex
+
 function parsebool(s)
     captures = captured(FORTRAN_BOOL, s)
     captures[1] in ("true", "t") && return true
