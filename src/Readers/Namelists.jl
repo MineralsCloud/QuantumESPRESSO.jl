@@ -40,7 +40,8 @@ function read_namelist(lines)
         k, v = split(str, '=', limit=2)
         k = strip(k)
         v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
-        result[k] = v
+        T = guesstype(v)
+        result[k] = parse(T, v)  # FIXME: pseudocode
     end
     namelist = Symbol("$(namelist_name)Namelist")
     parameters = Symbol(join(["$k=$v" for (k, v) in result], ","))
