@@ -17,6 +17,7 @@ using Rematch: MatchFailure
 export guesstype,
     parseint,
     parsefloat,
+    parsecomplex,
     parsebool,
     parsestring,
     @f_str
