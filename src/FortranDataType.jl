@@ -77,9 +77,7 @@ function parseint(::Type{T}, str) where {T <: Integer}
 end  # function parseint
 
 function parsefloat(::Type{T}, str) where {T <: AbstractFloat}
-    captures = captured(FORTRAN_FLOAT, str)
-    length(captures) == 4 && return parse(T, string(captures[1], ".", captures[3], "e", captures[4]))
-    return parse(T, string(captures[1], ".", captures[3]))
+    parse(T, replace(str, r"d"i => "e"))
 end  # function parsefloat
 
 function parsecomplex(::Type{Complex{T}}, str) where {T <: AbstractFloat}
