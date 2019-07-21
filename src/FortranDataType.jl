@@ -76,13 +76,13 @@ function parseint(::Type{T}, s) where {T <: Integer}
 end  # function parseint
 
 function parsefloat(::Type{T}, s) where {T <: AbstractFloat}
-    captures = captured(FORTRAN_INT, s)
+    captures = captured(FORTRAN_FLOAT, s)
     length(captures) == 4 && return parse(T, string(captures[1], ".", captures[3], "e", captures[4]))
     return parse(T, string(captures[1], ".", captures[3]))
 end  # function parsefloat
 
 function parsebool(s)
-    captures = captured(FORTRAN_INT, s)
+    captures = captured(FORTRAN_BOOL, s)
     captures[1] in ("true", "t") && return true
     captures[1] in ("false", "f") && return false
 end  # function parsebool
