@@ -45,11 +45,17 @@ Float64
 ```
 """
 function guesstype(str::AbstractString)
-    for (regex, type) in zip((FORTRAN_INT, FORTRAN_FLOAT, FORTRAN_COMPLEX, FORTRAN_BOOL, FORTRAN_STRING), (Integer, AbstractFloat, Complex, Bool, String))
+    # Must put `Complex` in front of `AbstractFloat`, or the complex number will be matched by 2
+    # floats. Must put `String` in front of `Number`s, or strings containing numbers will be matched.
+    for (regex, type) in zip((FORTRAN_STRING, FORTRAN_INT, FORTRAN_COMPLEX, FORTRAN_FLOAT, FORTRAN_BOOL), (String, Integer, Complex, AbstractFloat, Bool))
         if !isnothing(match(regex, str))
             if regex == FORTRAN_FLOAT
                 # 'd' and no-'d' returns double precision, 'e' returns single precision
                 occursin(r"e"i, str) ? (return Float32) : return Float64
+            elseif regex == FORTRAN_COMPLEX
+                r1, r2 = split(str, ",")
+                T1, T2 = guesstype(r1[2:end]), guesstype(r2[1:end - 1])
+                return Complex{Base.promote_type(T1, T2)}
             else
                 return type
             end  # if-else
