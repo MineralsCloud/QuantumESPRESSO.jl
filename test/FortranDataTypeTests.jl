@@ -48,4 +48,42 @@ using QuantumESPRESSO.FortranDataType
     @test guesstype("'david'") == String
 end  # testset
 
+@testset "Test `parse*` functions" begin
+    @test parsefloat(Float32, "1.0E-6") === 1.0e-6
+    @test parsefloat(Float32, "3.2767e+2") === 3.2767e2
+    @test parsefloat(Float32, "1.89e-14") === 1.89e-14
+    @test parsefloat(Float32, "-0.65e-2") === -0.65e-2
+    @test parsefloat(Float32, "+1e8") === 1e8
+
+    @test parsefloat(Float64, "1.0D-6") === 1.0e-6
+    @test parsefloat(Float64, "1d8") === 1e8
+    @test parsefloat(Float64, "0.") === 0.
+    @test parsefloat(Float64, "1.00") === 1.00
+    @test parsefloat(Float64, "+3.141593") === 3.141593
+    @test parsefloat(Float64, "+3.1415926535d+0") === +3.1415926535
+    @test parsefloat(Float64, "-4.78d+6") === -4.78e6
+    @test parsefloat(Float64, "1.0d+0") === 1.0
+
+    @test parsecomplex(Complex{Float64}, "(5.229, -4.78)") === Complex(5.229, -4.78)
+    @test parsecomplex(Complex{Float64}, "(0.0,1.0)") === Complex(0.0,1.0)
+    @test parsecomplex(Complex{Real}, "(0.0,1)") === Complex(0.0,1)
+    @test parsecomplex(Complex{Float32}, "(3.2767e+2, -0.65e-2)") === Complex(3.2767e2, -0.65e-2)
+
+    @test parseint(Int, "124") === 124
+    @test parseint(Int, "-448") === -448
+    @test parseint(Int, "0") === 0
+    @test parseint(Int, "32767") === 32767
+    @test parseint(Int, "2147483647") === 2147483647
+    @test parseint(Int, "-9874") === -9874
+
+    @test parsebool(Bool, ".true.") === true
+    @test parsebool(Bool, ".t.") === true
+    @test parsebool(Bool, ".false.") === false
+    @test parsebool(Bool, ".f.") === false
+
+    @test parsestring(String, "''") === ""
+    @test parsestring(String, "\"./tmp234\"") === "./tmp234"
+    @test parsestring(String, "david") === "david"
+end  # testset
+
 end
