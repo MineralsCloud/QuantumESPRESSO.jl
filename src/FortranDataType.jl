@@ -29,6 +29,7 @@ struct FortranCode{T <: AbstractString}
 end  # struct FortranCode
 
 macro f_str(str)
+    # Must escape the variable to return it to the calling context and executed there.
     return :(FortranCode($(esc(str))))
 end  # macro f_str
 
