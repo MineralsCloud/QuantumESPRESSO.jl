@@ -10,6 +10,8 @@ using Test
 
 using QuantumESPRESSO.FortranDataType
 
+# Test data referenced from: http://www-classes.usc.edu/engr/ce/108/text/fbk01.htm.
+
 @testset "Test `guesstype`" begin
     @test guesstype("1.0E-6") == Float32
     @test guesstype("3.2767e+2") == Float32
