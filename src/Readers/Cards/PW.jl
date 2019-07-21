@@ -57,8 +57,8 @@ function read_atomicspecies(lines)
         if isnothing(m)
             @warn "No match found in the line $(line)!"
         else
-            name, mass, pseudopotential = m.captures
-            push!(atomic_species, AtomicSpecies(parse(String, @f_str(name)), parse(Float64, @f_str(mass)), parse(String, @f_str(pseudopotential))))
+            atom, mass, pseudopotential = m.captures
+            push!(atomic_species, AtomicSpecies(parse(String, @f_str(atom)), parse(Float64, @f_str(mass)), parse(String, @f_str(pseudopotential))))
         end
     end
     return AtomicSpeciesCard(option=nothing, data=atomic_species)
@@ -75,15 +75,16 @@ function read_atomicpositions(lines)
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             atom, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
             push!(atomic_positions, AtomicPosition(atom=parse(String, @f_str(atom)),
-            pos=map(x->parse(Float64, @f_str(x)), [x, y, z]),
-            if_pos=map(x->parse(Float64, @f_str(x)), [if_pos1, if_pos2, if_pos3])))
+            pos=[parse(Float64, @f_str(p)) for p in (x, y, z)],
+            if_pos=[parse(Float64, @f_str(x)) for x in (if_pos1, if_pos2, if_pos3)]))
         else
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if isnothing(m)
                 @warn "No match found in the line $(line)!"
             else
                 atom, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom=parse(String, @f_str(atom)), pos=map(x->parse(Float64, @f_str(x)), [x, y, z])))
+                push!(atomic_positions, AtomicPosition(atom=parse(String, @f_str(atom)),
+                pos=[parse(Float64, @f_str(p)) for p in (x, y, z)]))
             end
         end
     end
@@ -101,7 +102,7 @@ function read_kpoints(lines)
             isnothing(str) && continue
 
             sp = split(str)
-            grid, offsets = map(x -> parse(Int, @f_str(x)), sp[1:3]), map(x -> parse(Int, @f_str(x)), sp[4:6])
+            grid, offsets = [parse(Int, @f_str(x)) for x in sp[1:3]], [parse(Int, @f_str(x)) for x in sp[4:6]]
             return KPointsCard(option=string(option), data=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
         end
     end
@@ -142,7 +143,7 @@ function read_cellparameters(lines)
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
         if !isnothing(m)
             v1, v2, v3 = m.captures
-            cell_params = vcat(cell_params, map(x->parse(Float64, @f_str(x)), [v1, v2, v3]))
+            cell_params = vcat(cell_params, [parse(Float64, @f_str(x)) for x in (v1, v2, v3)])
         end
     end
     return CellParametersCard(parse(String, @f_str(option)), reshape(cell_params, (3, 3)))
