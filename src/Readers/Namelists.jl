@@ -11,6 +11,8 @@ julia>
 """
 module Namelists
 
+using Compat: isnothing
+
 using QuantumESPRESSO.Namelists.PW
 
 export read_namelist
