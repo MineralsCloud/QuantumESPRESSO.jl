@@ -29,7 +29,7 @@ struct FortranCode{T <: AbstractString}
 end  # struct FortranCode
 
 macro f_str(str)
-    return :(FortranCode($str))
+    return :(FortranCode($(esc(str))))
 end  # macro f_str
 
 """
@@ -57,7 +57,7 @@ function guesstype(s::FortranCode)
                 occursin(r"e"i, str) ? (return Float32) : return Float64
             elseif regex == FORTRAN_COMPLEX
                 r1, r2 = split(str, ",")
-                T1, T2 = guesstype(r1[2:end]), guesstype(r2[1:end - 1])
+                T1, T2 = guesstype(@f_str(r1[2:end])), guesstype(@f_str(r2[1:end - 1]))
                 return Complex{Base.promote_type(T1, T2)}
             else
                 return type
@@ -85,7 +85,7 @@ end
 function Base.parse(::Type{Complex{T}}, s::FortranCode) where {T <: AbstractFloat}
     str = s.data
     r1, r2 = split(str, ",")
-    a, b = parse(T, r1[2:end]), parse(T, r2[1:end - 1])
+    a, b = parse(T, @f_str(r1[2:end])), parse(T, @f_str(r2[1:end - 1]))
     return Complex(a, b)
 end
 function Base.parse(::Type{Bool}, s::FortranCode) where {T <: AbstractFloat}
