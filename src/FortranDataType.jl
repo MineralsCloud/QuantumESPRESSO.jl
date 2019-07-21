@@ -82,9 +82,9 @@ function parsefloat(::Type{T}, str) where {T <: AbstractFloat}
     return parse(T, string(captures[1], ".", captures[3]))
 end  # function parsefloat
 
-function parsecomplex(::Type{Tuple{T1, T2}}, str) where {T1 <: AbstractFloat, T2 <: AbstractFloat}
+function parsecomplex(::Type{Complex{T}}, str) where {T <: AbstractFloat}
     r1, r2 = split(str, ",")
-    a, b = parsefloat(T1, r1[2:end]), parsefloat(T2, r2[1:end - 1])
+    a, b = parsefloat(T, r1[2:end]), parsefloat(T, r2[1:end - 1])
     return Complex(a, b)
 end  # function parsecomplex
 
