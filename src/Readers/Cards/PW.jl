@@ -11,6 +11,8 @@ julia>
 """
 module PW
 
+using Compat: isnothing
+
 using QuantumESPRESSO.Cards.PW
 
 export read_atomicspecies,

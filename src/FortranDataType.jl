@@ -11,6 +11,7 @@ julia>
 """
 module FortranDataType
 
+using Compat: isnothing
 using Rematch: MatchFailure
 
 export guesstype,
