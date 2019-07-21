@@ -14,7 +14,9 @@ module FortranDataType
 using Compat: isnothing
 using Rematch: MatchFailure
 
-export guesstype,
+export FortranCode,
+    @f_str,
+    guesstype,
     parseint,
     parsefloat,
     parsecomplex,
@@ -26,6 +28,14 @@ const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?"i
 const FORTRAN_BOOL = r"\.(true|false|t|f)\."i
 const FORTRAN_STRING = r"[\'\"](.*)[\'\"]"
 const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?\)"i
+
+struct FortranCode{T <: AbstractString}
+    data::T
+end  # struct FortranCode
+
+macro f_str(str)
+    return :(FortranCode($str))
+end  # macro f_str
 
 """
 
