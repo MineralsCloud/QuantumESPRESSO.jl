@@ -49,11 +49,11 @@ using QuantumESPRESSO.FortranDataType
 end  # testset
 
 @testset "Test `parse*` functions" begin
-    @test parsefloat(Float32, "1.0E-6") === 1.0e-6
-    @test parsefloat(Float32, "3.2767e+2") === 3.2767e2
-    @test parsefloat(Float32, "1.89e-14") === 1.89e-14
-    @test parsefloat(Float32, "-0.65e-2") === -0.65e-2
-    @test parsefloat(Float32, "+1e8") === 1e8
+    @test parsefloat(Float32, "1.0E-6") === 1.0f-6
+    @test parsefloat(Float32, "3.2767e+2") === 3.2767f2
+    @test parsefloat(Float32, "1.89e-14") === 1.89f-14
+    @test parsefloat(Float32, "-0.65e-2") === -0.65f-2
+    @test parsefloat(Float32, "+1e8") === 1f8
 
     @test parsefloat(Float64, "1.0D-6") === 1.0e-6
     @test parsefloat(Float64, "1d8") === 1e8
