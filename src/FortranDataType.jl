@@ -64,37 +64,37 @@ function guesstype(str::AbstractString)
     throw(MatchFailure("No type could be suggested for '$(str)'!"))
 end  # function guesstype
 
-function captured(regex, s)
-    m = match(regex, s)
-    isnothing(m) && throw(ParseError("Cannot parse Fortran data $(s)!"))
+function captured(regex, str)
+    m = match(regex, str)
+    isnothing(m) && throw(ParseError("Cannot parse Fortran data $(str)!"))
     return m.captures
 end  # function captured
 
-function parseint(::Type{T}, s) where {T <: Integer}
-    captures = captured(FORTRAN_INT, s)
+function parseint(::Type{T}, str) where {T <: Integer}
+    captures = captured(FORTRAN_INT, str)
     return parse(T, captures[1])
 end  # function parseint
 
-function parsefloat(::Type{T}, s) where {T <: AbstractFloat}
-    captures = captured(FORTRAN_FLOAT, s)
+function parsefloat(::Type{T}, str) where {T <: AbstractFloat}
+    captures = captured(FORTRAN_FLOAT, str)
     length(captures) == 4 && return parse(T, string(captures[1], ".", captures[3], "e", captures[4]))
     return parse(T, string(captures[1], ".", captures[3]))
 end  # function parsefloat
 
-function parsecomplex(::Type{Tuple{T1, T2}}, s) where {T1 <: AbstractFloat, T2 <: AbstractFloat}
-    r1, r2 = split(s, ",")
+function parsecomplex(::Type{Tuple{T1, T2}}, str) where {T1 <: AbstractFloat, T2 <: AbstractFloat}
+    r1, r2 = split(str, ",")
     a, b = parsefloat(T1, r1[2:end]), parsefloat(T2, r2[1:end - 1])
     return Complex(a, b)
 end  # function parsecomplex
 
-function parsebool(s)
-    captures = captured(FORTRAN_BOOL, s)
+function parsebool(str)
+    captures = captured(FORTRAN_BOOL, str)
     captures[1] in ("true", "t") && return true
     captures[1] in ("false", "f") && return false
 end  # function parsebool
 
 function parsestring(s)
-    captures = captured(FORTRAN_STRING, s)
+    captures = captured(FORTRAN_STRING, str)
     return "$(captures[1])"
 end  # function parsestring
 
