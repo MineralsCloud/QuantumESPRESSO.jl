@@ -26,6 +26,11 @@ using QuantumESPRESSO.FortranDataType
     @test guesstype("-4.78d+6") == Float64
     @test guesstype("1.0d+0") == Float64
 
+    @test guesstype("(5.229, -4.78)") == Complex{Float64}
+    @test guesstype("(0.0,1.0)") == Complex{Float64}
+    @test guesstype("(0.0,1)") == Complex{Real}
+    @test guesstype("(3.2767e+2, -0.65e-2)") == Complex{Float32}
+
     @test guesstype("124") == Integer
     @test guesstype("-448") == Integer
     @test guesstype("0") == Integer
