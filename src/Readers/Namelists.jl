@@ -13,6 +13,7 @@ module Namelists
 
 using Compat: isnothing
 
+using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Namelists.PW
 
 export read_namelist
@@ -40,11 +41,12 @@ function read_namelist(lines)
         k, v = split(str, '=', limit=2)
         k = strip(k)
         v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
-        T = guesstype(v)
-        result[k] = parse(T, v)  # FIXME: pseudocode
+        code = @f_str(v)
+        T = guesstype(code)
+        result[k] = parse(T, code)
     end
     namelist = Symbol("$(namelist_name)Namelist")
-    parameters = Symbol(join(["$k=$v" for (k, v) in result], ","))
+    parameters = QuoteNode(join([isa(v, AbstractString) ? "$k='$v'" : "$k=$v" for (k, v) in result], ","))
     eval(quote
         $(namelist)($(parameters))
     end)
