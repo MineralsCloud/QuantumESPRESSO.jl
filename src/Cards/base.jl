@@ -15,4 +15,4 @@ name(::Type{<: Card}) = error("Undefined name!")
 
 option(card::Card) = getfield(card, :option)
 
-allowed_options(::Type{<: Card}) = nothing
+allowed_options(::Type{<: Card}) = error("No allowed options defined!")
