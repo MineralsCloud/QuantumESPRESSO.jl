@@ -6,15 +6,14 @@ base:
 =#
 using FilePaths: AbstractPath, extension, exists
 import JSON
-using Parameters: type2dict, reconstruct
+using Parameters: type2dict
 
 using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Yaml
 
 export Namelist,
     name,
-    to_dict,
-    evolve
+    to_dict
 
 abstract type Namelist end
 
@@ -23,13 +22,6 @@ name(::Type{<: Namelist}) = error("Undefined name!")
 function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
 end  # function to_dict
-
-function evolve(nml::T, kwargs...)::T where {T <: Namelist}
-    return reconstruct(nml, kwargs...)
-end  # function evolve
-function evolve(nml::T, dict::AbstractDict{Symbol,Any})::T where {T <: Namelist}
-    return reconstruct(nml, dict)
-end  # function evolve
 
 function to_qe(nml::Namelist, indent::AbstractString = "    ")::String
     entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
