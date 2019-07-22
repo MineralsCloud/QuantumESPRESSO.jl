@@ -88,13 +88,13 @@ function read_atomicpositions(lines)
             end
         end
     end
-    return AtomicPositionsCard(option = parse(String, option), data = atomic_positions)
+    return AtomicPositionsCard(option = parse(String, @f_str(option)), data = atomic_positions)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
     option = read_title_line(first(lines), r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "tbipa")
 
-    option == "gamma" && return KPointsCard(option = option, points = GammaPoint())
+    option == "gamma" && return KPointsCard(option = parse(String, @f_str(option)), points = GammaPoint())
 
     if option == "automatic"
         for line in Iterators.drop(lines, 1)  # Drop the title line
@@ -103,7 +103,7 @@ function read_kpoints(lines)
 
             sp = split(str)
             grid, offsets = [parse(Int, @f_str(x)) for x in sp[1:3]], [parse(Int, @f_str(x)) for x in sp[4:6]]
-            return KPointsCard(option = string(option), data = [MonkhorstPackGrid(grid = grid, offsets = offsets)])
+            return KPointsCard(option = parse(String, @f_str(option)), data = [MonkhorstPackGrid(grid = grid, offsets = offsets)])
         end
     end
 
