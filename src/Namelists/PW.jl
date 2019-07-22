@@ -208,10 +208,10 @@ end  # struct IonsNamelist
     cell_dofree::String = "all"
 end  # struct CellNamelist
 
-name(::ControlNamelist) = :control
-name(::SystemNamelist) = :system
-name(::ElectronsNamelist) = :electrons
-name(::IonsNamelist) = :ions
-name(::CellNamelist) = :cell
+name(::Type{<: ControlNamelist}) = :control
+name(::Type{<: SystemNamelist}) = :system
+name(::Type{<: ElectronsNamelist}) = :electrons
+name(::Type{<: IonsNamelist}) = :ions
+name(::Type{<: CellNamelist}) = :cell
 
 end
