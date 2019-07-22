@@ -6,12 +6,14 @@ base:
 =#
 using Parameters
 
+using QuantumESPRESSO
+
 export Card,
     name,
     option,
     allowed_options
 
-abstract type Card end
+abstract type Card <: InputEntry end
 
 name(::Type{<: Card}) = error("Undefined name!")
 
