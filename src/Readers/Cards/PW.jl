@@ -61,7 +61,7 @@ function read_atomicspecies(lines)
             push!(atomic_species, AtomicSpecies(parse(String, @f_str(atom)), parse(Float64, @f_str(mass)), parse(String, @f_str(pseudopotential))))
         end
     end
-    return AtomicSpeciesCard(option = nothing, data = atomic_species)
+    return AtomicSpeciesCard(atomic_species)
 end  # function read_atomicspecies
 
 function read_atomicpositions(lines)
