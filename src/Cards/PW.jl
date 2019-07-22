@@ -12,7 +12,6 @@ julia>
 module PW
 
 using Parameters: @with_kw
-using SimpleTraits
 
 using QuantumESPRESSO.Cards
 
@@ -25,9 +24,7 @@ export AtomicSpecies,
     MonkhorstPackGrid,
     GammaPoint,
     SpecialKPoint,
-    KPointsCard,
-    allowed_options,
-    name
+    KPointsCard
 
 # =============================== AtomicSpecies ============================== #
 struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
@@ -83,20 +80,16 @@ end
 # ============================================================================ #
 
 # ================================== Methods ================================= #
-allowed_options(::Type{<: AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
-allowed_options(::Type{<: CellParametersCard}) = ("alat", "bohr", "angstrom")
-allowed_options(::Type{<: KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+Cards.option(card::AtomicSpeciesCard) = nothing
 
-name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
-name(::Type{<: AtomicPositionsCard}) = :atomicpositions
-name(::Type{<: KPointsCard}) = :kpoints
-name(::Type{<: CellParametersCard}) = :cellparameters
-# ============================================================================ #
+Cards.allowed_options(::Type{<: AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
+Cards.allowed_options(::Type{<: CellParametersCard}) = ("alat", "bohr", "angstrom")
+Cards.allowed_options(::Type{<: KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
 
-# =================================== Trait ================================== #
-@traitimpl HasOption{AtomicPositionsCard}
-@traitimpl HasOption{KPointsCard}
-@traitimpl HasOption{CellParametersCard}
+Cards.name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
+Cards.name(::Type{<: AtomicPositionsCard}) = :atomicpositions
+Cards.name(::Type{<: KPointsCard}) = :kpoints
+Cards.name(::Type{<: CellParametersCard}) = :cellparameters
 # ============================================================================ #
 
 end
