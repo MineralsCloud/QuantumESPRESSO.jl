@@ -15,8 +15,7 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
 
-export name,
-    ControlNamelist,
+export ControlNamelist,
     SystemNamelist,
     ElectronsNamelist,
     IonsNamelist,
@@ -208,10 +207,10 @@ end  # struct IonsNamelist
     cell_dofree::String = "all"
 end  # struct CellNamelist
 
-name(::Type{<: ControlNamelist}) = :control
-name(::Type{<: SystemNamelist}) = :system
-name(::Type{<: ElectronsNamelist}) = :electrons
-name(::Type{<: IonsNamelist}) = :ions
-name(::Type{<: CellNamelist}) = :cell
+Namelists.name(::Type{<: ControlNamelist}) = :control
+Namelists.name(::Type{<: SystemNamelist}) = :system
+Namelists.name(::Type{<: ElectronsNamelist}) = :electrons
+Namelists.name(::Type{<: IonsNamelist}) = :ions
+Namelists.name(::Type{<: CellNamelist}) = :cell
 
 end
