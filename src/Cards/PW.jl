@@ -32,21 +32,11 @@ export AtomicSpecies,
     evolve
 
 # =============================== AtomicSpecies ============================== #
-struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
+mutable struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
     atom::A
     mass::B
     pseudopotential::C
 end  # struct AtomicSpecies
-
-function evolve(data::AtomicSpecies, dict::Dict{Symbol,T}) where {T}
-    for (k, v) in dict
-        lens = @macroexpand(quote
-            @lens _.$(esc(k))
-        end)
-        data = set(data, lens, v)
-    end
-    return data
-end  # function evolve
 
 struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
