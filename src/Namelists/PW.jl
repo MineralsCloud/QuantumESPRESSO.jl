@@ -41,7 +41,7 @@ export ControlNamelist,
     etot_conv_thr::Float64 = 0.0001
     forc_conv_thr::Float64 = 0.001
     disk_io::String = "medium"
-    pseudo_dir::String = "\$HOME/espresso/pseudo/"
+    pseudo_dir::String = raw"$HOME/espresso/pseudo/"
     tefield::Bool = false
     dipfield::Bool = false
     lelfield::Bool = false
