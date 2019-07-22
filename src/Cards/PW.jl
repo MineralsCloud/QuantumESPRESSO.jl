@@ -84,8 +84,6 @@ end
 # ============================================================================ #
 
 # ================================== Methods ================================= #
-option(card::AtomicSpeciesCard) = nothing
-
 allowed_options(::Type{<: AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
 allowed_options(::Type{<: CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{<: KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
