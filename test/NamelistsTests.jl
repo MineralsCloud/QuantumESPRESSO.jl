@@ -14,7 +14,7 @@ using QuantumESPRESSO.Cards.PW
 using QuantumESPRESSO.QuantumESPRESSOInput.PW
 
 as = AtomicSpeciesCard(data=[AtomicSpecies("Fe", 55.845, "Fe.pseudopotential")])
-ap = AtomicPositionCard(data=[AtomicPosition(atom="Fe", pos=[0, 0, 0])])
+ap = AtomicPositionsCard(data=[AtomicPosition(atom="Fe", pos=[0, 0, 0])])
 cell = CellParametersCard(data=diagm(0=>[1, 1, 1]))
 k = KPointsCard(data=[GammaPoint()])
 

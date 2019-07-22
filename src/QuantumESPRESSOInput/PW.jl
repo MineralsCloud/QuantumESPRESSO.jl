@@ -31,7 +31,7 @@ export PWInput,
     ions::IonsNamelist = IonsNamelist()
     cell::CellNamelist = CellNamelist()
     atomicspecies::AtomicSpeciesCard
-    atomicpositions::AtomicPositionCard
+    atomicpositions::AtomicPositionsCard
     kpoints::KPointsCard
     cellparameters::CellParametersCard
 end  # struct PWInput
@@ -41,7 +41,7 @@ function typefield(type::Type{T}) where {T <: Union{Namelist, Card}}
         index = findfirst([T <: X for X in (ControlNamelist, SystemNamelist, ElectronsNamelist, IonsNamelist, CellNamelist)])
         return [:control, :system, :electrons, :ions, :cell][index]
     else  # T <: Card
-        index = findfirst([T <: X for X in (AtomicSpeciesCard, AtomicPositionCard, KPointsCard, CellParametersCard)])
+        index = findfirst([T <: X for X in (AtomicSpeciesCard, AtomicPositionsCard, KPointsCard, CellParametersCard)])
         return [:atomicspecies, :atomicpositions, :kpoints, :cellparameters][index]
     end  # if-else
 end  # function typefield

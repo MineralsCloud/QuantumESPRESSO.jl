@@ -88,7 +88,7 @@ function read_atomicpositions(lines)
             end
         end
     end
-    return AtomicPositionCard(option=parse(String, option), data=atomic_positions)
+    return AtomicPositionsCard(option=parse(String, option), data=atomic_positions)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
