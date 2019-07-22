@@ -91,10 +91,11 @@ allowed_options(::Type{AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "cry
 allowed_options(::Type{CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
 
-name(::AtomicSpeciesCard) = :atomicspecies
-name(::AtomicPositionsCard) = :atomicpositions
-name(::KPointsCard) = :kpoints
-name(::CellParametersCard) = :cellparameters
+name(::Type{<: Card}) = error("Undefined name!")
+name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
+name(::Type{<: AtomicPositionsCard}) = :atomicpositions
+name(::Type{<: KPointsCard}) = :kpoints
+name(::Type{<: CellParametersCard}) = :cellparameters
 # ============================================================================ #
 
 end
