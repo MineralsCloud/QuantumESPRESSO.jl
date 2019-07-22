@@ -35,6 +35,7 @@ macro f_str(str)
 end  # macro f_str
 
 """
+    guesstype(s::FortranCode)
 
 # Examples
 ```jldoctest
