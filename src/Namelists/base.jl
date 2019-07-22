@@ -4,10 +4,12 @@ base:
 - Author: singularitti
 - Date: 2019-07-21
 =#
-using FilePaths: AbstractPath, extension
+using FilePaths: AbstractPath, extension, exists
 import JSON
 using Parameters: type2dict, reconstruct
-import YAML
+
+using QuantumESPRESSO.FortranDataType
+using QuantumESPRESSO.Yaml
 
 export Namelist,
     to_dict,
@@ -35,16 +37,19 @@ function to_qe(nml::Namelist, indent::AbstractString = "    ")::String
     """
 end  # function to_qe
 
-function dump(path::AbstractPath, nml::Namelist)
+function Base.dump(path::AbstractPath, nml::Namelist)
+    exists(path) || touch(path)
     entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
     iswritable(path) || error("File $(path) not writable!")
     open(path, "r+") do io
         if extension(path) == "json"
             JSON.print(io, entries)
         elseif extension(path) == "yaml" || extension(path) == "yml"
-            YAML.dump(io, entries)
+            for p in pairs(entries)
+                Yaml.write(io, p)
+            end
         else
             error("Unknown extension type given!")
         end  # if-elseif-else
     end
-end  # function dump
+end  # function Base.dump
