@@ -26,7 +26,6 @@ export AtomicSpecies,
     GammaPoint,
     SpecialKPoint,
     KPointsCard,
-    option,
     allowed_options,
     name
 
