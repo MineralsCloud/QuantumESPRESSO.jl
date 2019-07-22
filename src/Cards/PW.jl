@@ -12,6 +12,7 @@ julia>
 module PW
 
 using Parameters: @with_kw
+using Setfield: @lens, set
 
 using QuantumESPRESSO.Cards
 
@@ -26,7 +27,8 @@ export AtomicSpecies,
     SpecialKPoint,
     KPointsCard,
     allowed_options,
-    name
+    name,
+    evolve
 
 # =============================== AtomicSpecies ============================== #
 struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
@@ -34,6 +36,16 @@ struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
     mass::B
     pseudopotential::C
 end  # struct AtomicSpecies
+
+function evolve(data::AtomicSpecies, dict::Dict{Symbol, T}) where {T}
+    for (k, v) in dict
+        lens = @macroexpand(quote
+            @lens _.$(esc(k))
+        end)
+        data = set(data, lens, v)
+    end
+    return data
+end  # function evolve
 
 @with_kw struct AtomicSpeciesCard{A <: AbstractVector{<: AtomicSpecies}} <: Card
     option::Nothing = nothing
