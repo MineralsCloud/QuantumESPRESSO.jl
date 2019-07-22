@@ -15,11 +15,18 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
 
-export ControlNamelist,
+export name,
+    ControlNamelist,
     SystemNamelist,
     ElectronsNamelist,
     IonsNamelist,
     CellNamelist
+
+name(::ControlNamelist) = :control
+name(::SystemNamelist) = :system
+name(::ElectronsNamelist) = :electrons
+name(::IonsNamelist) = :ions
+name(::CellNamelist) = :cell
 
 @with_kw struct ControlNamelist <: Namelist
     calculation::String = "scf"
