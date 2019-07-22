@@ -26,7 +26,8 @@ export AtomicSpecies,
     SpecialKPoint,
     KPointsCard,
     option,
-    allowed_options
+    allowed_options,
+    name
 
 # =============================== AtomicSpecies ============================== #
 struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
@@ -89,6 +90,11 @@ allowed_options(::Type{<: Card}) = nothing
 allowed_options(::Type{AtomicPositionCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
 allowed_options(::Type{CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+
+name(::AtomicPositionCard) = :atomicspecies
+name(::AtomicPositionCard) = :atomicpositions
+name(::KPointsCard) = :kpoints
+name(::CellParametersCard) = :cellparameters
 # ============================================================================ #
 
 end
