@@ -5,7 +5,9 @@ base:
 - Date: 2019-07-21
 =#
 using FilePaths: AbstractPath, extension
+import JSON
 using Parameters: type2dict, reconstruct
+import YAML
 
 export Namelist,
     to_dict,
@@ -38,10 +40,8 @@ function dump(path::AbstractPath, nml::Namelist)
     iswritable(path) || error("File $(path) not writable!")
     open(path, "r+") do io
         if extension(path) == "json"
-            import JSON
             JSON.print(io, entries)
         elseif extension(path) == "yaml" || extension(path) == "yml"
-            import YAML
             YAML.dump(io, entries)
         else
             error("Unknown extension type given!")
