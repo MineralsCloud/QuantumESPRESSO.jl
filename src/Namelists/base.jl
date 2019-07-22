@@ -13,7 +13,6 @@ using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Yaml
 
 export Namelist,
-    name,
     to_dict
 
 abstract type Namelist <: InputEntry end
