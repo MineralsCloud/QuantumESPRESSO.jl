@@ -11,10 +11,7 @@ julia>
 """
 module Cards
 
-export Card
-
-abstract type Card end
-
+include("base.jl")
 include("PW.jl")
 
 end

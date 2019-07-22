@@ -25,7 +25,6 @@ export AtomicSpecies,
     GammaPoint,
     SpecialKPoint,
     KPointsCard,
-    option,
     allowed_options,
     name
 
@@ -84,14 +83,10 @@ end  # struct KPointsCard
 # ============================================================================ #
 
 # ================================== Methods ================================= #
-option(card::Card) = getfield(card, :option)
-
-allowed_options(::Type{<: Card}) = nothing
 allowed_options(::Type{<: AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
 allowed_options(::Type{<: CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{<: KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
 
-name(::Type{<: Card}) = error("Undefined name!")
 name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
 name(::Type{<: AtomicPositionsCard}) = :atomicpositions
 name(::Type{<: KPointsCard}) = :kpoints
