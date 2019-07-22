@@ -12,6 +12,7 @@ julia>
 module PW
 
 using Parameters: @with_kw
+using SimpleTraits
 
 using QuantumESPRESSO.Cards
 
@@ -93,6 +94,12 @@ name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
 name(::Type{<: AtomicPositionsCard}) = :atomicpositions
 name(::Type{<: KPointsCard}) = :kpoints
 name(::Type{<: CellParametersCard}) = :cellparameters
+# ============================================================================ #
+
+# =================================== Trait ================================== #
+@traitimpl HasOption{AtomicPositionsCard}
+@traitimpl HasOption{KPointsCard}
+@traitimpl HasOption{CellParametersCard}
 # ============================================================================ #
 
 end
