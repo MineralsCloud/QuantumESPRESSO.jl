@@ -11,8 +11,7 @@ julia>
 """
 module PW
 
-using Parameters: @with_kw
-using Setfield: @lens, set
+using Parameters: @with_kw, reconstruct
 
 using QuantumESPRESSO.Cards
 
@@ -32,13 +31,17 @@ export AtomicSpecies,
     evolve
 
 # =============================== AtomicSpecies ============================== #
-mutable struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
+@with_kw struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
     atom::A
     mass::B
     pseudopotential::C
 end
 
-struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
+function evolve(data::AtomicSpecies, newdict::Dict{Symbol, T}) where {T}
+    return reconstruct(data, newdict)
+end  # function evolve
+
+@with_kw struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
 end
 # ============================================================================ #
