@@ -11,10 +11,7 @@ julia>
 """
 module Namelists
 
-export Namelist
-
-abstract type Namelist end
-
+include("base.jl")
 include("PW.jl")
 include("PH.jl")
 
