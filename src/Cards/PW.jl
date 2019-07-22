@@ -30,13 +30,13 @@ export AtomicSpecies,
     name
 
 # =============================== AtomicSpecies ============================== #
-@with_kw struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
+struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
     atom::A
     mass::B
     pseudopotential::C
 end
 
-@with_kw struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
+struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
 end
 # ============================================================================ #
