@@ -123,4 +123,8 @@ function to_fortran(v::AbstractString)
     return FortranCode("'$(v)'")
 end  # function to_fortran
 
+function Base.string(s::FortranCode)
+    return string(s.data)
+end  # function Base.string
+
 end
