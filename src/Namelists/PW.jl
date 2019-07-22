@@ -22,12 +22,6 @@ export name,
     IonsNamelist,
     CellNamelist
 
-name(::ControlNamelist) = :control
-name(::SystemNamelist) = :system
-name(::ElectronsNamelist) = :electrons
-name(::IonsNamelist) = :ions
-name(::CellNamelist) = :cell
-
 @with_kw struct ControlNamelist <: Namelist
     calculation::String = "scf"
     title::String = " "
@@ -213,5 +207,11 @@ end  # struct IonsNamelist
     press_conv_thr::Float64 = 0.5
     cell_dofree::String = "all"
 end  # struct CellNamelist
+
+name(::ControlNamelist) = :control
+name(::SystemNamelist) = :system
+name(::ElectronsNamelist) = :electrons
+name(::IonsNamelist) = :ions
+name(::CellNamelist) = :cell
 
 end
