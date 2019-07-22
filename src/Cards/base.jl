@@ -4,11 +4,12 @@ base:
 - Author: singularitti
 - Date: 2019-07-22
 =#
+using Parameters
+
 export Card,
     name,
     option,
-    allowed_options,
-    evolve
+    allowed_options
 
 abstract type Card end
 
@@ -18,10 +19,7 @@ option(card::Card) = getfield(card, :option)
 
 allowed_options(::Type{<: Card}) = error("No allowed options defined!")
 
-function evolve(card::Card, newdict::AbstractDict)
+function Parameters.reconstruct(card::Card, newdict::AbstractDict)
     :option in keys && error("If you want to change the option of a card, reconstruct a new one!")
     return reconstruct(card, newdict)
-end  # function evolve
-function evolve(card::Card; kwargs...)
-    return evolve(card, kwargs)
-end  # function evolve
+end  # function reconstruct
