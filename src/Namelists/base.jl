@@ -6,7 +6,9 @@ base:
 =#
 using Parameters: type2dict, reconstruct
 
-export Namelist
+export Namelist,
+    to_dict,
+    evolve
 
 abstract type Namelist end
 
