@@ -38,7 +38,7 @@ function read_namelist(lines)
         # Use '=' as the delimiter, split the stripped line into a key and a value.
         # Skip this line if a line starts with '!' (comment) or this line is empty ('').
         isempty(str) || any(startswith(str, x) for x in ('!', '/')) && continue
-        k, v = split(str, '=', limit=2)
+        k, v = split(str, '=', limit = 2)
         k = strip(k)
         v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
         code = @f_str(v)
