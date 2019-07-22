@@ -57,8 +57,8 @@ function read_atomicspecies(lines)
         if isnothing(m)
             @warn "No match found in the line $(line)!"
         else
-            name, mass, pseudopotential = m.captures
-            push!(atomic_species, AtomicSpecies(parsestring(name), parsefloat(Float64, mass), parsestring(pseudopotential)))
+            atom, mass, pseudopotential = m.captures
+            push!(atomic_species, AtomicSpecies(parse(String, @f_str(atom)), parse(Float64, @f_str(mass)), parse(String, @f_str(pseudopotential))))
         end
     end
     return AtomicSpeciesCard(option=nothing, data=atomic_species)
@@ -74,20 +74,21 @@ function read_atomicpositions(lines)
         if !isnothing(match(r"\{.*\}", str))
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             atom, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(atom=parsestring(atom),
-            pos=map(x->parsefloat(Float64, x), [x, y, z]),
-            if_pos=map(x->parsefloat(Float64, x), [if_pos1, if_pos2, if_pos3])))
+            push!(atomic_positions, AtomicPosition(atom=parse(String, @f_str(atom)),
+            pos=[parse(Float64, @f_str(p)) for p in (x, y, z)],
+            if_pos=[parse(Float64, @f_str(x)) for x in (if_pos1, if_pos2, if_pos3)]))
         else
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if isnothing(m)
                 @warn "No match found in the line $(line)!"
             else
                 atom, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom=parsestring(atom), pos=map(x->parsefloat(Float64, x), [x, y, z])))
+                push!(atomic_positions, AtomicPosition(atom=parse(String, @f_str(atom)),
+                pos=[parse(Float64, @f_str(p)) for p in (x, y, z)]))
             end
         end
     end
-    return AtomicPositionCard(option=parsestring(option), data=atomic_positions)
+    return AtomicPositionCard(option=parse(String, option), data=atomic_positions)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
@@ -101,7 +102,7 @@ function read_kpoints(lines)
             isnothing(str) && continue
 
             sp = split(str)
-            grid, offsets = map(x -> parseint(Int, x), sp[1:3]), map(x -> parseint(Int, x), sp[4:6])
+            grid, offsets = [parse(Int, @f_str(x)) for x in sp[1:3]], [parse(Int, @f_str(x)) for x in sp[4:6]]
             return KPointsCard(option=string(option), data=[MonkhorstPackGrid(grid=grid, offsets=offsets)])
         end
     end
@@ -113,7 +114,7 @@ function read_kpoints(lines)
             isnothing(str) && continue
 
             sp = split(str)
-            length(sp) == 1 && (nks = parseint(Int, first(sp)))
+            length(sp) == 1 && (nks = parse(Int, @f_str(first(sp))))
             (@isdefined nks) && break
         end
         for line in lines
@@ -122,10 +123,10 @@ function read_kpoints(lines)
 
             sp = split(str)
             length ≠ 4 && error("Unknown input given!")
-            push!(kpoints, SpecialKPoint(collect(parsefloat(Float64, x) for x in sp[1:3]), parsefloat(Float64, sp[4])))
+            push!(kpoints, SpecialKPoint(collect(parse(Float64, @f_str(x)) for x in sp[1:3]), parse(Float64, @f_str(sp[4]))))
         end
         length(kpoints) ≠ nks && throw(DimensionMismatch("The length of k-points $(length(kpoints)) is not equal to $(nks)!"))
-        return KPointsCard(option=parsestring(option), data=kpoints)
+        return KPointsCard(option=parse(String, @f_str(option)), data=kpoints)
     end
 
     error("Unknown option '$option' given!")
@@ -142,10 +143,10 @@ function read_cellparameters(lines)
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
         if !isnothing(m)
             v1, v2, v3 = m.captures
-            cell_params = vcat(cell_params, map(x->parsefloat(Float64, x), [v1, v2, v3]))
+            cell_params = vcat(cell_params, [parse(Float64, @f_str(x)) for x in (v1, v2, v3)])
         end
     end
-    return CellParametersCard(parsestring(option), reshape(cell_params, (3, 3)))
+    return CellParametersCard(parse(String, @f_str(option)), reshape(cell_params, (3, 3)))
 end  # function read_cellparameters
 
 end
