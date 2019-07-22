@@ -16,7 +16,8 @@ using Rematch: MatchFailure
 
 export FortranCode,
     @f_str,
-    guesstype
+    guesstype,
+    to_fortran
 
 const FORTRAN_INT = r"(?<=\s|^)([-+]?\d+)(?=\s|$)"
 const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?"i
@@ -101,5 +102,29 @@ function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractString}
     captures = captured(FORTRAN_STRING, str)
     return "$(captures[1])"
 end
+
+function to_fortran(v::Int)
+    FortranCode(string(v))
+end  # function to_fortran
+function to_fortran(v::Float32; scientific::Bool = false)
+    str = string(v)
+    scientific && return FortranCode(replace(str, r"f"i => "E"))
+    return FortranCode(string(v))
+end  # function to_fortran
+function to_fortran(v::Float64; scientific::Bool = false)
+    str = string(v)
+    scientific && return FortranCode(replace(str, r"e"i => "D"))
+    return FortranCode(string(v))
+end  # function to_fortran
+function to_fortran(v::Bool)
+    v ? (return FortranCode(".true.")) : return FortranCode(".false.")
+end  # function to_fortran
+function to_fortran(v::AbstractString)
+    return FortranCode("'$(v)'")
+end  # function to_fortran
+
+function Base.string(s::FortranCode)
+    return string(s.data)
+end  # function Base.string
 
 end
