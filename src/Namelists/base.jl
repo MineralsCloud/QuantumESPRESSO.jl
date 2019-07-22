@@ -22,3 +22,12 @@ end  # function evolve
 function evolve(nml::T, dict::AbstractDict{Symbol,Any})::T where {T <: Namelist}
     return reconstruct(nml, dict)
 end  # function evolve
+
+function to_qe(nml::Namelist, indent::AbstractString = "    ")::String
+    entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
+    """
+    &$(name(nml))
+    $(join(["$(indent)$(key) = $(value)" for (key, value) in entries], "\n"))
+    /
+    """
+end  # function to_qe
