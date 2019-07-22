@@ -6,6 +6,7 @@ splitting:
 =#
 using DataStructures
 using FilePaths: AbstractPath
+using Parameters: reconstrcut
 
 using QuantumESPRESSO.Readers.Namelists
 using QuantumESPRESSO.Readers.Cards.PW
@@ -177,8 +178,13 @@ function form_input_object(lines)
     end  # for
     for v in values(dict["cards"])
         d[name(typeof(v))] = v
-    end  # for
-    return PWInput(d...)
+    end  #
+    as = AtomicSpeciesCard([AtomicSpecies("Fe", 55.845, "Fe.pseudopotential")])
+    ap = AtomicPositionsCard(data = [AtomicPosition(atom = "Fe", pos = [0, 0, 0])])
+    cell = CellParametersCard(data = diagm(0 => [1, 1, 1]))
+    k = KPointsCard(data = [GammaPoint()])
+    pw = PWInput(system = SystemNamelist(celldm = ones(6)), atomicspecies = as, atomicpositions = ap, kpoints = k, cellparameters = cell)
+    return reconstrcut(pw, d)
 end  # function form_input_object
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
