@@ -4,6 +4,7 @@ base:
 - Author: singularitti
 - Date: 2019-07-21
 =#
+using FilePaths: AbstractPath, extension
 using Parameters: type2dict, reconstruct
 
 export Namelist,
@@ -31,3 +32,19 @@ function to_qe(nml::Namelist, indent::AbstractString = "    ")::String
     /
     """
 end  # function to_qe
+
+function dump(path::AbstractPath, nml::Namelist)
+    entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
+    iswritable(path) || error("File $(path) not writable!")
+    open(path, "r+") do io
+        if extension(path) == "json"
+            import JSON
+            JSON.print(io, entries)
+        elseif extension(path) == "yaml" || extension(path) == "yml"
+            import YAML
+            YAML.dump(io, entries)
+        else
+            error("Unknown extension type given!")
+        end  # if-elseif-else
+    end
+end  # function dump
