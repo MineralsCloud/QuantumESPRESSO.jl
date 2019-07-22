@@ -27,8 +27,7 @@ export AtomicSpecies,
     KPointsCard,
     option,
     allowed_options,
-    name,
-    evolve
+    name
 
 # =============================== AtomicSpecies ============================== #
 @with_kw struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
@@ -36,10 +35,6 @@ export AtomicSpecies,
     mass::B
     pseudopotential::C
 end
-
-function evolve(data::AtomicSpecies, newdict::Dict{Symbol, T}) where {T}
-    return reconstruct(data, newdict)
-end  # function evolve
 
 @with_kw struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
