@@ -11,7 +11,7 @@ julia>
 """
 module PW
 
-using Parameters: @with_kw, reconstruct
+using Parameters: @with_kw
 
 using QuantumESPRESSO.Cards
 
