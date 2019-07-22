@@ -8,6 +8,7 @@ using FilePaths: AbstractPath, extension, exists
 import JSON
 using Parameters: type2dict
 
+using QuantumESPRESSO
 using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Yaml
 
@@ -17,7 +18,7 @@ export Namelist,
 
 abstract type Namelist <: InputEntry end
 
-name(::Type{<: Namelist}) = error("Undefined name!")
+QuantumESPRESSO.name(::Type{<: Namelist}) = error("Undefined name!")
 
 function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)

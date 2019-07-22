@@ -9,13 +9,12 @@ using Parameters
 using QuantumESPRESSO
 
 export Card,
-    name,
     option,
     allowed_options
 
 abstract type Card <: InputEntry end
 
-name(::Type{<: Card}) = error("Undefined name!")
+QuantumESPRESSO.name(::Type{<: Card}) = error("Undefined name!")
 
 option(card::Card) = getfield(card, :option)
 
