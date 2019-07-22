@@ -12,10 +12,13 @@ using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Yaml
 
 export Namelist,
+    name,
     to_dict,
     evolve
 
 abstract type Namelist end
+
+name(::Type{<: Namelist}) = error("Undefined name!")
 
 function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
