@@ -91,7 +91,7 @@ allowed_options(::Type{AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "cry
 allowed_options(::Type{CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
 
-name(::AtomicPositionsCard) = :atomicspecies
+name(::AtomicSpeciesCard) = :atomicspecies
 name(::AtomicPositionsCard) = :atomicpositions
 name(::KPointsCard) = :kpoints
 name(::CellParametersCard) = :cellparameters
