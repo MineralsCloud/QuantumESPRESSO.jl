@@ -100,8 +100,8 @@ function Base.parse(::Type{Bool}, s::FortranCode) where {T <: AbstractFloat}
 end
 function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractString}
     str = s.data
-    captures = captured(FORTRAN_STRING, str)
-    return "$(captures[1])"
+    # captures = captured(FORTRAN_STRING, str)
+    return string(str)
 end
 
 function to_fortran(v::Int)
