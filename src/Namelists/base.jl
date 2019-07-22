@@ -15,7 +15,7 @@ export Namelist,
     name,
     to_dict
 
-abstract type Namelist end
+abstract type Namelist <: InputEntry end
 
 name(::Type{<: Namelist}) = error("Undefined name!")
 
