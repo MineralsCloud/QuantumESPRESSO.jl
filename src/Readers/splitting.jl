@@ -172,12 +172,11 @@ end  # function dispatch_readers
 function form_input_object(lines)
     dict = dispatch_readers(lines)
     d = Dict()
-    # for v in values(dict["namelists"])
-    #     println(typefield(v))
-    #     d[typefield(typeof(v))] = v
-    # end  # for
+    for v in values(dict["namelists"])
+        d[name(typeof(v))] = v
+    end  # for
     for v in values(dict["cards"])
-        d[typefield(typeof(v))] = v
+        d[name(typeof(v))] = v
     end  # for
     return PWInput(d...)
 end  # function form_input_object

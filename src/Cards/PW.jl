@@ -18,7 +18,7 @@ using QuantumESPRESSO.Cards
 export AtomicSpecies,
     AtomicSpeciesCard,
     AtomicPosition,
-    AtomicPositionCard,
+    AtomicPositionsCard,
     CellParametersCard,
     KPoint,
     MonkhorstPackGrid,
@@ -26,7 +26,8 @@ export AtomicSpecies,
     SpecialKPoint,
     KPointsCard,
     option,
-    allowed_options
+    allowed_options,
+    name
 
 # =============================== AtomicSpecies ============================== #
 struct AtomicSpecies{A <: AbstractString, B <: Real, C <: AbstractString}
@@ -48,10 +49,10 @@ end  # struct AtomicSpeciesCard
     if_pos::C = [1, 1, 1]; @assert length(if_pos) == 3
 end  # struct AtomicPosition
 
-@with_kw struct AtomicPositionCard{A <: AbstractString, B <: AbstractVector{<: AtomicPosition}} <: Card
-    option::A = "alat"; @assert option in allowed_options(AtomicPositionCard)
+@with_kw struct AtomicPositionsCard{A <: AbstractString, B <: AbstractVector{<: AtomicPosition}} <: Card
+    option::A = "alat"; @assert option in allowed_options(AtomicPositionsCard)
     data::B
-end  # struct AtomicPositionCard
+end  # struct AtomicPositionsCard
 # ============================================================================ #
 
 # ============================== CellParameters ============================== #
@@ -86,9 +87,15 @@ end  # struct KPointsCard
 option(card::Card) = getfield(card, :option)
 
 allowed_options(::Type{<: Card}) = nothing
-allowed_options(::Type{AtomicPositionCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
+allowed_options(::Type{AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
 allowed_options(::Type{CellParametersCard}) = ("alat", "bohr", "angstrom")
 allowed_options(::Type{KPointsCard}) = ("tpiba", "automatic", "crystal", "gamma", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+
+name(::Type{<: Card}) = error("Undefined name!")
+name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
+name(::Type{<: AtomicPositionsCard}) = :atomicpositions
+name(::Type{<: KPointsCard}) = :kpoints
+name(::Type{<: CellParametersCard}) = :cellparameters
 # ============================================================================ #
 
 end
