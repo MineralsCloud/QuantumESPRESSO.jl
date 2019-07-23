@@ -35,20 +35,9 @@ struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
     pseudopotential::C
 end
 
-function QuantumESPRESSO.to_qe(data::AtomicSpecies; sep::AbstractString = " ")::String
-    return join(map(string, fieldvalues(data)), sep)
-end  # function to_qe
-
 struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
 end
-
-function QuantumESPRESSO.to_qe(card::AtomicSpeciesCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    """
-    ATOMIC_SPECIES
-    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
-    """
-end  # function to_qe
 # ============================================================================ #
 
 # ============================== AtomicPosition ============================== #
@@ -58,22 +47,10 @@ end  # function to_qe
     if_pos::C = [1, 1, 1]; @assert length(if_pos) == 3
 end
 
-function QuantumESPRESSO.to_qe(data::AtomicPosition; sep::AbstractString = " ", with_if_pos::Bool = false)::String
-    with_if_pos && return join(map(string, [data.atom; data.pos; data.if_pos]), sep)
-    return join(map(string, [data.atom; data.pos]), sep)
-end  # function to_qe
-
 @with_kw struct AtomicPositionsCard{A <: AbstractString,B <: AbstractVector{<: AtomicPosition}} <: Card
     option::A = "alat"; @assert option in allowed_options(AtomicPositionsCard)
     data::B
 end
-
-function QuantumESPRESSO.to_qe(card::AtomicPositionsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    """
-    ATOMIC_POSITIONS$(sep){ $(card.option) }
-    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
-    """
-end  # function to_qe
 # ============================================================================ #
 
 # ============================== CellParameters ============================== #
@@ -81,13 +58,6 @@ end  # function to_qe
     option::A = "alat"; @assert option in allowed_options(CellParametersCard)
     data::B; @assert size(data) == (3, 3)
 end
-
-function QuantumESPRESSO.to_qe(card::CellParametersCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    """
-    CELL_PARAMETERS$(sep){ $(card.option) }
-    $(join(["$(indent)$(join(row, sep))" for row in eachrow(card.data)], "\n"))
-    """
-end  # function to_qe
 # ============================================================================ #
 
 # ================================== KPoint ================================== #
@@ -98,24 +68,12 @@ abstract type KPoint end
     offsets::B; @assert length(offsets) == 3 && all(x ∈ (0, 1) for x in offsets)
 end
 
-function QuantumESPRESSO.to_qe(data::MonkhorstPackGrid; sep::AbstractString = " ")::String
-    return join(map(string, [data.grid; data.offsets]), sep)
-end  # function to_qe
-
 struct GammaPoint <: KPoint end
-
-function QuantumESPRESSO.to_qe(data::GammaPoint)::String
-    return ""
-end  # function to_qe
 
 @with_kw struct SpecialKPoint{A <: AbstractVector{Float64},B <: Real} <: KPoint
     coordinates::A; @assert length(coordinates) == 3
     weight::B
 end
-
-function QuantumESPRESSO.to_qe(data::SpecialKPoint; sep::AbstractString = " ")::String
-    return join(map(string, [data.coordinates; data.weight]), sep)
-end  # function to_qe
 
 @with_kw struct KPointsCard{A <: AbstractString,B <: AbstractVector{<: KPoint}} <: Card
     option::A = "tpiba"; @assert option in allowed_options(KPointsCard)
@@ -130,7 +88,43 @@ end  # function to_qe
         end
     end
 end
+# ============================================================================ #
 
+# ================================== Methods ================================= #
+function QuantumESPRESSO.to_qe(data::AtomicSpecies; sep::AbstractString = " ")::String
+    return join(map(string, fieldvalues(data)), sep)
+end  # function to_qe
+function QuantumESPRESSO.to_qe(card::AtomicSpeciesCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    """
+    ATOMIC_SPECIES
+    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
+    """
+end  # function to_qe
+function QuantumESPRESSO.to_qe(data::AtomicPosition; sep::AbstractString = " ", with_if_pos::Bool = false)::String
+    with_if_pos && return join(map(string, [data.atom; data.pos; data.if_pos]), sep)
+    return join(map(string, [data.atom; data.pos]), sep)
+end  # function to_qe
+function QuantumESPRESSO.to_qe(card::AtomicPositionsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    """
+    ATOMIC_POSITIONS$(sep){ $(card.option) }
+    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
+    """
+end  # function to_qe
+function QuantumESPRESSO.to_qe(card::CellParametersCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    """
+    CELL_PARAMETERS$(sep){ $(card.option) }
+    $(join(["$(indent)$(join(row, sep))" for row in eachrow(card.data)], "\n"))
+    """
+end  # function to_qe
+function QuantumESPRESSO.to_qe(data::MonkhorstPackGrid; sep::AbstractString = " ")::String
+    return join(map(string, [data.grid; data.offsets]), sep)
+end  # function to_qe
+function QuantumESPRESSO.to_qe(data::GammaPoint)::String
+    return ""
+end  # function to_qe
+function QuantumESPRESSO.to_qe(data::SpecialKPoint; sep::AbstractString = " ")::String
+    return join(map(string, [data.coordinates; data.weight]), sep)
+end  # function to_qe
 function QuantumESPRESSO.to_qe(card::KPointsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
     content = "K_POINTS$(sep){ $(card.option) }\n"
     if card.option in ("gamma", "automatic")
@@ -143,9 +137,7 @@ function QuantumESPRESSO.to_qe(card::KPointsCard; indent::AbstractString = "    
     end
     return content
 end  # function to_qe
-# ============================================================================ #
 
-# ================================== Methods ================================= #
 Cards.option(card::AtomicSpeciesCard) = nothing
 
 Cards.allowed_options(::Type{<: AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")
