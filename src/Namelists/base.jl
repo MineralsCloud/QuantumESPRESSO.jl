@@ -25,7 +25,7 @@ end  # function to_dict
 function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
     entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
     """
-    &$(name(nml))
+    &$(name(typeof(nml)))
     $(join(["$(indent)$(key) = $(value)" for (key, value) in entries], "\n"))
     /
     """
