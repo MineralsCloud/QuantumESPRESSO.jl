@@ -22,7 +22,7 @@ export FortranCode,
 const FORTRAN_INT = r"(?<=\s|^)([-+]?\d+)(?=\s|$)"
 const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+(([ed])[-+]?\d+)?"i
 const FORTRAN_BOOL = r"\.(true|false|t|f)\."i
-const FORTRAN_STRING = r"[\'\"](.*)[\'\"]"
+const FORTRAN_STRING = r"([\"'])((?:\\\1|.)*?)\1"  # Referenced from https://stackoverflow.com/a/375362/3260253
 const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+(([ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+(([ed])[-+]?\d+)?\)"i
 
 struct FortranCode{T <: AbstractString}
@@ -100,8 +100,8 @@ function Base.parse(::Type{Bool}, s::FortranCode) where {T <: AbstractFloat}
 end
 function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractString}
     str = s.data
-    # captures = captured(FORTRAN_STRING, str)
-    return string(str)
+    captures = captured(FORTRAN_STRING, str)
+    return string(captures[2])
 end
 
 function to_fortran(v::Int)
