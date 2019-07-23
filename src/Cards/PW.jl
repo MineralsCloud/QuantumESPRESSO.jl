@@ -99,6 +99,10 @@ abstract type KPoint end
     offsets::B; @assert length(offsets) == 3
 end
 
+function QuantumESPRESSO.to_qe(data::MonkhorstPackGrid; sep::AbstractString = " ")::String
+    return join(map(string, [data.grid; data.offsets]), sep)
+end  # function to_qe
+
 struct GammaPoint <: KPoint end
 
 @with_kw struct SpecialKPoint{A <: AbstractVector{Float64},B <: Real} <: KPoint
