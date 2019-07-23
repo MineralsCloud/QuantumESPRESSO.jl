@@ -58,6 +58,11 @@ end  # function to_qe
     if_pos::C = [1, 1, 1]; @assert length(if_pos) == 3
 end
 
+function QuantumESPRESSO.to_qe(data::AtomicPosition; sep::AbstractString = " ", with_if_pos::Bool = false)::String
+    with_if_pos && return join(map(string, [data.atom; data.pos; data.if_pos]), sep)
+    return join(map(string, [data.atom; data.pos]), sep)
+end  # function to_qe
+
 @with_kw struct AtomicPositionsCard{A <: AbstractString,B <: AbstractVector{<: AtomicPosition}} <: Card
     option::A = "alat"; @assert option in allowed_options(AtomicPositionsCard)
     data::B
