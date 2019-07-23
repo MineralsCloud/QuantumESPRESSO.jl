@@ -1,6 +1,5 @@
 module QuantumESPRESSO
 
-include("Yaml.jl")
 include("FortranDataType.jl")
 include("base.jl")
 include("Namelists/Namelists.jl")

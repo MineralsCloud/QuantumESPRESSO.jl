@@ -10,7 +10,6 @@ using Parameters: type2dict
 
 using QuantumESPRESSO
 using QuantumESPRESSO.FortranDataType
-using QuantumESPRESSO.Yaml
 
 export Namelist,
     to_dict
@@ -40,9 +39,7 @@ function Base.dump(path::AbstractPath, nml::Namelist)
         if extension(path) == "json"
             JSON.print(io, entries)
         elseif extension(path) == "yaml" || extension(path) == "yml"
-            for p in pairs(entries)
-                Yaml.write(io, p)
-            end
+            @warn "Currently not supported!"
         else
             error("Unknown extension type given!")
         end  # if-elseif-else
