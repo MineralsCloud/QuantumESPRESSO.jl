@@ -35,8 +35,8 @@ struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
     pseudopotential::C
 end
 
-function QuantumESPRESSO.to_qe(data::AtomicSpecies, whitespace::AbstractString = " ")::String
-    return join(map(string, fieldvalues(data)), whitespace)
+function QuantumESPRESSO.to_qe(data::AtomicSpecies; sep::AbstractString = " ")::String
+    return join(map(string, fieldvalues(data)), sep)
 end  # function to_qe
 
 struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
