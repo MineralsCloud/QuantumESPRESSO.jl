@@ -67,6 +67,13 @@ end  # function to_qe
     option::A = "alat"; @assert option in allowed_options(AtomicPositionsCard)
     data::B
 end
+
+function QuantumESPRESSO.to_qe(card::AtomicPositionsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    """
+    ATOMIC_POSITIONS$(sep){ $(card.option) }
+    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
+    """
+end  # function to_qe
 # ============================================================================ #
 
 # ============================== CellParameters ============================== #
