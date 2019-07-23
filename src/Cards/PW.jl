@@ -11,6 +11,7 @@ julia>
 """
 module PW
 
+using Compat: eachrow
 using IterTools: fieldvalues
 using Parameters: @with_kw
 
@@ -81,6 +82,13 @@ end  # function to_qe
     option::A = "alat"; @assert option in allowed_options(CellParametersCard)
     data::B; @assert size(data) == (3, 3)
 end
+
+function QuantumESPRESSO.to_qe(card::CellParametersCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    """
+    CELL_PARAMETERS$(sep){ $(card.option) }
+    $(join(["$(indent)$(join(row, sep))" for row in eachrow(card.data)], "\n"))
+    """
+end  # function to_qe
 # ============================================================================ #
 
 # ================================== KPoint ================================== #
