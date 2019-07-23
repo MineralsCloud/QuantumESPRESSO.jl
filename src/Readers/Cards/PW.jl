@@ -58,7 +58,7 @@ function read_atomicspecies(lines)
             @warn "No match found in the line $(line)!"
         else
             atom, mass, pseudopotential = m.captures
-            push!(atomic_species, AtomicSpecies(parse(String, @f_str(atom)), parse(Float64, @f_str(mass)), parse(String, @f_str(pseudopotential))))
+            push!(atomic_species, AtomicSpecies(string(atom), parse(Float64, @f_str(mass)), string(pseudopotential)))
         end
     end
     return AtomicSpeciesCard(atomic_species)
@@ -88,13 +88,13 @@ function read_atomicpositions(lines)
             end
         end
     end
-    return AtomicPositionsCard(option = parse(String, @f_str(option)), data = atomic_positions)
+    return AtomicPositionsCard(option = string(option), data = atomic_positions)
 end  # function read_atomicpositions
 
 function read_kpoints(lines)
     option = read_title_line(first(lines), r"K_POINTS\s*(?:[({])?\s*(\w*)\s*(?:[)}])?"i, "tbipa")
 
-    option == "gamma" && return KPointsCard(option = parse(String, @f_str(option)), points = GammaPoint())
+    option == "gamma" && return KPointsCard(option = string(option), points = GammaPoint())
 
     if option == "automatic"
         for line in Iterators.drop(lines, 1)  # Drop the title line
@@ -103,7 +103,7 @@ function read_kpoints(lines)
 
             sp = split(str)
             grid, offsets = [parse(Int, @f_str(x)) for x in sp[1:3]], [parse(Int, @f_str(x)) for x in sp[4:6]]
-            return KPointsCard(option = parse(String, @f_str(option)), data = [MonkhorstPackGrid(grid = grid, offsets = offsets)])
+            return KPointsCard(option = string(option), data = [MonkhorstPackGrid(grid = grid, offsets = offsets)])
         end
     end
 
@@ -126,7 +126,7 @@ function read_kpoints(lines)
             push!(kpoints, SpecialKPoint(collect(parse(Float64, @f_str(x)) for x in sp[1:3]), parse(Float64, @f_str(sp[4]))))
         end
         length(kpoints) ≠ nks && throw(DimensionMismatch("The length of k-points $(length(kpoints)) is not equal to $(nks)!"))
-        return KPointsCard(option = parse(String, @f_str(option)), data = kpoints)
+        return KPointsCard(option = string(option), data = kpoints)
     end
 
     error("Unknown option '$option' given!")
@@ -146,7 +146,7 @@ function read_cellparameters(lines)
             cell_params = vcat(cell_params, [parse(Float64, @f_str(x)) for x in (v1, v2, v3)])
         end
     end
-    return CellParametersCard(parse(String, @f_str(option)), reshape(cell_params, (3, 3)))
+    return CellParametersCard(string(option), reshape(cell_params, (3, 3)))
 end  # function read_cellparameters
 
 end
