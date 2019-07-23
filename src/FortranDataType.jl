@@ -20,10 +20,10 @@ export FortranCode,
     to_fortran
 
 const FORTRAN_INT = r"(?<=\s|^)([-+]?\d+)(?=\s|$)"
-const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?"i
+const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+(([ed])[-+]?\d+)?"i
 const FORTRAN_BOOL = r"\.(true|false|t|f)\."i
 const FORTRAN_STRING = r"[\'\"](.*)[\'\"]"
-const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+((:?[ed])[-+]?\d+)?\)"i
+const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+(([ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+(([ed])[-+]?\d+)?\)"i
 
 struct FortranCode{T <: AbstractString}
     data::T
