@@ -96,7 +96,7 @@ abstract type KPoint end
 
 @with_kw struct MonkhorstPackGrid{A <: AbstractVector{Int},B <: AbstractVector{Int}} <: KPoint
     grid::A; @assert length(grid) == 3
-    offsets::B; @assert length(offsets) == 3
+    offsets::B; @assert length(offsets) == 3 && all(x ∈ (0, 1) for x in offsets)
 end
 
 function QuantumESPRESSO.to_qe(data::MonkhorstPackGrid; sep::AbstractString = " ")::String
