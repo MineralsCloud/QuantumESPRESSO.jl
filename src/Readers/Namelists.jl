@@ -41,15 +41,9 @@ function read_namelist(lines)
         k, v = split(str, '=', limit = 2)
         k = strip(k)
         v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
-        code = @f_str(v)
-        T = guesstype(code)
-        result[k] = parse(T, code)
+        result[k] = v
     end
-    namelist = Symbol("$(namelist_name)Namelist")
-    parameters = QuoteNode(join([isa(v, AbstractString) ? "$k='$v'" : "$k=$v" for (k, v) in result], ","))
-    eval(quote
-        $(namelist)($(parameters))
-    end)
+    return result
 end  # function read_namelist
 
 end
