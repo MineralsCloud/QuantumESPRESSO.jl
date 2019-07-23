@@ -11,6 +11,7 @@ julia>
 """
 module PW
 
+using IterTools: fieldvalues
 using Parameters: @with_kw
 
 using QuantumESPRESSO
@@ -33,6 +34,10 @@ struct AtomicSpecies{A <: AbstractString,B <: Real,C <: AbstractString}
     mass::B
     pseudopotential::C
 end
+
+function QuantumESPRESSO.to_qe(data::AtomicSpecies, whitespace::AbstractString = " ")::String
+    return join(map(string, fieldvalues(data)), whitespace)
+end  # function to_qe
 
 struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
