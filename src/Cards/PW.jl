@@ -11,7 +11,6 @@ julia>
 """
 module PW
 
-using Compat: eachrow
 using IterTools: fieldvalues
 using Parameters: @with_kw
 
@@ -157,6 +156,8 @@ QuantumESPRESSO.name(::Type{<: AtomicSpeciesCard}) = :atomicspecies
 QuantumESPRESSO.name(::Type{<: AtomicPositionsCard}) = :atomicpositions
 QuantumESPRESSO.name(::Type{<: KPointsCard}) = :kpoints
 QuantumESPRESSO.name(::Type{<: CellParametersCard}) = :cellparameters
+
+eachrow(A::AbstractVecOrMat) = (view(A, i, :) for i in axes(A, 1))  # Julia 1.0 does not support `eachrow`
 # ============================================================================ #
 
 end
