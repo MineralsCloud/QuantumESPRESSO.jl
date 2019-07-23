@@ -28,10 +28,10 @@ function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::
     for (key, value) in entries
         if value isa AbstractArray
             for (i, x) in enumerate(value)
-                content *= "$(indent)$(key)($i) = $(to_fortran(x))\n"
+                content *= "$(indent)$(key)($i) = $(string(to_fortran(x)))\n"
             end
         else
-            content *= "$(indent)$(key) = $(value)\n"
+            content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
         end
     end
     return content * "/\n"
