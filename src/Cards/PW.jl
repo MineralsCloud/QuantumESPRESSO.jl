@@ -77,6 +77,15 @@ end
 @with_kw struct KPointsCard{A <: AbstractString,B <: AbstractVector{<: KPoint}} <: Card
     option::A = "tpiba"; @assert option in allowed_options(KPointsCard)
     data::B
+    @assert begin
+        if option == "automatic"
+            eltype(data) <: MonkhorstPackGrid
+        elseif option == "gamma"
+            eltype(data) <: GammaPoint
+        else  # option in ("tpiba", "crystal", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+            eltype(data) <: SpecialKPoint
+        end
+    end
 end
 # ============================================================================ #
 
