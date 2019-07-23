@@ -131,6 +131,19 @@ end  # function to_qe
         end
     end
 end
+
+function QuantumESPRESSO.to_qe(card::KPointsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    content = "K_POINTS$(sep){ $(card.option) }\n"
+    if card.option in ("gamma", "automatic")
+        content *= "$(indent)$(to_qe(first(card.data)))"
+    else  # option in ("tpiba", "crystal", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
+        content *= "$(length(card.data))\n"
+        for x in card.data
+            content *= "$(indent)$(to_qe(x, sep = sep))\n"
+        end
+    end
+    return content
+end  # function to_qe
 # ============================================================================ #
 
 # ================================== Methods ================================= #
