@@ -74,7 +74,7 @@ function read_atomicpositions(lines)
         if !isnothing(match(r"\{.*\}", str))
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             atom, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
-            push!(atomic_positions, AtomicPosition(atom = parse(String, @f_str(atom)),
+            push!(atomic_positions, AtomicPosition(atom = string(atom),
                                                    pos = [parse(Float64, @f_str(p)) for p in (x, y, z)],
                                                    if_pos = [parse(Float64, @f_str(x)) for x in (if_pos1, if_pos2, if_pos3)]))
         else
@@ -83,7 +83,7 @@ function read_atomicpositions(lines)
                 @warn "No match found in the line $(line)!"
             else
                 atom, x, y, z = m.captures
-                push!(atomic_positions, AtomicPosition(atom = parse(String, @f_str(atom)),
+                push!(atomic_positions, AtomicPosition(atom = string(atom),
                 pos = [parse(Float64, @f_str(p)) for p in (x, y, z)]))
             end
         end
