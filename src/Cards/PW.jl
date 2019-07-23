@@ -42,6 +42,13 @@ end  # function to_qe
 struct AtomicSpeciesCard{T <: AbstractVector{<: AtomicSpecies}} <: Card
     data::T
 end
+
+function QuantumESPRESSO.to_qe(card::AtomicSpeciesCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
+    """
+    ATOMIC_SPECIES
+    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
+    """
+end  # function to_qe
 # ============================================================================ #
 
 # ============================== AtomicPosition ============================== #
