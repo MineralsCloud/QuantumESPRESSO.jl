@@ -22,7 +22,7 @@ function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
 end  # function to_dict
 
-function to_qe(nml::Namelist, indent::AbstractString = "    ")::String
+function to_qe(nml::Namelist; indent::AbstractString = "    ")::String
     entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
     """
     &$(name(nml))
