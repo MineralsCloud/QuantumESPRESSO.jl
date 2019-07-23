@@ -105,10 +105,18 @@ end  # function to_qe
 
 struct GammaPoint <: KPoint end
 
+function QuantumESPRESSO.to_qe(data::GammaPoint)::String
+    return ""
+end  # function to_qe
+
 @with_kw struct SpecialKPoint{A <: AbstractVector{Float64},B <: Real} <: KPoint
     coordinates::A; @assert length(coordinates) == 3
     weight::B
 end
+
+function QuantumESPRESSO.to_qe(data::SpecialKPoint; sep::AbstractString = " ")::String
+    return join(map(string, [data.coordinates; data.weight]), sep)
+end  # function to_qe
 
 @with_kw struct KPointsCard{A <: AbstractString,B <: AbstractVector{<: KPoint}} <: Card
     option::A = "tpiba"; @assert option in allowed_options(KPointsCard)
