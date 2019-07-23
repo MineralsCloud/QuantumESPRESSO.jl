@@ -22,13 +22,19 @@ function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
 end  # function to_dict
 
-function to_qe(nml::Namelist; indent::AbstractString = "    ")::String
-    entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
-    """
-    &$(name(nml))
-    $(join(["$(indent)$(key) = $(value)" for (key, value) in entries], "\n"))
-    /
-    """
+function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
+    entries = to_dict(nml)
+    content = "&$(name(typeof(nml)))\n"
+    for (key, value) in entries
+        if value isa AbstractArray
+            for (i, x) in enumerate(value)
+                content *= "$(indent)$(key)($i) = $(string(to_fortran(x)))\n"
+            end
+        else
+            content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
+        end
+    end
+    return content * "/\n"
 end  # function to_qe
 
 function Base.dump(path::AbstractPath, nml::Namelist)
