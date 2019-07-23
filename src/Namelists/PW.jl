@@ -13,6 +13,7 @@ module PW
 
 using Parameters: @with_kw
 
+using QuantumESPRESSO
 using QuantumESPRESSO.Namelists
 
 export ControlNamelist,
@@ -40,7 +41,7 @@ export ControlNamelist,
     etot_conv_thr::Float64 = 0.0001
     forc_conv_thr::Float64 = 0.001
     disk_io::String = "medium"
-    pseudo_dir::String = "\$HOME/espresso/pseudo/"
+    pseudo_dir::String = raw"$HOME/espresso/pseudo/"
     tefield::Bool = false
     dipfield::Bool = false
     lelfield::Bool = false
@@ -206,5 +207,11 @@ end  # struct IonsNamelist
     press_conv_thr::Float64 = 0.5
     cell_dofree::String = "all"
 end  # struct CellNamelist
+
+QuantumESPRESSO.name(::Type{<: ControlNamelist}) = :control
+QuantumESPRESSO.name(::Type{<: SystemNamelist}) = :system
+QuantumESPRESSO.name(::Type{<: ElectronsNamelist}) = :electrons
+QuantumESPRESSO.name(::Type{<: IonsNamelist}) = :ions
+QuantumESPRESSO.name(::Type{<: CellNamelist}) = :cell
 
 end

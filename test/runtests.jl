@@ -2,5 +2,6 @@ using QuantumESPRESSO
 using Test
 
 @testset "QuantumESPRESSO.jl" begin
-    # Write your own tests here.
+    include("NamelistsTests.jl")
+    include("FortranDataTypeTests.jl")
 end

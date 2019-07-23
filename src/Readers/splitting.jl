@@ -6,9 +6,11 @@ splitting:
 =#
 using DataStructures
 using FilePaths: AbstractPath
+using Parameters
 
 using QuantumESPRESSO.Readers.Namelists
 using QuantumESPRESSO.Readers.Cards.PW
+using QuantumESPRESSO.QuantumESPRESSOInput.PW
 
 export namelist_identifier_linenumbers,
     namelist_lineranges,
@@ -16,7 +18,8 @@ export namelist_identifier_linenumbers,
     card_lineranges,
     input_identifier_linenumbers,
     input_lineranges,
-    dispatch_readers
+    dispatch_readers,
+    form_input_object
 
 const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
@@ -166,6 +169,23 @@ function dispatch_readers(lines)
 end  # function dispatch_readers
 @iostream_to_lines dispatch_readers
 @path_to_iostream dispatch_readers
+
+function form_input_object(lines)
+    dict = dispatch_readers(lines)
+    d = Dict()
+    for v in values(dict["namelists"])
+        d[name(typeof(v))] = v
+    end  # for
+    for v in values(dict["cards"])
+        d[name(typeof(v))] = v
+    end  #
+    as = AtomicSpeciesCard([AtomicSpecies("Fe", 55.845, "Fe.pseudopotential")])
+    ap = AtomicPositionsCard(data = [AtomicPosition(atom = "Fe", pos = [0, 0, 0])])
+    cell = CellParametersCard(data = diagm(0 => [1, 1, 1]))
+    k = KPointsCard(data = [GammaPoint()])
+    pw = PWInput(system = SystemNamelist(celldm = ones(6)), atomicspecies = as, atomicpositions = ap, kpoints = k, cellparameters = cell)
+    return reconstrcut(pw, d)
+end  # function form_input_object
 
 isincreasing(r::UnitRange) = r.stop > r.start ? true : false
 

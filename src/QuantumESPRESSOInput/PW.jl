@@ -30,7 +30,7 @@ export PWInput,
     ions::IonsNamelist = IonsNamelist()
     cell::CellNamelist = CellNamelist()
     atomicspecies::AtomicSpeciesCard
-    atomicpositions::AtomicPositionCard
+    atomicpositions::AtomicPositionsCard
     kpoints::KPointsCard
     cellparameters::CellParametersCard
 end  # struct PWInput
