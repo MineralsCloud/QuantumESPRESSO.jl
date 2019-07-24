@@ -56,7 +56,7 @@ end  # struct ControlNamelist
 
 @with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
-    celldm::Vector{Float64}
+    celldm::Vector{Float64} = ones(6)
     A::Float64 = 0.0
     B::Float64 = 0.0
     C::Float64 = 0.0
