@@ -34,6 +34,7 @@ end  # function read_title_line
 function read_namelist(lines)
     result = Dict()
     namelist_name = read_title_line(first(lines), r"&(\w+)"i)
+    regex = r"\s*([\w\d]+)(?:\((.*)\))?\s*=\s*([^,\n]*)"i
     T = Dict(
         "control" => ControlNamelist,
         "system" => SystemNamelist,
@@ -46,12 +47,22 @@ function read_namelist(lines)
         # Use '=' as the delimiter, split the stripped line into a key and a value.
         # Skip this line if a line starts with '!' (comment) or this line is empty ('').
         isempty(str) || any(startswith(str, x) for x in ('!', '/')) && continue
-        k, v = split(str, '=', limit = 2)
-        k = strip(k)
-        v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
-        # `result` is a `Dict{Symbol,Any}`, we need to parse `FortranCode` from QuantumESPRESSO's input
-        # as type of the field of the namelist.
-        result[Symbol(k)] = parse(fieldtype(T, Symbol(k)), FortranCode(v))
+
+        m = match(regex, str)
+        isnothing(m) && error("Matching not found!")
+        captures = m.captures
+        k = Symbol(string(captures[1]))
+        if !isnothing(captures[2])  # An entry with multiple values, e.g., `celldm[2] = 3.0`.
+            val = parse(Float64, FortranCode(string(captures[3])))
+            # If `celldm` occurs before, push the new value, else create a vector of pairs.
+            index = parse(Int, captures[2])
+            haskey(result, k) ? push!(result[k], Pair(index, val)) : result[k] = [Pair(index, val)]
+        else
+            v = FortranCode(string(captures[3]))
+            # `result` is a `Dict{Symbol,Any}`, we need to parse `FortranCode` from QuantumESPRESSO's input
+            # as type of the field of the namelist.
+            result[k] = parse(fieldtype(T, k), v)
+        end
     end
     dict = merge(to_dict(T()), result)
     return T((dict[f] for f in fieldnames(T))...)
