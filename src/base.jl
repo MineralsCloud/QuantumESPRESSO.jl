@@ -5,8 +5,12 @@ base:
 - Date: 2019-07-22
 =#
 export InputEntry,
-    name
+    name,
+    to_qe
 
 abstract type InputEntry end
 
 name(::Type{<: InputEntry}) = error("Undefined name!")
+
+function to_qe
+end  # function to_qe
