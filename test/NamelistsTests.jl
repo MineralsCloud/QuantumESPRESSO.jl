@@ -18,7 +18,7 @@ ap = AtomicPositionsCard(data=[AtomicPosition(atom="Fe", pos=[0, 0, 0])])
 cell = CellParametersCard(data=diagm(0=>[1, 1, 1]))
 k = KPointsCard(option="gamma", data=[GammaPoint()])
 
-pw = PWInput(system=SystemNamelist(celldm=ones(6)), atomicspecies=as, atomicpositions=ap,
+pw = PWInput(system=SystemNamelist(celldm=collect(pairs(ones(6)))), atomicspecies=as, atomicpositions=ap,
     kpoints=k, cellparameters=cell
 )
 
