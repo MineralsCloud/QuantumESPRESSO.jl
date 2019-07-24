@@ -19,7 +19,7 @@ export INPUTPHNamelist,
     name
 
 @with_kw struct INPUTPHNamelist <: Namelist
-    amass::Vector{Float64} = zeros(5)
+    amass::Vector{Pair{Int, Float64}} = collect(pairs(zeros(5)))
     outdir::String = "./"
     prefix::String = "pwscf"
     niter_ph::Int = 100
