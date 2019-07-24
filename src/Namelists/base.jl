@@ -26,9 +26,9 @@ function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::
     entries = to_dict(nml)
     content = "&$(name(typeof(nml)))\n"
     for (key, value) in entries
-        if value isa AbstractArray
-            for (i, x) in enumerate(value)
-                content *= "$(indent)$(key)($i) = $(string(to_fortran(x)))\n"
+        if value isa Vector{<: Pair}
+            for x in value
+                content *= "$(indent)$(key)($(x.first)) = $(string(to_fortran(x.second)))\n"
             end
         else
             content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
