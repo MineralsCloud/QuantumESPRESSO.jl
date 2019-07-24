@@ -14,12 +14,13 @@ module PH
 using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
+import QuantumESPRESSO.Namelists.convertfield
 
 export INPUTPHNamelist,
     name
 
 @with_kw struct INPUTPHNamelist <: Namelist
-    amass::Vector{Float64} = zeros(5)
+    amass::Vector{Pair{Int, Float64}} = convertfield(zeros(5))
     outdir::String = "./"
     prefix::String = "pwscf"
     niter_ph::Int = 100
