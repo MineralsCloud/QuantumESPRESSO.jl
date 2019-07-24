@@ -14,6 +14,7 @@ module Namelists
 using Compat: isnothing
 
 using QuantumESPRESSO.FortranDataType
+using QuantumESPRESSO.Namelists
 using QuantumESPRESSO.Namelists.PW
 
 export read_namelist
@@ -27,12 +28,19 @@ function read_title_line(title_line, regex)
     else
         namelist_name = m.captures[1]  # The first parenthesized subgroup will be `namelist_name`.
     end
-    return titlecase(namelist_name)
+    return lowercase(namelist_name)
 end  # function read_title_line
 
 function read_namelist(lines)
     result = Dict()
     namelist_name = read_title_line(first(lines), r"&(\w+)"i)
+    T = Dict(
+        "control" => ControlNamelist,
+        "system" => SystemNamelist,
+        "electrons" => ElectronsNamelist,
+        "ions" => IonsNamelist,
+        "cell" => CellNamelist
+    )[namelist_name]
     for line in Iterators.drop(lines, 1)  # Drop the title line
         str = strip(line)
         # Use '=' as the delimiter, split the stripped line into a key and a value.
@@ -41,9 +49,12 @@ function read_namelist(lines)
         k, v = split(str, '=', limit = 2)
         k = strip(k)
         v = first(split(strip(rstrip(strip(v), ',')), '!'))  # Ignore trailing comma of the line
-        result[k] = v
+        # `result` is a `Dict{Symbol,Any}`, we need to parse `FortranCode` from QuantumESPRESSO's input
+        # as type of the field of the namelist.
+        result[Symbol(k)] = parse(fieldtype(T, Symbol(k)), FortranCode(v))
     end
-    return result
+    dict = merge(to_dict(T()), result)
+    return T((dict[f] for f in fieldnames(T))...)
 end  # function read_namelist
 
 end
