@@ -15,6 +15,7 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO
 using QuantumESPRESSO.Namelists
+import QuantumESPRESSO.Namelists.convertfield
 
 export ControlNamelist,
     SystemNamelist,
@@ -214,8 +215,4 @@ QuantumESPRESSO.name(::Type{<: ElectronsNamelist}) = :electrons
 QuantumESPRESSO.name(::Type{<: IonsNamelist}) = :ions
 QuantumESPRESSO.name(::Type{<: CellNamelist}) = :cell
 
-convertfield(x::Vector{Pair{Int, Float64}}) = x
-function convertfield(x::Union{AbstractVector{<: Real}, NTuple{N, <: Real} where {N}})
-    return collect(pairs(Float64.(x)))
-end  # function convertfield
 end
