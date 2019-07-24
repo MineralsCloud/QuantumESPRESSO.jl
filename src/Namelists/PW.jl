@@ -15,7 +15,6 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO
 using QuantumESPRESSO.Namelists
-import QuantumESPRESSO.Namelists.convertfield
 
 export ControlNamelist,
     SystemNamelist,
@@ -57,7 +56,7 @@ end  # struct ControlNamelist
 
 @with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
-    celldm::Vector{Pair{Int, Float64}} = convertfield(zeros(6)); @assert length(celldm) ≤ 6
+    celldm::Vector{Pair{Int, Float64}} = collect(pairs(zeros(6))); @assert length(celldm) ≤ 6
     A::Float64 = 0.0
     B::Float64 = 0.0
     C::Float64 = 0.0
@@ -68,9 +67,9 @@ end  # struct ControlNamelist
     ntyp::Int = 1
     nbnd::Int = 20
     tot_charge::Float64 = 0.0
-    starting_charge::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
+    starting_charge::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
     tot_magnetization::Float64 = -1.0
-    starting_magnetization::Vector{Pair{Int, Float64}} = convertfield(ones(ntyp))
+    starting_magnetization::Vector{Pair{Int, Float64}} = collect(pairs(ones(ntyp)))
     ecutwfc::Float64 = 90.0
     ecutrho::Float64 = 360.0
     ecutfock::Float64 = 120.0
@@ -107,21 +106,21 @@ end  # struct ControlNamelist
     nqx3::Int = 1
     lda_plus_u::Bool = false
     lda_plus_u_kind::Int = 0
-    Hubbard_U::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
-    Hubbard_J0::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
-    Hubbard_alpha::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
-    Hubbard_beta::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
-    Hubbard_J::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
+    Hubbard_U::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
+    Hubbard_J0::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
+    Hubbard_alpha::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
+    Hubbard_beta::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
+    Hubbard_J::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
     starting_ns_eigenvalue::Float64 = -1.0
     U_projection_type::String = "atomic"
     edir::Int = 1
     emaxpos::Float64 = 0.5
     eopreg::Float64 = 0.1
     eamp::Float64 = 0.001
-    angle1::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
-    angle2::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
+    angle1::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
+    angle2::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
     constrained_magnetization::String = "none"
-    fixed_magnetization::Vector{Pair{Int, Float64}} = convertfield(zeros(3))
+    fixed_magnetization::Vector{Pair{Int, Float64}} = collect(pairs(zeros(3)))
     lambda::Float64 = 1.0
     report::Int = 100
     lspinorb::Bool = false
@@ -134,8 +133,8 @@ end  # struct ControlNamelist
     vdw_corr::String = "none"
     london::Bool = false
     london_s6::Float64 = 0.75
-    london_c6::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
-    london_rvdw::Vector{Pair{Int, Float64}} = convertfield(zeros(ntyp))
+    london_c6::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
+    london_rvdw::Vector{Pair{Int, Float64}} = collect(pairs(zeros(ntyp)))
     london_rcut::Int = 200
     ts_vdw_econv_thr::Float64 = 1e-06
     ts_vdw_isolated::Bool = false
@@ -172,7 +171,7 @@ end  # struct SystemNamelist
     diago_david_ndim::Int = 4
     diago_full_acc::Bool = false
     efield::Float64 = 0.0
-    efield_cart::Vector{Pair{Int, Float64}} = convertfield([0.0, 0.0, 0.0])
+    efield_cart::Vector{Pair{Int, Float64}} = collect(pairs([0.0, 0.0, 0.0]))
     efield_phase::String = "none"
     startingpot::String = "atomic"
     startingwfc::String = "atomic+random"

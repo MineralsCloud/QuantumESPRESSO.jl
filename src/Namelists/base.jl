@@ -51,8 +51,3 @@ function Base.dump(path::AbstractPath, nml::Namelist)
         end  # if-elseif-else
     end
 end  # function Base.dump
-
-convertfield(x::Vector{Pair{Int, Float64}}) = x
-function convertfield(x::Union{AbstractVector{<: Real}, NTuple{N, <: Real} where {N}})
-    return collect(pairs(Float64.(x)))
-end  # function convertfield
