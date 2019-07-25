@@ -13,25 +13,22 @@ module FortranDataType
 
 using Compat: isnothing
 
-export FortranCode,
-    @f_str,
-    guesstype,
-    to_fortran
+export FortranCode, @f_str, guesstype, to_fortran
 
 const FORTRAN_INT = r"(?<=\s|^)([-+]?\d+)(?=\s|$)"
 const FORTRAN_FLOAT = r"[-+]?\d*\.?\d+(([ed])[-+]?\d+)?"i
 const FORTRAN_BOOL = r"\.(true|false|t|f)\."i
-const FORTRAN_STRING = r"([\"'])((?:\\\1|.)*?)\1"  # Referenced from https://stackoverflow.com/a/375362/3260253
+const FORTRAN_STRING = r"([\"'])((?:\\\1|.)*?)\1" # Referenced from https://stackoverflow.com/a/375362/3260253
 const FORTRAN_COMPLEX = r"\([-+]?\d*\.?\d+(([ed])[-+]?\d+)?,\s*[-+]?\d*\.?\d+(([ed])[-+]?\d+)?\)"i
 
-struct FortranCode{T <: AbstractString}
+struct FortranCode{T<:AbstractString}
     data::T
-end  # struct FortranCode
+end # struct FortranCode
 
 macro f_str(str)
     # Must escape the variable to return it to the calling context and executed there.
     return :(FortranCode($(esc(str))))
-end  # macro f_str
+end # macro f_str
 
 """
     guesstype(s::FortranCode)
@@ -52,52 +49,55 @@ function guesstype(s::FortranCode)
     str = s.data
     # Must put `Complex` in front of `AbstractFloat`, or the complex number will be matched by 2
     # floats. Must put `String` in front of `Number`s, or strings containing numbers will be matched.
-    for (regex, type) in zip((FORTRAN_STRING, FORTRAN_INT, FORTRAN_COMPLEX, FORTRAN_FLOAT, FORTRAN_BOOL), (String, Integer, Complex, AbstractFloat, Bool))
+    for (regex, type) in zip(
+        (FORTRAN_STRING, FORTRAN_INT, FORTRAN_COMPLEX, FORTRAN_FLOAT, FORTRAN_BOOL),
+        (String, Integer, Complex, AbstractFloat, Bool)
+    )
         if !isnothing(match(regex, str))
             if regex == FORTRAN_FLOAT
                 # 'd' and no-'d' returns double precision, 'e' returns single precision
                 occursin(r"e"i, str) ? (return Float32) : return Float64
             elseif regex == FORTRAN_COMPLEX
                 r1, r2 = split(str, ",")
-                T1, T2 = guesstype(@f_str(r1[2:end])), guesstype(@f_str(r2[1:end - 1]))
+                T1, T2 = guesstype(@f_str(r1[2:end])), guesstype(@f_str(r2[1:end-1]))
                 return Complex{Base.promote_type(T1, T2)}
             else
                 return type
-            end  # if-else
-        end  # if
+            end # if-else
+        end # if
     end
     throw(MatchFailure("No type could be suggested for '$(str)'!"))
-end  # function guesstype
+end # function guesstype
 
 function captured(regex, str)
     m = match(regex, str)
     isnothing(m) && throw(MatchFailure("Cannot match Fortran data $(str)!"))
     return m.captures
-end  # function captured
+end # function captured
 
-function Base.parse(::Type{T}, s::FortranCode) where {T <: Integer}
+function Base.parse(::Type{T}, s::FortranCode) where {T<:Integer}
     str = s.data
     captures = captured(FORTRAN_INT, str)
     isabstracttype(T) && return parse(Int, captures[1])
     return parse(T, captures[1])
 end
-function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractFloat}
+function Base.parse(::Type{T}, s::FortranCode) where {T<:AbstractFloat}
     str = s.data
     parse(T, replace(str, r"d"i => "e"))
 end
-function Base.parse(::Type{Complex{T}}, s::FortranCode) where {T <: AbstractFloat}
+function Base.parse(::Type{Complex{T}}, s::FortranCode) where {T<:AbstractFloat}
     str = s.data
     r1, r2 = split(str, ",")
-    a, b = parse(T, @f_str(r1[2:end])), parse(T, @f_str(r2[1:end - 1]))
+    a, b = parse(T, @f_str(r1[2:end])), parse(T, @f_str(r2[1:end-1]))
     return Complex(a, b)
 end
-function Base.parse(::Type{Bool}, s::FortranCode) where {T <: AbstractFloat}
+function Base.parse(::Type{Bool}, s::FortranCode) where {T<:AbstractFloat}
     str = s.data
     captures = captured(FORTRAN_BOOL, str)
     captures[1] in ("true", "t") && return true
     captures[1] in ("false", "f") && return false
 end
-function Base.parse(::Type{T}, s::FortranCode) where {T <: AbstractString}
+function Base.parse(::Type{T}, s::FortranCode) where {T<:AbstractString}
     str = s.data
     captures = captured(FORTRAN_STRING, str)
     return string(captures[2])
@@ -105,26 +105,26 @@ end
 
 function to_fortran(v::Int)
     FortranCode(string(v))
-end  # function to_fortran
+end # function to_fortran
 function to_fortran(v::Float32; scientific::Bool = false)
     str = string(v)
     scientific && return FortranCode(replace(str, r"f"i => "E"))
     return FortranCode(string(v))
-end  # function to_fortran
+end # function to_fortran
 function to_fortran(v::Float64; scientific::Bool = false)
     str = string(v)
     scientific && return FortranCode(replace(str, r"e"i => "D"))
     return FortranCode(string(v))
-end  # function to_fortran
+end # function to_fortran
 function to_fortran(v::Bool)
     v ? (return FortranCode(".true.")) : return FortranCode(".false.")
-end  # function to_fortran
+end # function to_fortran
 function to_fortran(v::AbstractString)
     return FortranCode("'$(v)'")
-end  # function to_fortran
+end # function to_fortran
 
 function Base.string(s::FortranCode)
     return string(s.data)
-end  # function Base.string
+end # function Base.string
 
 end
