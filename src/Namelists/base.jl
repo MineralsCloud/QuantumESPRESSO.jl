@@ -32,19 +32,6 @@ function dropdefault(nml::Namelist)
     return result
 end
 
-function QuantumESPRESSO.to_qe(dict::AbstractDict; indent::AbstractString = "    ")::String
-    for (key, value) in dict
-        if value isa Vector{<:Pair}
-            for x in value
-                content *= "$(indent)$(key)($(x.first)) = $(string(to_fortran(x.second)))\n"
-            end
-        else
-            content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
-        end
-    end
-    return content * "/\n"
-end
-
 function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
     return "&$(name(typeof(nml)))\n" * to_qe(to_dict(nml); indent = indent)
 end # function to_qe
