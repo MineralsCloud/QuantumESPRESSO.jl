@@ -11,7 +11,7 @@ using Parameters: type2dict
 using QuantumESPRESSO
 using QuantumESPRESSO.FortranDataType
 
-export Namelist, to_dict
+export Namelist, to_dict, dropdefault
 
 abstract type Namelist <: InputEntry end
 
@@ -20,6 +20,17 @@ QuantumESPRESSO.name(::Type{<:Namelist}) = error("Undefined name!")
 function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
 end # function to_dict
+
+function dropdefault(nml::Namelist)
+    default = typeof(nml)()
+    result = Dict{Symbol,Any}()
+    for (k, v) in to_dict(nml)
+        if v != getfield(default, :k)
+            result[k] = v
+        end
+    end
+    return result
+end
 
 function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
     entries = to_dict(nml)
