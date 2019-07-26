@@ -33,7 +33,7 @@ function dropdefault(nml::Namelist)
 end
 
 function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
-    return "&$(name(typeof(nml)))\n" * to_qe(to_dict(nml); indent = indent)
+    return "&$(name(typeof(nml)))\n" * to_qe(to_dict(nml); indent = indent) * "/\n"
 end # function to_qe
 
 function Base.dump(path::AbstractPath, nml::Namelist)

@@ -20,5 +20,5 @@ function to_qe(dict::AbstractDict; indent::AbstractString = "    ")::String
             content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
         end
     end
-    return content * "/\n"
+    return content
 end
