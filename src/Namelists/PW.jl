@@ -208,10 +208,4 @@ end  # struct IonsNamelist
     cell_dofree::String = "all"
 end  # struct CellNamelist
 
-QuantumESPRESSO.name(::Type{<: ControlNamelist}) = :control
-QuantumESPRESSO.name(::Type{<: SystemNamelist}) = :system
-QuantumESPRESSO.name(::Type{<: ElectronsNamelist}) = :electrons
-QuantumESPRESSO.name(::Type{<: IonsNamelist}) = :ions
-QuantumESPRESSO.name(::Type{<: CellNamelist}) = :cell
-
 end

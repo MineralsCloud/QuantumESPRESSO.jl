@@ -15,8 +15,6 @@ export Namelist, to_dict, dropdefault
 
 abstract type Namelist <: InputEntry end
 
-QuantumESPRESSO.name(::Type{<:Namelist}) = error("Undefined name!")
-
 function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
 end # function to_dict

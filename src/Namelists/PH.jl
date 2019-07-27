@@ -15,8 +15,7 @@ using Parameters: @with_kw
 
 using QuantumESPRESSO.Namelists
 
-export INPUTPHNamelist,
-    name
+export INPUTPHNamelist
 
 @with_kw struct INPUTPHNamelist <: Namelist
     amass::Vector{Pair{Int, Float64}} = collect(pairs(zeros(5)))
@@ -76,7 +75,5 @@ export INPUTPHNamelist,
     # dvscf_star::String = 1
     # drho_star::String = 1
 end  # struct INPUTPHNamelist
-
-name(::Type{<: INPUTPHNamelist}) = :inputph
 
 end

@@ -12,8 +12,6 @@ export Card, option, allowed_options
 
 abstract type Card <: InputEntry end
 
-QuantumESPRESSO.name(::Type{<:Card}) = error("Undefined name!")
-
 option(card::Card) = getfield(card, :option)
 
 allowed_options(::Type{<:Card}) = nothing
