@@ -12,8 +12,6 @@ export Card, option, allowed_options
 
 abstract type Card <: InputEntry end
 
-allowed_options(::Type{<:Card}) = nothing
-
 function Parameters.reconstruct(card::Card, newdict::AbstractDict)
     :option in keys && error("If you want to change the option of a card, reconstruct a new one!")
     return reconstruct(card, newdict)
