@@ -12,8 +12,6 @@ export Card, option, allowed_options
 
 abstract type Card <: InputEntry end
 
-option(card::Card) = getfield(card, :option)
-
 allowed_options(::Type{<:Card}) = nothing
 
 function Parameters.reconstruct(card::Card, newdict::AbstractDict)
