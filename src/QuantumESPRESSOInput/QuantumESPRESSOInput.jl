@@ -11,7 +11,10 @@ julia>
 """
 module QuantumESPRESSOInput
 
-include("base.jl")
+export Input
+
+abstract type Input end
+
 include("PW.jl")
 
 end
