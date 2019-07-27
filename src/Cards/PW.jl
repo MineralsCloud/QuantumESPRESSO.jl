@@ -11,7 +11,6 @@ julia>
 """
 module PW
 
-using IterTools: fieldvalues
 using Parameters: @with_kw
 
 using QuantumESPRESSO

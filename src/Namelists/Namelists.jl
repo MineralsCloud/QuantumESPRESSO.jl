@@ -15,7 +15,7 @@ using FilePaths: AbstractPath, extension, exists
 import JSON
 using Parameters: type2dict
 
-using QuantumESPRESSO
+using QuantumESPRESSO: InputEntry
 using QuantumESPRESSO.FortranDataType
 
 export Namelist, to_dict, dropdefault

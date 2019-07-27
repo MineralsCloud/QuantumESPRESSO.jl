@@ -13,8 +13,7 @@ module PW
 
 using Parameters: @with_kw
 
-using QuantumESPRESSO
-using QuantumESPRESSO.Namelists
+using QuantumESPRESSO.Namelists: Namelist
 
 export ControlNamelist,
     SystemNamelist,
