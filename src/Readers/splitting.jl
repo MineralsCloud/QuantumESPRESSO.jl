@@ -8,6 +8,7 @@ using DataStructures
 using FilePaths: AbstractPath
 using Parameters
 
+using QuantumESPRESSO: name
 using QuantumESPRESSO.Readers.Namelists
 using QuantumESPRESSO.Readers.Cards.PW
 using QuantumESPRESSO.QuantumESPRESSOInput.PW
