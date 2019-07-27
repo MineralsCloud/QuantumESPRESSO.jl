@@ -19,8 +19,6 @@ julia>
 ```
 """
 name(::Type{<: InputEntry}) = error("Undefined name!")
-name(::Type{<: Namelist}) = error("Undefined name!")
-name(::Type{<: Card}) = error("Undefined name!")
 name(::Type{<: ControlNamelist}) = :control
 name(::Type{<: SystemNamelist}) = :system
 name(::Type{<: ElectronsNamelist}) = :electrons
