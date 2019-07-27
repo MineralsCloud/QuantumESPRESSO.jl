@@ -11,7 +11,7 @@ using Parameters: type2dict
 using QuantumESPRESSO
 using QuantumESPRESSO.FortranDataType
 
-export Namelist, to_dict
+export Namelist, to_dict, dropdefault
 
 abstract type Namelist <: InputEntry end
 
@@ -21,19 +21,19 @@ function to_dict(nml::Namelist)::Dict{Symbol,Any}
     return type2dict(nml)
 end # function to_dict
 
-function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
-    entries = to_dict(nml)
-    content = "&$(name(typeof(nml)))\n"
-    for (key, value) in entries
-        if value isa Vector{<:Pair}
-            for x in value
-                content *= "$(indent)$(key)($(x.first)) = $(string(to_fortran(x.second)))\n"
-            end
-        else
-            content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
+function dropdefault(nml::Namelist)
+    default = typeof(nml)()
+    result = Dict{Symbol,Any}()
+    for (k, v) in to_dict(nml)
+        if v != getfield(default, :k)
+            result[k] = v
         end
     end
-    return content * "/\n"
+    return result
+end
+
+function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
+    return "&$(name(typeof(nml)))\n" * to_qe(to_dict(nml); indent = indent) * "/\n"
 end # function to_qe
 
 function Base.dump(path::AbstractPath, nml::Namelist)
