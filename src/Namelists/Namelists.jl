@@ -30,7 +30,7 @@ function dropdefault(nml::Namelist)
     default = typeof(nml)()
     result = Dict{Symbol,Any}()
     for (k, v) in to_dict(nml)
-        if v != getfield(default, :k)
+        if v != getfield(default, k)
             result[k] = v
         end
     end

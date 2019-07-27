@@ -1,3 +1,5 @@
+using IterTools: fieldvalues
+using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Namelists
 using QuantumESPRESSO.Namelists.PW
 using QuantumESPRESSO.Cards
@@ -21,6 +23,7 @@ julia>
 ```
 """
 function to_qe(dict::AbstractDict; indent::AbstractString = "    ")::String
+    content = ""
     for (key, value) in dict
         if value isa Vector{<: Pair}
             for x in value
@@ -87,7 +90,9 @@ function to_qe(input::PWInput; indent::AbstractString = "    ", sep::AbstractStr
     else
         str = ""
         for namelist in namelists(input)
-            str *= to_qe(to_dict(namelist))
+            str *= "&" * uppercase(string(name(typeof(namelist)))) * "\n"
+            str *= to_qe(dropdefault(namelist))
+            str *= "/\n"
         end
         for card in cards(input)
             str *= to_qe(card)
