@@ -13,8 +13,7 @@ module PW
 
 using Parameters: @with_kw
 
-using QuantumESPRESSO
-using QuantumESPRESSO.Namelists
+using QuantumESPRESSO.Namelists: Namelist
 
 export ControlNamelist,
     SystemNamelist,
@@ -207,11 +206,5 @@ end  # struct IonsNamelist
     press_conv_thr::Float64 = 0.5
     cell_dofree::String = "all"
 end  # struct CellNamelist
-
-QuantumESPRESSO.name(::Type{<: ControlNamelist}) = :control
-QuantumESPRESSO.name(::Type{<: SystemNamelist}) = :system
-QuantumESPRESSO.name(::Type{<: ElectronsNamelist}) = :electrons
-QuantumESPRESSO.name(::Type{<: IonsNamelist}) = :ions
-QuantumESPRESSO.name(::Type{<: CellNamelist}) = :cell
 
 end
