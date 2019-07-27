@@ -91,53 +91,6 @@ end
 # ============================================================================ #
 
 # ================================== Methods ================================= #
-function QuantumESPRESSO.to_qe(data::AtomicSpecies; sep::AbstractString = " ")::String
-    return join(map(string, fieldvalues(data)), sep)
-end  # function to_qe
-function QuantumESPRESSO.to_qe(card::AtomicSpeciesCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    """
-    ATOMIC_SPECIES
-    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
-    """
-end  # function to_qe
-function QuantumESPRESSO.to_qe(data::AtomicPosition; sep::AbstractString = " ", with_if_pos::Bool = false)::String
-    with_if_pos && return join(map(string, [data.atom; data.pos; data.if_pos]), sep)
-    return join(map(string, [data.atom; data.pos]), sep)
-end  # function to_qe
-function QuantumESPRESSO.to_qe(card::AtomicPositionsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    """
-    ATOMIC_POSITIONS$(sep){ $(card.option) }
-    $(join(["$(indent)$(to_qe(x; sep = sep))" for x in card.data], "\n"))
-    """
-end  # function to_qe
-function QuantumESPRESSO.to_qe(card::CellParametersCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    """
-    CELL_PARAMETERS$(sep){ $(card.option) }
-    $(join(["$(indent)$(join(row, sep))" for row in eachrow(card.data)], "\n"))
-    """
-end  # function to_qe
-function QuantumESPRESSO.to_qe(data::MonkhorstPackGrid; sep::AbstractString = " ")::String
-    return join(map(string, [data.grid; data.offsets]), sep)
-end  # function to_qe
-function QuantumESPRESSO.to_qe(data::GammaPoint)::String
-    return ""
-end  # function to_qe
-function QuantumESPRESSO.to_qe(data::SpecialKPoint; sep::AbstractString = " ")::String
-    return join(map(string, [data.coordinates; data.weight]), sep)
-end  # function to_qe
-function QuantumESPRESSO.to_qe(card::KPointsCard; indent::AbstractString = "    ", sep::AbstractString = " ")::String
-    content = "K_POINTS$(sep){ $(card.option) }\n"
-    if card.option in ("gamma", "automatic")
-        content *= "$(indent)$(to_qe(first(card.data)))"
-    else  # option in ("tpiba", "crystal", "tpiba_b", "crystal_b", "tpiba_c", "crystal_c")
-        content *= "$(length(card.data))\n"
-        for x in card.data
-            content *= "$(indent)$(to_qe(x, sep = sep))\n"
-        end
-    end
-    return content
-end  # function to_qe
-
 Cards.option(card::AtomicSpeciesCard) = nothing
 
 Cards.allowed_options(::Type{<: AtomicPositionsCard}) = ("alat", "bohr", "angstrom", "crystal", "crystal_sg")

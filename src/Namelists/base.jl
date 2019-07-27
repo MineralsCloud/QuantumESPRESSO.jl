@@ -32,10 +32,6 @@ function dropdefault(nml::Namelist)
     return result
 end
 
-function QuantumESPRESSO.to_qe(nml::Namelist; indent::AbstractString = "    ")::String
-    return "&$(name(typeof(nml)))\n" * to_qe(to_dict(nml); indent = indent) * "/\n"
-end # function to_qe
-
 function Base.dump(path::AbstractPath, nml::Namelist)
     exists(path) || touch(path)
     entries = Dict(key => to_fortran(value) for (key, value) in to_dict(nml))
