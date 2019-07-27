@@ -1,5 +1,9 @@
 module QuantumESPRESSO
 
+export InputEntry
+
+abstract type InputEntry end
+
 include("FortranDataType.jl")
 include("base.jl")
 include("Namelists/Namelists.jl")
