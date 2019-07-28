@@ -91,7 +91,7 @@ function Base.parse(::Type{Complex{T}}, s::FortranCode) where {T<:AbstractFloat}
     a, b = parse(T, @f_str(r1[2:end])), parse(T, @f_str(r2[1:end-1]))
     return Complex(a, b)
 end
-function Base.parse(::Type{Bool}, s::FortranCode) where {T<:AbstractFloat}
+function Base.parse(::Type{Bool}, s::FortranCode)
     str = s.data
     captures = captured(FORTRAN_BOOL, str)
     captures[1] in ("true", "t") && return true
