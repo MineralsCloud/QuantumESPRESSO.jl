@@ -12,9 +12,9 @@ julia>
 module PW
 
 using Compat: isnothing
+using Fortran90Namelists.FortranToJulia: FortranData
 
 using QuantumESPRESSO.Cards.PW
-using QuantumESPRESSO.FortranDataType
 
 export read_atomicspecies,
     read_atomicpositions,
@@ -58,7 +58,7 @@ function read_atomicspecies(lines)
             @warn "No match found in the line $(line)!"
         else
             atom, mass, pseudopotential = m.captures
-            push!(atomic_species, AtomicSpecies(string(atom), parse(Float64, @f_str(mass)), string(pseudopotential)))
+            push!(atomic_species, AtomicSpecies(string(atom), parse(Float64, FortranData(mass)), string(pseudopotential)))
         end
     end
     return AtomicSpeciesCard(atomic_species)
@@ -75,8 +75,8 @@ function read_atomicpositions(lines)
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*\{\s*([01])?\s*([01])?\s*([01])?\s*\}", str)
             atom, x, y, z, if_pos1, if_pos2, if_pos3 = m.captures
             push!(atomic_positions, AtomicPosition(atom = string(atom),
-                                                   pos = [parse(Float64, @f_str(p)) for p in (x, y, z)],
-                                                   if_pos = [parse(Float64, @f_str(x)) for x in (if_pos1, if_pos2, if_pos3)]))
+                                                   pos = [parse(Float64, FortranData(p)) for p in (x, y, z)],
+                                                   if_pos = [parse(Float64, FortranData(x)) for x in (if_pos1, if_pos2, if_pos3)]))
         else
             m = match(r"(\w+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)\s*(-?\d+\.\d+)", str)
             if isnothing(m)
@@ -84,7 +84,7 @@ function read_atomicpositions(lines)
             else
                 atom, x, y, z = m.captures
                 push!(atomic_positions, AtomicPosition(atom = string(atom),
-                pos = [parse(Float64, @f_str(p)) for p in (x, y, z)]))
+                pos = [parse(Float64, FortranData(p)) for p in (x, y, z)]))
             end
         end
     end
@@ -102,7 +102,7 @@ function read_kpoints(lines)
             isnothing(str) && continue
 
             sp = split(str)
-            grid, offsets = [parse(Int, @f_str(x)) for x in sp[1:3]], [parse(Int, @f_str(x)) for x in sp[4:6]]
+            grid, offsets = [parse(Int, FortranData(x)) for x in sp[1:3]], [parse(Int, FortranData(x)) for x in sp[4:6]]
             return KPointsCard(option = string(option), data = [MonkhorstPackGrid(grid = grid, offsets = offsets)])
         end
     end
@@ -114,7 +114,7 @@ function read_kpoints(lines)
             isnothing(str) && continue
 
             sp = split(str)
-            length(sp) == 1 && (nks = parse(Int, @f_str(first(sp))))
+            length(sp) == 1 && (nks = parse(Int, FortranData(first(sp))))
             (@isdefined nks) && break
         end
         for line in lines
@@ -123,7 +123,7 @@ function read_kpoints(lines)
 
             sp = split(str)
             length ≠ 4 && error("Unknown input given!")
-            push!(kpoints, SpecialKPoint(collect(parse(Float64, @f_str(x)) for x in sp[1:3]), parse(Float64, @f_str(sp[4]))))
+            push!(kpoints, SpecialKPoint(collect(parse(Float64, FortranData(x)) for x in sp[1:3]), parse(Float64, FortranData(sp[4]))))
         end
         length(kpoints) ≠ nks && throw(DimensionMismatch("The length of k-points $(length(kpoints)) is not equal to $(nks)!"))
         return KPointsCard(option = string(option), data = kpoints)
@@ -143,7 +143,7 @@ function read_cellparameters(lines)
         m = match(r"(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*(-?\d*\.\d*)\s*", str)
         if !isnothing(m)
             v1, v2, v3 = m.captures
-            cell_params = vcat(cell_params, [parse(Float64, @f_str(x)) for x in (v1, v2, v3)])
+            cell_params = vcat(cell_params, [parse(Float64, FortranData(x)) for x in (v1, v2, v3)])
         end
     end
     return CellParametersCard(string(option), reshape(cell_params, (3, 3)))

@@ -12,8 +12,8 @@ julia>
 module Namelists
 
 using Compat: isnothing
+using Fortran90Namelists.FortranToJulia: FortranData
 
-using QuantumESPRESSO.FortranDataType
 using QuantumESPRESSO.Namelists
 using QuantumESPRESSO.Namelists.PW
 
@@ -53,13 +53,13 @@ function read_namelist(lines)
         captures = m.captures
         k = Symbol(string(captures[1]))
         if !isnothing(captures[2])  # An entry with multiple values, e.g., `celldm[2] = 3.0`.
-            val = parse(Float64, FortranCode(string(captures[3])))
+            val = parse(Float64, FortranData(string(captures[3])))
             # If `celldm` occurs before, push the new value, else create a vector of pairs.
             index = parse(Int, captures[2])
             haskey(result, k) ? push!(result[k], Pair(index, val)) : result[k] = [Pair(index, val)]
         else
-            v = FortranCode(string(captures[3]))
-            # `result` is a `Dict{Symbol,Any}`, we need to parse `FortranCode` from QuantumESPRESSO's input
+            v = FortranData(string(captures[3]))
+            # `result` is a `Dict{Symbol,Any}`, we need to parse `FortranData` from QuantumESPRESSO's input
             # as type of the field of the namelist.
             result[k] = parse(fieldtype(T, k), v)
         end
