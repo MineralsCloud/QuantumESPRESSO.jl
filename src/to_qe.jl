@@ -1,5 +1,6 @@
+using Fortran90Namelists.JuliaToFortran: to_fortran
 using IterTools: fieldvalues
-using QuantumESPRESSO.FortranDataType
+
 using QuantumESPRESSO.Namelists
 using QuantumESPRESSO.Namelists.PW
 using QuantumESPRESSO.Cards
