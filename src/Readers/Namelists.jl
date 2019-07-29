@@ -56,7 +56,7 @@ function read_namelist(lines)
             val = parse(Float64, FortranData(string(captures[3])))
             # If `celldm` occurs before, push the new value, else create a vector of pairs.
             index = parse(Int, captures[2])
-            haskey(result, k) ? push!(result[k], Pair(index, val)) : result[k] = [Pair(index, val)]
+            haskey(result, k) ? result[k] = fillbyindex!(result[k], Pair(index, val)) : result[k] = fillbyindex!([], Pair(index, val))
         else
             v = FortranData(string(captures[3]))
             # `result` is a `Dict{Symbol,Any}`, we need to parse `FortranData` from QuantumESPRESSO's input
@@ -67,5 +67,19 @@ function read_namelist(lines)
     dict = merge(to_dict(T()), result)
     return T((dict[f] for f in fieldnames(T))...)
 end  # function read_namelist
+
+function fillbyindex!(x::AbstractVector, p::Pair{Int, T}) where {T}
+    index, value = p
+    if isempty(x)
+        x = Vector{Union{Missing, T}}(missing, index)
+    else
+        if index > length(x)
+            append!(x, Vector{Union{Missing, T}}(missing, index - length(x)))
+        else
+        end
+    end
+    x[index] = value
+    return x
+end
 
 end
