@@ -18,7 +18,7 @@ using QuantumESPRESSO.Namelists: Namelist
 export INPUTPHNamelist
 
 @with_kw struct INPUTPHNamelist <: Namelist
-    amass::Vector{Pair{Int, Float64}} = collect(pairs(zeros(5)))
+    amass::Vector{Union{Missing, Float64}} = zeros(5)
     outdir::String = "./"
     prefix::String = "pwscf"
     niter_ph::Int = 100

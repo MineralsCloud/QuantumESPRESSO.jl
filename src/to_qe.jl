@@ -26,9 +26,10 @@ julia>
 function to_qe(dict::AbstractDict; indent::AbstractString = "    ")::String
     content = ""
     for (key, value) in dict
-        if value isa Vector{<: Pair}
-            for x in value
-                content *= "$(indent)$(key)($(x.first)) = $(string(to_fortran(x.second)))\n"
+        if value isa Vector
+            for (i, x) in enumerate(value)
+                ismissing(x) && continue
+                content *= "$(indent)$(key)($i) = $(string(to_fortran(x)))\n"
             end
         else
             content *= "$(indent)$(key) = $(string(to_fortran(value)))\n"
