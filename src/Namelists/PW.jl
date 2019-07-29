@@ -55,7 +55,7 @@ end  # struct ControlNamelist
 
 @with_kw struct SystemNamelist <: Namelist
     ibrav::Int = 0
-    celldm::Vector{Union{Missing, Float64}}; @assert length(celldm) ≤ 6
+    celldm::Vector{Union{Missing, Float64}} = zeros(6); @assert length(celldm) ≤ 6
     A::Float64 = 0.0
     B::Float64 = 0.0
     C::Float64 = 0.0
