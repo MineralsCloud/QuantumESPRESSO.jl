@@ -14,7 +14,7 @@ module PW
 using Compat: isnothing
 using Fortran90Namelists.FortranToJulia: FortranData
 
-using QuantumESPRESSO.Cards.PW
+using QuantumESPRESSOBase.Cards.PW
 
 export read_atomicspecies,
     read_atomicpositions,
