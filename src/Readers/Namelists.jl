@@ -14,8 +14,8 @@ module Namelists
 using Compat: isnothing
 using Fortran90Namelists.FortranToJulia: FortranData
 
-using QuantumESPRESSO.Namelists
-using QuantumESPRESSO.Namelists.PW
+using QuantumESPRESSOBase.Namelists
+using QuantumESPRESSOBase.Namelists.PW
 
 export read_namelist
 

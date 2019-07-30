@@ -108,6 +108,14 @@ uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
+[[QuantumESPRESSOBase]]
+deps = ["FilePaths", "Fortran90Namelists", "IterTools", "JSON", "Parameters"]
+git-tree-sha1 = "dc06fb17cd978a6655ac0990d46f2bf54f0e9a68"
+repo-rev = "master"
+repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOBase.jl.git"
+uuid = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
+version = "0.1.0"
+
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"

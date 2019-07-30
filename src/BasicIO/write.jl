@@ -4,8 +4,8 @@ write:
 - Author: singularitti
 - Date: 2019-07-29
 =#
-using QuantumESPRESSO
-using QuantumESPRESSO.QuantumESPRESSOInput.PW
+using QuantumESPRESSOBase
+using QuantumESPRESSOBase.QuantumESPRESSOInput.PW
 
 function Base.write(io::IO, pw::PWInput, debug::Bool = true)
     write(io, to_qe(pw, debug = debug))

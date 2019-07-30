@@ -5,13 +5,12 @@ splitting:
 - Date: 2019-07-17
 =#
 using DataStructures
-using Parameters
 
-using QuantumESPRESSO: name
+using QuantumESPRESSOBase: name
+using QuantumESPRESSOBase.QuantumESPRESSOInput.PW
+using QuantumESPRESSO.BasicIO: @iostream_to_lines, @path_to_iostream
 using QuantumESPRESSO.Readers.Namelists
 using QuantumESPRESSO.Readers.Cards.PW
-using QuantumESPRESSO.QuantumESPRESSOInput.PW
-using QuantumESPRESSO.BasicIO: @iostream_to_lines, @path_to_iostream
 
 export namelist_identifier_linenumbers,
     namelist_lineranges,
