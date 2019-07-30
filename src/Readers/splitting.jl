@@ -5,13 +5,13 @@ splitting:
 - Date: 2019-07-17
 =#
 using DataStructures
-using FilePaths: AbstractPath
 using Parameters
 
 using QuantumESPRESSO: name
 using QuantumESPRESSO.Readers.Namelists
 using QuantumESPRESSO.Readers.Cards.PW
 using QuantumESPRESSO.QuantumESPRESSOInput.PW
+using QuantumESPRESSO.BasicIO: @iostream_to_lines, @path_to_iostream
 
 export namelist_identifier_linenumbers,
     namelist_lineranges,
@@ -25,25 +25,6 @@ export namelist_identifier_linenumbers,
 const NAMELIST_END = '/'  # Not a regex anymore, since I strip everyline
 const NAMELIST_STARTS = "&CONTROL", "&SYSTEM", "&ELECTRONS", "&IONS", "&CELL"  # regex: "&(.[^,]*)"
 const CARD_STARTS = "ATOMIC_SPECIES", "ATOMIC_POSITIONS", "K_POINTS", "CELL_PARAMETERS", "OCCUPATIONS", "CONSTRAINTS", "ATOMIC_FORCES"
-
-macro iostream_to_lines(methodname)
-    return quote
-        function $(esc(methodname))(io::IOStream)
-            $(esc(methodname))(readlines(io))
-        end
-    end
-end  # macro iostream_to_lines
-
-macro path_to_iostream(methodname)
-    return quote
-        function $(esc(methodname))(path::AbstractPath)
-            isfile(path) && isreadable(path) || error("File $(path) not readable!")
-            open(path, "r") do io
-                $(esc(methodname))(io)
-            end
-        end
-    end
-end  # macro path_to_iostream
 
 function namelist_identifier_linenumbers(lines)
     records = OrderedDict()
