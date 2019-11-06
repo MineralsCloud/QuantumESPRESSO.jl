@@ -8,4 +8,6 @@
 [![Coveralls](https://coveralls.io/repos/github/MineralsCloud/QuantumESPRESSO.jl/badge.svg?branch=develop)](https://coveralls.io/github/MineralsCloud/QuantumESPRESSO.jl?branch=develop)
 [![Build Status](https://api.cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl.svg)](https://cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl)
 
-This package could handle the interaction with [Quantum ESPRESSO](https://www.quantum-espresso.org) software.
+It is basically a wrapper of the [`QuantumESPRESSOBase.jl`](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl)
+and [`QuantumESPRESSOParsers.jl`](https://github.com/MineralsCloud/QuantumESPRESSOParsers.jl)
+packages.
