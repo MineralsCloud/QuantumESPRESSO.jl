@@ -111,11 +111,6 @@ uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 [[Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
-[[MLStyle]]
-git-tree-sha1 = "67f9a88611bc79f992aa705d9bbc833a2547dec7"
-uuid = "d8e11817-5142-5d16-987a-aa16d5891078"
-version = "0.3.1"
-
 [[MacroTools]]
 deps = ["CSTParser", "Compat", "DataStructures", "Test", "Tokenize"]
 git-tree-sha1 = "d6e9dedb8c92c3465575442da456aec15a89ff76"
@@ -167,16 +162,16 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[QuantumESPRESSOBase]]
-deps = ["Compat", "DataStructures", "Fortran90Namelists", "JSON", "LinearAlgebra", "MLStyle", "Parameters", "Serialization", "Setfield"]
-git-tree-sha1 = "975e567c4bb8d0591f668d2f6877d450cef2f83d"
+deps = ["Compat", "DataStructures", "Fortran90Namelists", "JSON", "LinearAlgebra", "Parameters", "Rematch", "Serialization", "Setfield"]
+git-tree-sha1 = "9166ad3bcc3660f26b684bae87f73158f970961c"
 repo-rev = "develop"
 repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOBase.jl.git"
 uuid = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
 version = "0.1.0"
 
 [[QuantumESPRESSOParsers]]
-deps = ["Compat", "DataFrames", "DataStructures", "Fortran90Namelists", "MLStyle", "Parameters", "QuantumESPRESSOBase"]
-git-tree-sha1 = "44b67deab0507e554198221fd384f3b057eb7eec"
+deps = ["Compat", "DataFrames", "DataStructures", "Fortran90Namelists", "Parameters", "QuantumESPRESSOBase", "Rematch"]
+git-tree-sha1 = "aec9e53adb88002399f6aedb7d1eddbc9db17cd8"
 repo-rev = "develop"
 repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOParsers.jl.git"
 uuid = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
@@ -196,6 +191,12 @@ git-tree-sha1 = "7b1d07f411bc8ddb7977ec7f377b97b158514fe0"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "0.2.0"
 
+[[Rematch]]
+deps = ["Compat", "MacroTools"]
+git-tree-sha1 = "cb5298565d0642a4de0bd3feed284a1af326cb8e"
+uuid = "bfecab0d-fd4d-5014-a23f-56c5fae6447a"
+version = "0.3.2"
+
 [[SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 
@@ -204,9 +205,9 @@ uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
 [[Setfield]]
 deps = ["ConstructionBase", "MacroTools"]
-git-tree-sha1 = "48e02359e79fc1934905e96fc81f42678abf2b56"
+git-tree-sha1 = "39c71b432fa9c00153d865da87ee259b9b97114c"
 uuid = "efcf1570-3423-57d1-acb7-fd33fddbac46"
-version = "0.5.0"
+version = "0.5.1"
 
 [[SharedArrays]]
 deps = ["Distributed", "Mmap", "Random", "Serialization"]
