@@ -2,8 +2,12 @@ module QuantumESPRESSO
 
 using Reexport: @reexport
 @reexport using QuantumESPRESSOBase
-@reexport using QuantumESPRESSOBase.Namelists, QuantumESPRESSOBase.Cards, QuantumESPRESSOBase.Inputs
 @reexport using QuantumESPRESSOParsers
-@reexport using QuantumESPRESSOParsers.Inputs, QuantumESPRESSOParsers.Outputs
+
+using ImportMacros
+@import QuantumESPRESSOBase.Namelists as Namelists
+@import QuantumESPRESSOBase.Cards as Cards
+@import QuantumESPRESSOBase.Inputs as Inputs
+@import QuantumESPRESSOParsers.Outputs as Outputs
 
 end # module
