@@ -5,9 +5,9 @@ uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
 [[CategoricalArrays]]
 deps = ["Compat", "DataAPI", "Future", "JSON", "Missings", "Printf", "Reexport", "Unicode"]
-git-tree-sha1 = "4d85a015093760ff23b20f3e25fa195b4cb76794"
+git-tree-sha1 = "9c3fd1ebb503d271943c4ea94332d55ea900c9cb"
 uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
-version = "0.7.3"
+version = "0.7.4"
 
 [[Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -26,10 +26,10 @@ uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.1.0"
 
 [[DataFrames]]
-deps = ["CategoricalArrays", "Compat", "DataAPI", "InvertedIndices", "IteratorInterfaceExtensions", "Missings", "PooledArrays", "Printf", "REPL", "Reexport", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
-git-tree-sha1 = "271528230c65a4517522e2968c3deed76b92b998"
+deps = ["CategoricalArrays", "Compat", "DataAPI", "Future", "InvertedIndices", "IteratorInterfaceExtensions", "Missings", "PooledArrays", "Printf", "REPL", "Reexport", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "00136fcd39d503e66ab1b2eab800c47deaf7ca04"
 uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-version = "0.19.4"
+version = "0.20.0"
 
 [[DataStructures]]
 deps = ["InteractiveUtils", "OrderedCollections"]
@@ -56,9 +56,9 @@ uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[Fortran90Namelists]]
 deps = ["Compat", "IterTools", "Parameters"]
-git-tree-sha1 = "055da283d3667385ee1f20e6e81b25fe52006e39"
-repo-rev = "master"
-repo-url = "https://github.com/singularitti/Fortran90Namelists.jl.git"
+git-tree-sha1 = "da7d0139dc45ec616b70068e022a243cfcab95d8"
+repo-rev = "develop"
+repo-url = "git@github.com:singularitti/Fortran90Namelists.jl.git"
 uuid = "8fb689aa-71ff-4044-8071-0cffc910b57d"
 version = "0.1.0"
 
@@ -162,17 +162,17 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[QuantumESPRESSOBase]]
 deps = ["Compat", "DataStructures", "Fortran90Namelists", "LinearAlgebra", "Parameters", "Setfield"]
-git-tree-sha1 = "3e434e7877aea6c57b6c643942fb2fda37f47ce4"
+git-tree-sha1 = "f0b0b3e77ff569eba2682ed9e4d3c84e45db8c9c"
 repo-rev = "develop"
-repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOBase.jl.git"
+repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOBase.jl.git"
 uuid = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
 version = "0.1.0"
 
 [[QuantumESPRESSOParsers]]
 deps = ["Compat", "DataFrames", "DataStructures", "Fortran90Namelists", "Parameters", "QuantumESPRESSOBase", "Rematch"]
-git-tree-sha1 = "21121d120a2e4b3feb1f6c630cb6b89dd380ef34"
+git-tree-sha1 = "4da09533626aa82663e754d504a15216eaf5b560"
 repo-rev = "develop"
-repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOParsers.jl.git"
+repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOParsers.jl.git"
 uuid = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 version = "0.1.0"
 
