@@ -1,4 +1,8 @@
-# QuantumESPRESSO.jl
+```@meta
+CurrentModule = QuantumESPRESSO
+```
+
+# QuantumESPRESSO
 
 ```@index
 ```
