@@ -1,15 +1,8 @@
 module QuantumESPRESSO
 
-using Reexport: @reexport
-
-@reexport using QuantumESPRESSOBase
-@reexport using QuantumESPRESSOParsers
-
 module Inputs
 
-using Reexport: @reexport
-
-@reexport using QuantumESPRESSOBase.Inputs:
+using QuantumESPRESSOBase.Inputs:
     Namelist,
     Card,
     InputEntry,
@@ -21,7 +14,7 @@ using Reexport: @reexport
     allowed_options,
     titleof,
     qestring
-@reexport using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
+using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
 
 export InvalidInput,
     InputFile,
@@ -36,9 +29,7 @@ export InvalidInput,
 
 module PWscf
 
-using Reexport: @reexport
-
-@reexport using QuantumESPRESSOBase.Inputs.PWscf:
+using QuantumESPRESSOBase.Inputs.PWscf:
     ControlNamelist,
     SystemNamelist,
     ElectronsNamelist,
@@ -58,7 +49,7 @@ using Reexport: @reexport
     SpecialKPoint,
     KPointsCard,
     PWInput
-@reexport using QuantumESPRESSOParsers.Inputs.PWscf
+using QuantumESPRESSOParsers.Inputs.PWscf
 
 export ControlNamelist,
     SystemNamelist,
@@ -84,9 +75,7 @@ end # module PWscf
 
 module PHonon
 
-using Reexport: @reexport
-
-@reexport using QuantumESPRESSOBase.Inputs.PHonon:
+using QuantumESPRESSOBase.Inputs.PHonon:
     PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput
 # PhInput, MatdynInput
 
@@ -99,17 +88,13 @@ end # module Inputs
 
 module Outputs
 
-using Reexport: @reexport
-
-@reexport using QuantumESPRESSOParsers.Outputs: SubroutineError, OutputFile
+using QuantumESPRESSOParsers.Outputs: SubroutineError, OutputFile
 
 export SubroutineError, OutputFile
 
 module PWscf
 
-using Reexport: @reexport
-
-@reexport using QuantumESPRESSOParsers.Outputs.PWscf:
+using QuantumESPRESSOParsers.Outputs.PWscf:
     Diagonalization,
     Preamble,
     Diagonalization,
