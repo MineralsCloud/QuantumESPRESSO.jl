@@ -1,7 +1,7 @@
 module CLI
 
-using QuantumESPRESSOBase.CLI: PWCmd
+using QuantumESPRESSOBase.CLI: PWExec
 
-export PWCmd
+export PWExec
 
 end # module CLI
