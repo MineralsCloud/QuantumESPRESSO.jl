@@ -46,7 +46,8 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     GammaPoint,
     SpecialKPoint,
     KPointsCard,
-    PWInput
+    PWInput,
+    optconvert
 using QuantumESPRESSOParsers.Inputs.PWscf
 
 export ControlNamelist,
@@ -67,7 +68,8 @@ export ControlNamelist,
     GammaPoint,
     SpecialKPoint,
     KPointsCard,
-    PWInput
+    PWInput,
+    optconvert
 
 end # module PWscf
 
