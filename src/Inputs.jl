@@ -76,11 +76,11 @@ end # module PWscf
 module PHonon
 
 using QuantumESPRESSOBase.Inputs.PHonon:
-    PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput
-# PhInput, MatdynInput
+    PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput,
+    PhInput, MatdynInput
 
-export PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput
-# PhInput, MatdynInput
+export PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput,
+    PhInput, MatdynInput
 
 end # module PHonon
 
