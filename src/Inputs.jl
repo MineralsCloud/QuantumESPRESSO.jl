@@ -4,8 +4,6 @@ using QuantumESPRESSOBase.Inputs:
     Namelist,
     Card,
     InputEntry,
-    to_dict,
-    dropdefault,
     getnamelists,
     getcards,
     getoption,
@@ -16,8 +14,6 @@ using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
 
 export InvalidInput,
     InputFile,
-    to_dict,
-    dropdefault,
     getnamelists,
     getcards,
     getoption,
