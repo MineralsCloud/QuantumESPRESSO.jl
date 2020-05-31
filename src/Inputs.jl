@@ -9,7 +9,7 @@ using QuantumESPRESSOBase.Inputs:
     getoption,
     allowed_options,
     titleof,
-    qestring
+    inputstring
 using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
 
 export InvalidInput,
@@ -19,7 +19,7 @@ export InvalidInput,
     getoption,
     allowed_options,
     titleof,
-    qestring
+    inputstring
 
 module PWscf
 
