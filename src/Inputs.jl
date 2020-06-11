@@ -13,13 +13,7 @@ using QuantumESPRESSOBase.Inputs:
 using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
 
 export InvalidInput,
-    InputFile,
-    getnamelists,
-    getcards,
-    getoption,
-    allowed_options,
-    titleof,
-    inputstring
+    InputFile, getnamelists, getcards, getoption, allowed_options, titleof, inputstring
 
 module PWscf
 
@@ -72,11 +66,17 @@ end # module PWscf
 module PHonon
 
 using QuantumESPRESSOBase.Inputs.PHonon:
-    PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput,
-    PhInput, MatdynInput
+    PhNamelist,
+    Q2rNamelist,
+    MatdynNamelist,
+    DynmatNamelist,
+    Q2rInput,
+    DynmatInput,
+    PhInput,
+    MatdynInput
 
-export PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput,
-    PhInput, MatdynInput
+export PhNamelist,
+    Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput, PhInput, MatdynInput
 
 end # module PHonon
 
