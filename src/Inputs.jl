@@ -4,22 +4,20 @@ using QuantumESPRESSOBase.Inputs:
     Namelist,
     Card,
     InputEntry,
-    getnamelists,
-    getcards,
     getoption,
     allowed_options,
     titleof,
-    inputstring
+    inputstring,
+    compulsory_namelists,
+    optional_namelists,
+    compulsory_cards,
+    optional_cards,
+    allnamelists,
+    allcards
 using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
 
 export InvalidInput,
-    InputFile,
-    getnamelists,
-    getcards,
-    getoption,
-    allowed_options,
-    titleof,
-    inputstring
+    InputFile, getnamelists, getcards, getoption, allowed_options, titleof, inputstring
 
 module PWscf
 
@@ -43,7 +41,17 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     SpecialKPoint,
     KPointsCard,
     PWInput,
-    optconvert
+    optconvert,
+    xmldir,
+    wfcfiles,
+    getoption,
+    allowed_options,
+    allnamelists,
+    allcards,
+    compulsory_namelists,
+    optional_namelists,
+    compulsory_cards,
+    optional_cards
 using QuantumESPRESSOParsers.Inputs.PWscf
 
 export ControlNamelist,
@@ -65,18 +73,34 @@ export ControlNamelist,
     SpecialKPoint,
     KPointsCard,
     PWInput,
-    optconvert
+    optconvert,
+    xmldir,
+    wfcfiles,
+    getoption,
+    allowed_options,
+    allnamelists,
+    allcards,
+    compulsory_namelists,
+    optional_namelists,
+    compulsory_cards,
+    optional_cards
 
 end # module PWscf
 
 module PHonon
 
 using QuantumESPRESSOBase.Inputs.PHonon:
-    PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput,
-    PhInput, MatdynInput
+    PhNamelist,
+    Q2rNamelist,
+    MatdynNamelist,
+    DynmatNamelist,
+    Q2rInput,
+    DynmatInput,
+    PhInput,
+    MatdynInput
 
-export PhNamelist, Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput,
-    PhInput, MatdynInput
+export PhNamelist,
+    Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput, PhInput, MatdynInput
 
 end # module PHonon
 
