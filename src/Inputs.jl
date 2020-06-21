@@ -3,7 +3,7 @@ module Inputs
 using QuantumESPRESSOBase.Inputs:
     Namelist,
     Card,
-    InputEntry,
+    QuantumESPRESSOInputEntry,
     getoption,
     allowed_options,
     titleof,
@@ -17,7 +17,17 @@ using QuantumESPRESSOBase.Inputs:
 using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
 
 export InvalidInput,
-    InputFile, getnamelists, getcards, getoption, allowed_options, titleof, inputstring
+    InputFile,
+    getoption,
+    allowed_options,
+    titleof,
+    inputstring,
+    compulsory_namelists,
+    optional_namelists,
+    compulsory_cards,
+    optional_cards,
+    allnamelists,
+    allcards
 
 module PWscf
 
