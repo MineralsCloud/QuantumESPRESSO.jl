@@ -116,6 +116,7 @@ using QuantumESPRESSOBase.Inputs.PHonon:
     DynmatInput,
     PhInput,
     MatdynInput
+using QuantumESPRESSOParsers.Inputs.PHonon
 
 export PhNamelist,
     Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput, PhInput, MatdynInput
