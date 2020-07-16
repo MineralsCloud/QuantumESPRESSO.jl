@@ -65,7 +65,7 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     set_verbosity,
     set_temperature,
     set_structure,
-    set_press_vol
+    set_pressure_volume
 using QuantumESPRESSOParsers.Inputs.PWscf
 
 export ControlNamelist,
@@ -101,7 +101,7 @@ export ControlNamelist,
     set_verbosity,
     set_temperature,
     set_structure,
-    set_press_vol
+    set_pressure_volume
 
 end # module PWscf
 
