@@ -14,10 +14,9 @@ using QuantumESPRESSOBase.Inputs:
     optional_cards,
     allnamelists,
     allcards
-using QuantumESPRESSOParsers.Inputs: InvalidInput, InputFile
+using QuantumESPRESSOParsers.Inputs: InvalidInput
 
 export InvalidInput,
-    InputFile,
     getoption,
     allowed_options,
     titleof,

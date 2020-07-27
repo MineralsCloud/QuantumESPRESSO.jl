@@ -1,8 +1,8 @@
 module Outputs
 
-using QuantumESPRESSOParsers.Outputs: SubroutineError, OutputFile
+using QuantumESPRESSOParsers.Outputs: SubroutineError
 
-export SubroutineError, OutputFile
+export SubroutineError
 
 module PWscf
 
