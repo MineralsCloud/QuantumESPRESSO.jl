@@ -119,11 +119,19 @@ using QuantumESPRESSOBase.Inputs.PHonon:
     Q2rInput,
     DynmatInput,
     PhInput,
-    MatdynInput
+    MatdynInput,
+    relayinfo
 using QuantumESPRESSOParsers.Inputs.PHonon
 
 export PhNamelist,
-    Q2rNamelist, MatdynNamelist, DynmatNamelist, Q2rInput, DynmatInput, PhInput, MatdynInput
+    Q2rNamelist,
+    MatdynNamelist,
+    DynmatNamelist,
+    Q2rInput,
+    DynmatInput,
+    PhInput,
+    MatdynInput,
+    relayinfo
 
 end # module PHonon
 
