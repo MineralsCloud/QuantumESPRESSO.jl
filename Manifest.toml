@@ -307,7 +307,7 @@ version = "0.1.0"
 
 [[QuantumESPRESSOBase]]
 deps = ["AbInitioSoftwareBase", "AutoHashEquals", "Compat", "ConstructionBase", "Crystallography", "Formatting", "LinearAlgebra", "OptionalArgChecks", "Pseudopotentials", "PyFortran90Namelists", "Setfield", "StaticArrays", "Unitful", "UnitfulAtomic"]
-git-tree-sha1 = "4caa691acbb1ba0fb5369b00c3fadff9a287ed28"
+git-tree-sha1 = "35bf0ea2f11e979223a7171ddadbeb0f9675ac39"
 repo-rev = "master"
 repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOBase.jl.git"
 uuid = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
