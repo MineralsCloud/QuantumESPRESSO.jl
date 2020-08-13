@@ -8,6 +8,8 @@ QuantumESPRESSOBase = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
 QuantumESPRESSOParsers = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 
 [compat]
+QuantumESPRESSOBase = "0.1"
+QuantumESPRESSOParsers = "0.1"
 julia = "1"
 
 [extras]
