@@ -1,7 +1,7 @@
 module CLI
 
-using QuantumESPRESSOBase.CLI: PWCmd, PhCmd, Q2rCmd, MatdynCmd
+using QuantumESPRESSOBase.CLI: PWX, PhX, Q2rX, MatdynX
 
-export PWCmd, PhCmd, Q2rCmd, MatdynCmd
+export PWX, PhX, Q2rX, MatdynX
 
 end # module CLI
