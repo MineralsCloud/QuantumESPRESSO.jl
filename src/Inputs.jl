@@ -1,12 +1,10 @@
 module Inputs
 
 using QuantumESPRESSOBase.Inputs:
-    Namelist,
     Card,
-    QuantumESPRESSOInputEntry,
     optionof,
     optionpool,
-    titleof,
+    groupname,
     inputstring,
     required_namelists,
     optional_namelists,
@@ -19,7 +17,7 @@ using QuantumESPRESSOParsers.Inputs: InvalidInput
 export InvalidInput,
     optionof,
     optionpool,
-    titleof,
+    groupname,
     inputstring,
     required_namelists,
     optional_namelists,
