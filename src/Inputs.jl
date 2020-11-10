@@ -53,6 +53,8 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     optconvert,
     xmldir,
     wfcfiles,
+    exitfile,
+    mkexitfile,
     optionof,
     optionpool,
     allnamelists,
