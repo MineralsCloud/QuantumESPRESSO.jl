@@ -1,6 +1,6 @@
 module CLI
 
-using QuantumESPRESSOBase.CLI: PWX, PhX, Q2rX, MatdynX
+using QuantumESPRESSOBase.CLI: QuantumESPRESSOBin, PWX, PhX, Q2rX, MatdynX
 
 export PWX, PhX, Q2rX, MatdynX
 
