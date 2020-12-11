@@ -50,6 +50,12 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     GammaPointCard,
     SpecialPointsCard,
     PWInput,
+    VerbositySetter,
+    ElectronicTemperatureSetter,
+    ElecTempSetter,
+    VolumeSetter,
+    PressureSetter,
+    StructureSetter,
     optconvert,
     xmldir,
     wfcfiles,
@@ -62,11 +68,7 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     required_namelists,
     optional_namelists,
     required_cards,
-    optional_cards,
-    set_verbosity,
-    set_elec_temp,
-    set_cell,
-    set_press_vol
+    optional_cards
 using QuantumESPRESSOParsers.Inputs.PWscf
 
 export ControlNamelist,
@@ -90,6 +92,12 @@ export ControlNamelist,
     GammaPointCard,
     SpecialPointsCard,
     PWInput,
+    VerbositySetter,
+    ElectronicTemperatureSetter,
+    ElecTempSetter,
+    VolumeSetter,
+    PressureSetter,
+    StructureSetter,
     optconvert,
     xmldir,
     wfcfiles,
@@ -100,11 +108,7 @@ export ControlNamelist,
     required_namelists,
     optional_namelists,
     required_cards,
-    optional_cards,
-    set_verbosity,
-    set_elec_temp,
-    set_cell,
-    set_press_vol
+    optional_cards
 
 end # module PWscf
 
