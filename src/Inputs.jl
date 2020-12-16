@@ -123,6 +123,7 @@ using QuantumESPRESSOBase.Inputs.PHonon:
     DynmatInput,
     PhInput,
     MatdynInput,
+    VerbositySetter,
     relayinfo
 using QuantumESPRESSOParsers.Inputs.PHonon
 
@@ -134,6 +135,7 @@ export PhNamelist,
     DynmatInput,
     PhInput,
     MatdynInput,
+    VerbositySetter,
     relayinfo
 
 end # module PHonon
