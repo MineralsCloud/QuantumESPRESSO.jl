@@ -1,7 +1,20 @@
 module Cli
 
-using QuantumESPRESSOBase.CLI: QuantumESPRESSOExec, PWExec, PhExec, Q2rExec, MatdynExec
+using QuantumESPRESSOCli:
+    MpiexecOptions,
+    PwxOptions,
+    PwxConfig,
+    PhxConfig,
+    Q2rxConfig,
+    MatdynxConfig,
+    QuantumESPRESSOCliConfig,
+    materialize,
+    pw,
+    ph,
+    q2r,
+    matdyn,
+    makecmd
 
-export PWExec, PhExec, Q2rExec, MatdynExec
+export pw, ph, q2r, matdyn
 
 end # module Cli
