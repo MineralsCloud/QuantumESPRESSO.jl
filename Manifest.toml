@@ -33,11 +33,20 @@ git-tree-sha1 = "ecdec412a9abc8db54c0efc5548c64dfce072058"
 uuid = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
 version = "0.5.10"
 
+[[CRC32c]]
+uuid = "8bf52ea8-c179-5cab-976a-9e18b702a9bc"
+
 [[CategoricalArrays]]
 deps = ["DataAPI", "Future", "JSON", "Missings", "Printf", "Statistics", "StructTypes", "Unicode"]
 git-tree-sha1 = "b0f7ea8fc2baa3d9b4077c2518ee01564702c4bd"
 uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
 version = "0.9.1"
+
+[[Comonicon]]
+deps = ["CRC32c", "Configurations", "Crayons", "ExprTools", "Libdl", "Logging", "Markdown", "MatchCore", "PackageCompiler", "Pkg", "TOML"]
+git-tree-sha1 = "dbefb148a18fc468f2a8159c252a15165d4c0735"
+uuid = "863f3e99-da2a-4334-8734-de3dacbe5542"
+version = "0.10.2"
 
 [[Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "SHA", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -50,6 +59,12 @@ deps = ["JSON", "VersionParsing"]
 git-tree-sha1 = "c0647249d785f1d5139c0cc96db8f6b32f7ec416"
 uuid = "8f4d0f93-b110-5947-807f-2305c1781a2d"
 version = "1.5.0"
+
+[[Configurations]]
+deps = ["Crayons", "ExprTools", "MatchCore", "OrderedCollections", "TOML"]
+git-tree-sha1 = "84a19ac7a48245419990792df182025fc9216419"
+uuid = "5218b696-f38b-4ac9-8b61-a12ec717816d"
+version = "0.9.4"
 
 [[ConstructionBase]]
 git-tree-sha1 = "a2a6a5fea4d6f730ec4c18a76d27ec10e8ec1c50"
@@ -112,6 +127,11 @@ uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 [[Downloads]]
 deps = ["ArgTools", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+
+[[ExprTools]]
+git-tree-sha1 = "10407a39b87f29d47ebaca8edbc75d7c302ff93e"
+uuid = "e2ba6199-217a-4e67-a87a-7c52f15ade04"
+version = "0.1.3"
 
 [[Formatting]]
 deps = ["Printf"]
@@ -197,6 +217,11 @@ version = "0.5.6"
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
+[[MatchCore]]
+git-tree-sha1 = "c4b9f2f81cb7dbe22540df3a084de380f3cef6c4"
+uuid = "5dd3f0b1-72a9-48ad-ae6e-79f673da005f"
+version = "0.1.0"
+
 [[MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
@@ -226,6 +251,12 @@ version = "0.3.1"
 git-tree-sha1 = "d45739abcfc03b51f6a42712894a593f74c80a23"
 uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 version = "1.3.3"
+
+[[PackageCompiler]]
+deps = ["Libdl", "Pkg", "UUIDs"]
+git-tree-sha1 = "d448727c4b86be81b225b738c88d30334fda6779"
+uuid = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
+version = "1.2.5"
 
 [[Parameters]]
 deps = ["OrderedCollections", "UnPack"]
@@ -280,6 +311,14 @@ repo-rev = "master"
 repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOBase.jl.git"
 uuid = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
 version = "0.2.1"
+
+[[QuantumESPRESSOCli]]
+deps = ["AbInitioSoftwareBase", "Comonicon", "Configurations"]
+git-tree-sha1 = "4edf99891708aa4f9d343400392ef74368813a5c"
+repo-rev = "master"
+repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOCli.jl.git"
+uuid = "f713baf6-9299-4878-8719-8ad597e49a7b"
+version = "0.1.0"
 
 [[QuantumESPRESSOParsers]]
 deps = ["AbInitioSoftwareBase", "Compat", "Crystallography", "DataFrames", "DataStructures", "Parameters", "PyFortran90Namelists", "QuantumESPRESSOBase", "ReadableRegex", "VersionParsing"]
