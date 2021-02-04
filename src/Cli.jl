@@ -1,7 +1,7 @@
-module CLI
+module Cli
 
 using QuantumESPRESSOBase.CLI: QuantumESPRESSOExec, PWExec, PhExec, Q2rExec, MatdynExec
 
 export PWExec, PhExec, Q2rExec, MatdynExec
 
-end # module CLI
+end # module Cli
