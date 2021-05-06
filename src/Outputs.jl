@@ -1,12 +1,12 @@
 module Outputs
 
-using QuantumESPRESSOParsers.Outputs: SubroutineError
+using QuantumESPRESSOParser.Outputs: SubroutineError
 
 export SubroutineError
 
 module PWscf
 
-using QuantumESPRESSOParsers.Outputs.PWscf:
+using QuantumESPRESSOParser.Outputs.PWscf:
     Diagonalization,
     Preamble,
     Diagonalization,
@@ -82,7 +82,7 @@ end # module PWscf
 
 module PHonon
 
-using QuantumESPRESSOParsers.Outputs.PHonon: parse_frequency, parse_dos
+using QuantumESPRESSOParser.Outputs.PHonon: parse_frequency, parse_dos
 
 export parse_frequency, parse_dos
 

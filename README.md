@@ -11,5 +11,5 @@
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://MineralsCloud.github.io/QuantumESPRESSO.jl/dev)
 
 It is basically a wrapper of the [`QuantumESPRESSOBase.jl`](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl)
-and [`QuantumESPRESSOParsers.jl`](https://github.com/MineralsCloud/QuantumESPRESSOParsers.jl)
+and [`QuantumESPRESSOParser.jl`](https://github.com/MineralsCloud/QuantumESPRESSOParser.jl)
 packages.

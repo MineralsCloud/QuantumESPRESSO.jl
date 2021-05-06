@@ -12,7 +12,7 @@ using QuantumESPRESSOBase.Inputs:
     optional_cards,
     allnamelists,
     allcards
-using QuantumESPRESSOParsers.Inputs: InvalidInput
+using QuantumESPRESSOParser.Inputs: InvalidInput
 
 export InvalidInput,
     optionof,
@@ -69,7 +69,7 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     optional_namelists,
     required_cards,
     optional_cards
-using QuantumESPRESSOParsers.Inputs.PWscf
+using QuantumESPRESSOParser.Inputs.PWscf
 
 export ControlNamelist,
     SystemNamelist,
@@ -125,7 +125,7 @@ using QuantumESPRESSOBase.Inputs.PHonon:
     MatdynInput,
     VerbositySetter,
     relayinfo
-using QuantumESPRESSOParsers.Inputs.PHonon
+using QuantumESPRESSOParser.Inputs.PHonon
 
 export PhNamelist,
     Q2rNamelist,
