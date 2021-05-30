@@ -6,7 +6,7 @@ using QuantumESPRESSOCommands:
     PhxConfig,
     Q2rxConfig,
     MatdynxConfig,
-    QuantumESPRESSOCliConfig,
+    QuantumESPRESSOConfig,
     readconfig,
     pw,
     ph,
