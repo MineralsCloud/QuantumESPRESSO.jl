@@ -1,4 +1,4 @@
-module Cli
+module Commands
 
 using QuantumESPRESSOCommands:
     ParallelizationFlags,
