@@ -2,6 +2,6 @@ module QuantumESPRESSO
 
 include("Inputs.jl")
 include("Outputs.jl")
-include("Cli.jl")
+include("Commands.jl")
 
-end # module QuantumESPRESSO
+end

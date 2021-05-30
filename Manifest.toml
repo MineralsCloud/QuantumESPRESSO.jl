@@ -342,7 +342,7 @@ version = "0.2.1"
 
 [[QuantumESPRESSOCommands]]
 deps = ["AbInitioSoftwareBase", "Comonicon", "Configurations"]
-git-tree-sha1 = "615f90dd5bcb0da431b04896809a755ff9e4edaa"
+git-tree-sha1 = "62c617a9e2a005926f70aaef70598e8a1caffff5"
 repo-rev = "master"
 repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOCommands.jl.git"
 uuid = "f713baf6-9299-4878-8719-8ad597e49a7b"
