@@ -2,9 +2,7 @@
 
 [[AbInitioSoftwareBase]]
 deps = ["Configurations", "IsURL", "JSON", "Pkg", "YAML"]
-git-tree-sha1 = "07d4639eb1934b3cebdf17f4c1c5dd59ee545626"
-repo-rev = "master"
-repo-url = "git@github.com:MineralsCloud/AbInitioSoftwareBase.jl.git"
+git-tree-sha1 = "b1e616c828b6502c590c3fa62b9f70ed73e61c1c"
 uuid = "df5135bc-470e-46c6-b451-292e27ca5b84"
 version = "0.2.0"
 
@@ -29,9 +27,9 @@ uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
 [[Comonicon]]
 deps = ["ComoniconBuilder", "ComoniconOptions", "ComoniconTargetExpr", "ComoniconTypes", "ComoniconZSHCompletion", "Configurations", "ExproniconLite", "Markdown", "Pkg"]
-git-tree-sha1 = "aa9f271282a2ce9e2979a8304212abae9b5d13bc"
+git-tree-sha1 = "79cedcaf7a494c8392550c772ff052f3b80f62d0"
 uuid = "863f3e99-da2a-4334-8734-de3dacbe5542"
-version = "0.11.4"
+version = "0.11.5"
 
 [[ComoniconBuilder]]
 deps = ["ComoniconOptions", "ComoniconTypes", "ComoniconZSHCompletion", "Libdl", "Logging", "PackageCompiler"]
@@ -94,9 +92,9 @@ version = "0.6.1"
 
 [[Counters]]
 deps = ["SparseArrays"]
-git-tree-sha1 = "31bf497965ec3edf0b5cace7439cc8c30a0014df"
+git-tree-sha1 = "6107c3c82c979db4c826b7abd0fa7175316683ba"
 uuid = "5a653867-b65e-5b16-a095-b1e26d522bbf"
-version = "0.3.2"
+version = "0.3.3"
 
 [[Crayons]]
 git-tree-sha1 = "3f71217b538d7aaee0b69ab47d9b7724ca8afa0d"
@@ -104,12 +102,20 @@ uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
 version = "4.0.4"
 
 [[Crystallography]]
-deps = ["CoordinateTransformations", "Counters", "LinearAlgebra", "Spglib", "StaticArrays"]
-git-tree-sha1 = "0b80f61509f40401dfda434c1d896ccfb970f346"
+deps = ["CoordinateTransformations", "CrystallographyBase", "LinearAlgebra", "Spglib", "StaticArrays"]
+git-tree-sha1 = "7c7a3ce5c3067bec7fa1958b8d9cff4fc65fda9f"
 repo-rev = "master"
-repo-url = "git@github.com:MineralsCloud/Crystallography.jl.git"
+repo-url = "https://github.com/MineralsCloud/Crystallography.jl.git"
 uuid = "3bff3928-7a76-11e9-2089-d112443085a5"
 version = "0.1.1"
+
+[[CrystallographyBase]]
+deps = ["Compat", "CoordinateTransformations", "Counters", "Functors", "LinearAlgebra", "Spglib", "StaticArrays"]
+git-tree-sha1 = "79b493b3217e098ad5ab0904c8b25b17e3c9e854"
+repo-rev = "master"
+repo-url = "https://github.com/MineralsCloud/CrystallographyBase.jl.git"
+uuid = "93b1d1cd-a8ea-4aa5-adb1-b2407ea0ba8d"
+version = "0.1.0"
 
 [[DataAPI]]
 git-tree-sha1 = "dfb3b7e89e395be1e25c2ad6d7690dc29cc53b1d"
@@ -159,6 +165,12 @@ deps = ["Printf"]
 git-tree-sha1 = "8339d61043228fdd3eb658d86c926cb282ae72a8"
 uuid = "59287772-0a20-5a39-b81b-1366585eb4c0"
 version = "0.4.2"
+
+[[Functors]]
+deps = ["MacroTools"]
+git-tree-sha1 = "a7bb2af991c43dcf5c3455d276dd83976799634f"
+uuid = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
+version = "0.2.1"
 
 [[Future]]
 deps = ["Random"]
@@ -223,9 +235,9 @@ uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[Libiconv_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "8d22e127ea9a0917bc98ebd3755c8bd31989381e"
+git-tree-sha1 = "42b62845d70a619f063a7da093d995ec8e15e778"
 uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
-version = "1.16.1+0"
+version = "1.16.1+1"
 
 [[LinearAlgebra]]
 deps = ["Libdl"]
@@ -276,9 +288,9 @@ version = "1.4.1"
 
 [[PackageCompiler]]
 deps = ["Libdl", "Pkg", "UUIDs"]
-git-tree-sha1 = "d448727c4b86be81b225b738c88d30334fda6779"
+git-tree-sha1 = "363f8327031df2b64942d4d17c13a8f8b3641300"
 uuid = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
-version = "1.2.5"
+version = "1.2.6"
 
 [[Parameters]]
 deps = ["OrderedCollections", "UnPack"]
@@ -310,9 +322,9 @@ version = "1.2.2"
 
 [[PrettyTables]]
 deps = ["Crayons", "Formatting", "Markdown", "Reexport", "Tables"]
-git-tree-sha1 = "b60494adf99652d220cdef46f8a32232182cc22d"
+git-tree-sha1 = "0d1245a357cc61c8cd61934c07447aa569ff22e6"
 uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
-version = "1.0.1"
+version = "1.1.0"
 
 [[Printf]]
 deps = ["Unicode"]
@@ -334,17 +346,15 @@ version = "0.1.0"
 
 [[QuantumESPRESSOBase]]
 deps = ["AbInitioSoftwareBase", "AutoHashEquals", "Compat", "ConstructionBase", "Crystallography", "Formatting", "LinearAlgebra", "OptionalArgChecks", "PyFortran90Namelists", "Setfield", "StaticArrays", "Unitful", "UnitfulAtomic"]
-git-tree-sha1 = "812f95b88758030b017d3808e9ddc8560d1666f2"
+git-tree-sha1 = "364ef32a59934ab193161f33e8059fd6590d5abc"
 repo-rev = "master"
-repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOBase.jl.git"
+repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOBase.jl.git"
 uuid = "51b62caa-b28f-11e9-38c2-1f67cb498e05"
 version = "0.2.1"
 
 [[QuantumESPRESSOCommands]]
 deps = ["AbInitioSoftwareBase", "Comonicon", "Configurations"]
-git-tree-sha1 = "62c617a9e2a005926f70aaef70598e8a1caffff5"
-repo-rev = "master"
-repo-url = "git@github.com:MineralsCloud/QuantumESPRESSOCommands.jl.git"
+git-tree-sha1 = "7269afd339142dd3a88efc0bcf210d5361416e88"
 uuid = "f713baf6-9299-4878-8719-8ad597e49a7b"
 version = "0.1.0"
 
@@ -352,7 +362,7 @@ version = "0.1.0"
 deps = ["AbInitioSoftwareBase", "Compat", "Crystallography", "DataFrames", "DataStructures", "Parameters", "PyFortran90Namelists", "QuantumESPRESSOBase", "ReadableRegex", "VersionParsing"]
 git-tree-sha1 = "af335605e71a78e2ab1a9ee9692dad7e24a2c374"
 repo-rev = "master"
-repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOParser.jl"
+repo-url = "https://github.com/MineralsCloud/QuantumESPRESSOParser.jl.git"
 uuid = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 version = "0.2.1"
 
@@ -370,9 +380,9 @@ uuid = "cbbcb084-453d-4c4c-b292-e315607ba6a4"
 version = "0.3.2"
 
 [[Reexport]]
-git-tree-sha1 = "57d8440b0c7d98fc4f889e478e80f268d534c9d5"
+git-tree-sha1 = "5f6c21241f0f655da3952fd60aa18477cf96c220"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
-version = "1.0.0"
+version = "1.1.0"
 
 [[Requires]]
 deps = ["UUIDs"]
@@ -411,15 +421,15 @@ uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [[Spglib]]
 deps = ["StaticArrays", "StructEquality", "UnPack", "spglib_jll"]
-git-tree-sha1 = "14e9c410f9f2331a6e31e6e199d5d58233651051"
+git-tree-sha1 = "5a1798aed94e7f2f5b641e07ed335700ed6b3f29"
 uuid = "f761d5c5-86db-4880-b97f-9680a7cccfb5"
-version = "0.1.1"
+version = "0.2.0"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
-git-tree-sha1 = "a1f226ebe197578c25fcf948bfff3d0d12f2ff20"
+git-tree-sha1 = "42378d3bab8b4f57aa1ca443821b752850592668"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.2.1"
+version = "1.2.2"
 
 [[Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -475,9 +485,9 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[Unitful]]
 deps = ["ConstructionBase", "Dates", "LinearAlgebra", "Random"]
-git-tree-sha1 = "c6bbc170505c5ea36593a0072b61d3be8bf868ae"
+git-tree-sha1 = "b3682a0559219355f1e3c8024e9f97adce2d4623"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.7.0"
+version = "1.8.0"
 
 [[UnitfulAtomic]]
 deps = ["Unitful"]
