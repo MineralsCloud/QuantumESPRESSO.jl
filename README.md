@@ -9,6 +9,8 @@
 [![Coverage](https://codecov.io/gh/MineralsCloud/QuantumESPRESSO.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/MineralsCloud/QuantumESPRESSO.jl)
 [![Coverage](https://coveralls.io/repos/github/MineralsCloud/QuantumESPRESSO.jl/badge.svg?branch=master)](https://coveralls.io/github/MineralsCloud/QuantumESPRESSO.jl?branch=master)
 
-It is basically a wrapper of the [`QuantumESPRESSOBase.jl`](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl)
-and [`QuantumESPRESSOParser.jl`](https://github.com/MineralsCloud/QuantumESPRESSOParser.jl)
+It is basically a wrapper of the
+[`QuantumESPRESSOBase.jl`](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl)
+and
+[`QuantumESPRESSOParser.jl`](https://github.com/MineralsCloud/QuantumESPRESSOParser.jl)
 packages.
