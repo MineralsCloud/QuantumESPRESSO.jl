@@ -8,6 +8,7 @@
 [![Build Status](https://api.cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl.svg)](https://cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl)
 [![Coverage](https://codecov.io/gh/MineralsCloud/QuantumESPRESSO.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/MineralsCloud/QuantumESPRESSO.jl)
 [![Coverage](https://coveralls.io/repos/github/MineralsCloud/QuantumESPRESSO.jl/badge.svg?branch=master)](https://coveralls.io/github/MineralsCloud/QuantumESPRESSO.jl?branch=master)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
 
 It is basically a wrapper of the [`QuantumESPRESSOBase.jl`](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl)
 and [`QuantumESPRESSOParser.jl`](https://github.com/MineralsCloud/QuantumESPRESSOParser.jl)
