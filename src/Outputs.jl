@@ -80,12 +80,12 @@ export Diagonalization,
 
 end # module PWscf
 
-module PHonon
+# module PHonon
 
-using QuantumESPRESSOParser.Outputs.PHonon: parse_frequency, parse_dos
+# using QuantumESPRESSOParser.Outputs.PHonon: parse_frequency, parse_dos
 
-export parse_frequency, parse_dos
+# export parse_frequency, parse_dos
 
-end # module PHonon
+# end # module PHonon
 
 end # module Outputs

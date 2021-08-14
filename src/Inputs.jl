@@ -105,32 +105,32 @@ export ControlNamelist,
 
 end # module PWscf
 
-module PHonon
+# module PHonon
 
-using QuantumESPRESSOBase.Inputs.PHonon:
-    PhNamelist,
-    Q2rNamelist,
-    MatdynNamelist,
-    DynmatNamelist,
-    Q2rInput,
-    DynmatInput,
-    PhInput,
-    MatdynInput,
-    VerbositySetter,
-    relayinfo
-using QuantumESPRESSOParser.Inputs.PHonon
+# using QuantumESPRESSOBase.Inputs.PHonon:
+#     PhNamelist,
+#     Q2rNamelist,
+#     MatdynNamelist,
+#     DynmatNamelist,
+#     Q2rInput,
+#     DynmatInput,
+#     PhInput,
+#     MatdynInput,
+#     VerbositySetter,
+#     relayinfo
+# using QuantumESPRESSOParser.Inputs.PHonon
 
-export PhNamelist,
-    Q2rNamelist,
-    MatdynNamelist,
-    DynmatNamelist,
-    Q2rInput,
-    DynmatInput,
-    PhInput,
-    MatdynInput,
-    VerbositySetter,
-    relayinfo
+# export PhNamelist,
+#     Q2rNamelist,
+#     MatdynNamelist,
+#     DynmatNamelist,
+#     Q2rInput,
+#     DynmatInput,
+#     PhInput,
+#     MatdynInput,
+#     VerbositySetter,
+#     relayinfo
 
-end # module PHonon
+# end # module PHonon
 
 end # module Inputs
