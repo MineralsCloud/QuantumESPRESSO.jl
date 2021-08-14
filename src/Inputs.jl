@@ -1,11 +1,9 @@
 module Inputs
 
 using QuantumESPRESSOBase.Inputs:
-    Card,
     optionof,
     optionpool,
     groupname,
-    asstring,
     required_namelists,
     optional_namelists,
     required_cards,
@@ -18,7 +16,6 @@ export InvalidInput,
     optionof,
     optionpool,
     groupname,
-    asstring,
     required_namelists,
     optional_namelists,
     required_cards,
@@ -43,8 +40,6 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     CellParametersCard,
     AtomicForce,
     AtomicForcesCard,
-    MonkhorstPackGrid,
-    SpecialPoint,
     KPointsCard,
     KMeshCard,
     GammaPointCard,
@@ -85,8 +80,6 @@ export ControlNamelist,
     CellParametersCard,
     AtomicForce,
     AtomicForcesCard,
-    MonkhorstPackGrid,
-    SpecialPoint,
     KPointsCard,
     KMeshCard,
     GammaPointCard,
@@ -112,32 +105,32 @@ export ControlNamelist,
 
 end # module PWscf
 
-module PHonon
+# module PHonon
 
-using QuantumESPRESSOBase.Inputs.PHonon:
-    PhNamelist,
-    Q2rNamelist,
-    MatdynNamelist,
-    DynmatNamelist,
-    Q2rInput,
-    DynmatInput,
-    PhInput,
-    MatdynInput,
-    VerbositySetter,
-    relayinfo
-using QuantumESPRESSOParser.Inputs.PHonon
+# using QuantumESPRESSOBase.Inputs.PHonon:
+#     PhNamelist,
+#     Q2rNamelist,
+#     MatdynNamelist,
+#     DynmatNamelist,
+#     Q2rInput,
+#     DynmatInput,
+#     PhInput,
+#     MatdynInput,
+#     VerbositySetter,
+#     relayinfo
+# using QuantumESPRESSOParser.Inputs.PHonon
 
-export PhNamelist,
-    Q2rNamelist,
-    MatdynNamelist,
-    DynmatNamelist,
-    Q2rInput,
-    DynmatInput,
-    PhInput,
-    MatdynInput,
-    VerbositySetter,
-    relayinfo
+# export PhNamelist,
+#     Q2rNamelist,
+#     MatdynNamelist,
+#     DynmatNamelist,
+#     Q2rInput,
+#     DynmatInput,
+#     PhInput,
+#     MatdynInput,
+#     VerbositySetter,
+#     relayinfo
 
-end # module PHonon
+# end # module PHonon
 
 end # module Inputs
