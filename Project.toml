@@ -11,6 +11,7 @@ QuantumESPRESSOParser = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 [compat]
 QuantumESPRESSOBase = "0.1"
 QuantumESPRESSOCommands = "0.1"
+QuantumESPRESSOParser = "0.1"
 julia = "1"
 
 [extras]
