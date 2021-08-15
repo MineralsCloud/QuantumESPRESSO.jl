@@ -10,6 +10,7 @@ QuantumESPRESSOCommands = "f713baf6-9299-4878-8719-8ad597e49a7b"
 QuantumESPRESSOParser = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 
 [compat]
+Crystallography = "0.3"
 QuantumESPRESSOBase = "0.1"
 QuantumESPRESSOCommands = "0.1"
 QuantumESPRESSOParser = "0.1"
