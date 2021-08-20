@@ -66,6 +66,7 @@ using QuantumESPRESSOBase.Inputs.PWscf:
     required_cards,
     optional_cards
 using QuantumESPRESSOParser.Inputs.PWscf
+using QuantumESPRESSOFormatter.Inputs.PWscf: format_file, format_text
 
 export ControlNamelist,
     SystemNamelist,
@@ -103,7 +104,9 @@ export ControlNamelist,
     required_namelists,
     optional_namelists,
     required_cards,
-    optional_cards
+    optional_cards,
+    format_file,
+    format_text
 
 end # module PWscf
 
