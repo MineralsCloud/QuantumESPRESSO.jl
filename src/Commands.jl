@@ -6,6 +6,7 @@ using QuantumESPRESSOCommands:
     PhxConfig,
     Q2rxConfig,
     MatdynxConfig,
+    DynmatxConfig,
     QuantumESPRESSOConfig,
     pw,
     ph,
