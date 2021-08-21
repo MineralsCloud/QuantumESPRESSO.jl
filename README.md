@@ -6,8 +6,8 @@
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/MineralsCloud/QuantumESPRESSO.jl?svg=true)](https://ci.appveyor.com/project/singularitti/QuantumESPRESSO-jl)
 [![Build Status](https://cloud.drone.io/api/badges/MineralsCloud/QuantumESPRESSO.jl/status.svg)](https://cloud.drone.io/MineralsCloud/QuantumESPRESSO.jl)
 [![Build Status](https://api.cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl.svg)](https://cirrus-ci.com/github/MineralsCloud/QuantumESPRESSO.jl)
+[![pipeline status](https://gitlab.com/singularitti/QuantumESPRESSO.jl/badges/master/pipeline.svg)](https://gitlab.com/singularitti/QuantumESPRESSO.jl/-/pipelines)
 [![Coverage](https://codecov.io/gh/MineralsCloud/QuantumESPRESSO.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/MineralsCloud/QuantumESPRESSO.jl)
-[![Coverage](https://coveralls.io/repos/github/MineralsCloud/QuantumESPRESSO.jl/badge.svg?branch=master)](https://coveralls.io/github/MineralsCloud/QuantumESPRESSO.jl?branch=master)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
 
 It is basically a wrapper of the [`QuantumESPRESSOBase.jl`](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl)
