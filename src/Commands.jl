@@ -1,12 +1,19 @@
 module Commands
 
 using QuantumESPRESSOCommands:
+    ParallelizationFlags,
+    PwxConfig,
+    PhxConfig,
+    Q2rxConfig,
+    MatdynxConfig,
+    DynmatxConfig,
+    QuantumESPRESSOConfig,
     pw,
     ph,
     q2r,
     matdyn,
     dynmat,
-    cmdtemplate
+    makecmd
 
 export pw, ph, q2r, matdyn, dynmat
 
