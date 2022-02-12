@@ -10,7 +10,7 @@ QuantumESPRESSOFormatter = "a4e7ca57-d8d8-4f74-9c0b-0b18081c205e"
 QuantumESPRESSOParser = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 
 [compat]
-QuantumESPRESSOBase = "0.3, 0.4, 0.5"
+QuantumESPRESSOBase = "0.3, 0.4, 0.5, 0.6"
 QuantumESPRESSOCommands = "0.2, 0.3, 0.4, 0.5, 0.6"
 QuantumESPRESSOFormatter = "0.1, 0.2"
 QuantumESPRESSOParser = "0.2, 0.3"
