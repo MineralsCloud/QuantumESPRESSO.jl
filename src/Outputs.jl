@@ -1,91 +1,23 @@
 module Outputs
 
-using QuantumESPRESSOParser.Outputs: SubroutineError
+using Reexport: @reexport
 
-export SubroutineError
+@reexport using QuantumESPRESSOParser.Outputs: SubroutineError
 
 module PWscf
 
-using QuantumESPRESSOParser.Outputs.PWscf:
-    Diagonalization,
-    Preamble,
-    Diagonalization,
-    Davidson,
-    ConjugateGradient,
-    ProjectedPreconditionedConjugateGradient,
-    parse_fft_base_info,
-    parse_symmetries,
-    parse_ibz,
-    parse_stress,
-    parse_iteration_time,
-    parse_bands,
-    parse_all_electron_energy,
-    parse_energy_decomposition,
-    parse_paw_contribution,
-    parse_smearing_energy,
-    parse_version,
-    parse_parallel_info,
-    parse_fft_dimensions,
-    parse_iteration_head,
-    parse_electrons_energies,
-    parse_clock,
-    # whatinput,
-    isoptimized,
-    isjobdone,
-    tryparsefirst,
-    parsefirst,
-    tryparseall,
-    parseall,
-    tryparselast,
-    parselast,
-    tryparsenext,
-    parsenext,
-    tryparsefinal,
-    parsefinal
+using Reexport: @reexport
 
-export Diagonalization,
-    Preamble,
-    Davidson,
-    ConjugateGradient,
-    ProjectedPreconditionedConjugateGradient,
-    parse_fft_base_info,
-    parse_symmetries,
-    parse_ibz,
-    parse_stress,
-    parse_iteration_time,
-    parse_bands,
-    parse_all_electron_energy,
-    parse_energy_decomposition,
-    parse_paw_contribution,
-    parse_smearing_energy,
-    parse_version,
-    parse_parallel_info,
-    parse_fft_dimensions,
-    parse_iteration_head,
-    parse_electrons_energies,
-    parse_clock,
-    # whatinput,
-    isoptimized,
-    isjobdone,
-    tryparsefirst,
-    parsefirst,
-    tryparseall,
-    parseall,
-    tryparselast,
-    parselast,
-    tryparsenext,
-    parsenext,
-    tryparsefinal,
-    parsefinal
+@reexport using QuantumESPRESSOParser.Outputs.PWscf
 
-end # module PWscf
+end
 
 module PHonon
 
-using QuantumESPRESSOParser.Outputs.PHonon: parse_frequency, parse_dos
+using Reexport: @reexport
 
-export parse_frequency, parse_dos
+@reexport using QuantumESPRESSOParser.Outputs.PHonon
 
-end # module PHonon
+end
 
-end # module Outputs
+end
