@@ -1,147 +1,27 @@
 module Inputs
 
-using QuantumESPRESSOBase.Inputs:
-    optionof,
-    optionpool,
-    groupname,
-    required_namelists,
-    optional_namelists,
-    required_cards,
-    optional_cards,
-    allnamelists,
-    allcards
-using QuantumESPRESSOParser.Inputs: InvalidInput
+using Reexport: @reexport
 
-export InvalidInput,
-    optionof,
-    optionpool,
-    groupname,
-    required_namelists,
-    optional_namelists,
-    required_cards,
-    optional_cards,
-    allnamelists,
-    allcards
+@reexport using QuantumESPRESSOBase.Inputs
+@reexport using QuantumESPRESSOParser.Inputs: InvalidInput
 
 module PWscf
 
-using QuantumESPRESSOBase.Inputs.PWscf:
-    ControlNamelist,
-    SystemNamelist,
-    ElectronsNamelist,
-    IonsNamelist,
-    CellNamelist,
-    DosNamelist,
-    BandsNamelist,
-    AtomicSpecies,
-    AtomicSpeciesCard,
-    AtomicPosition,
-    AtomicPositionsCard,
-    CellParametersCard,
-    AtomicForce,
-    AtomicForcesCard,
-    KPointsCard,
-    KMeshCard,
-    GammaPointCard,
-    SpecialPointsCard,
-    PWInput,
-    VerbositySetter,
-    ElectronicTemperatureSetter,
-    ElecTempSetter,
-    VolumeSetter,
-    PressureSetter,
-    CellParametersCardSetter,
-    AtomicPositionsCardSetter,
-    find_symmetry,
-    optconvert,
-    getxmldir,
-    wfcfiles,
-    getpseudodir,
-    getpotentials,
-    exitfile,
-    mkexitfile,
-    optionof,
-    optionpool,
-    allnamelists,
-    allcards,
-    required_namelists,
-    optional_namelists,
-    required_cards,
-    optional_cards
-using QuantumESPRESSOParser.Inputs.PWscf
-using QuantumESPRESSOFormatter.Inputs.PWscf: format_file, format_text
+using Reexport: @reexport
 
-export ControlNamelist,
-    SystemNamelist,
-    ElectronsNamelist,
-    IonsNamelist,
-    CellNamelist,
-    DosNamelist,
-    BandsNamelist,
-    AtomicSpecies,
-    AtomicSpeciesCard,
-    AtomicPosition,
-    AtomicPositionsCard,
-    CellParametersCard,
-    AtomicForce,
-    AtomicForcesCard,
-    KPointsCard,
-    KMeshCard,
-    GammaPointCard,
-    SpecialPointsCard,
-    PWInput,
-    VerbositySetter,
-    ElectronicTemperatureSetter,
-    ElecTempSetter,
-    VolumeSetter,
-    PressureSetter,
-    CellParametersCardSetter,
-    AtomicPositionsCardSetter,
-    find_symmetry,
-    optconvert,
-    getxmldir,
-    wfcfiles,
-    getpseudodir,
-    getpotentials,
-    optionof,
-    optionpool,
-    allnamelists,
-    allcards,
-    required_namelists,
-    optional_namelists,
-    required_cards,
-    optional_cards,
-    format_file,
-    format_text
+@reexport using QuantumESPRESSOBase.Inputs.PWscf
+@reexport using QuantumESPRESSOParser.Inputs.PWscf
+@reexport using QuantumESPRESSOFormatter.Inputs.PWscf
 
-end # module PWscf
+end
 
 module PHonon
 
-using QuantumESPRESSOBase.Inputs.PHonon:
-    PhNamelist,
-    Q2rNamelist,
-    MatdynNamelist,
-    DynmatNamelist,
-    Q2rInput,
-    DynmatInput,
-    PhInput,
-    MatdynInput,
-    VerbositySetter,
-    relayinfo
-using QuantumESPRESSOParser.Inputs.PHonon
+using Reexport: @reexport
 
-export PhNamelist,
-    Q2rNamelist,
-    MatdynNamelist,
-    DynmatNamelist,
-    Q2rInput,
-    DynmatInput,
-    PhInput,
-    MatdynInput,
-    VerbositySetter,
-    relayinfo
+@reexport using QuantumESPRESSOBase.Inputs.PHonon
+@reexport using QuantumESPRESSOParser.Inputs.PHonon
 
-end # module PHonon
+end
 
-end # module Inputs
+end
