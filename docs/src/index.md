@@ -6,6 +6,13 @@ CurrentModule = QuantumESPRESSO
 
 Documentation for [QuantumESPRESSO](https://github.com/MineralsCloud/QuantumESPRESSO.jl).
 
+QuantumESPRESSO.jl is simply a wrapper of the types, methods, and commands defined in
+[QuantumESPRESSOBase.jl](https://github.com/MineralsCloud/QuantumESPRESSOBase.jl),
+[QuantumESPRESSOParser.jl](https://github.com/MineralsCloud/QuantumESPRESSOParser.jl),
+[QuantumESPRESSOFormatter.jl](https://github.com/MineralsCloud/QuantumESPRESSOFormatter.jl),
+and [QuantumESPRESSOCommands.jl](https://github.com/MineralsCloud/QuantumESPRESSOCommands.jl)
+under a common namespace.
+
 See the [Index](@ref main-index) for the complete list of documented functions
 and types.
 
