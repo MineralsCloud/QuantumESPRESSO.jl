@@ -3,38 +3,31 @@
 <span class="sgr32"><span class="sgr1">  No Changes</span></span> to `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl/docs/Project.toml`
 <span class="sgr32"><span class="sgr1">  No Changes</span></span> to `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl/docs/Manifest.toml`
 <span class="sgr32"><span class="sgr1">Precompiling</span></span> project...
+<span class="sgr32">  ✓ </span><span class="sgr90">CompilerSupportLibraries_jll</span>
+<span class="sgr32">  ✓ </span><span class="sgr90">JLLWrappers</span>
 <span class="sgr32">  ✓ </span><span class="sgr90">IsURL</span>
 <span class="sgr32">  ✓ </span><span class="sgr90">Libiconv_jll</span>
-<span class="sgr32">  ✓ </span><span class="sgr90">LLVMOpenMP_jll</span>
 <span class="sgr32">  ✓ </span><span class="sgr90">StringEncodings</span>
-<span class="sgr33">  ✓ </span><span class="sgr90">spglib_jll</span>
 <span class="sgr32">  ✓ </span><span class="sgr90">YAML</span>
-<span class="sgr33">  ✓ </span><span class="sgr90">Spglib</span>
 <span class="sgr33">  ✓ </span><span class="sgr90">AbInitioSoftwareBase</span>
 <span class="sgr33">  ✓ </span><span class="sgr90">QuantumESPRESSOBase</span>
-<span class="sgr32">  ✓ </span><span class="sgr90">MLStyle</span>
-<span class="sgr33">  ✓ </span><span class="sgr90">Crystallography</span>
 <span class="sgr33">  ✓ </span><span class="sgr90">QuantumESPRESSOParser</span>
 <span class="sgr33">  ✓ </span><span class="sgr90">QuantumESPRESSOFormatter</span>
 <span class="sgr33">  ✓ </span>QuantumESPRESSO
-  14 dependencies successfully precompiled in 38 seconds. 70 already precompiled.
-  <span class="sgr33">8</span> dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
-  <span class="sgr33">1</span> dependency had warnings during precompilation:<span class="sgr33">
-┌ </span>QuantumESPRESSOBase [51b62caa-b28f-11e9-38c2-1f67cb498e05]<span class="sgr33">
-│  </span>WARNING: could not import AbInitioSoftwareBase.listpotentials into PWscf<span class="sgr33">
-└  </span>
+  11 dependencies successfully precompiled in 16 seconds. 49 already precompiled.
+  <span class="sgr33">5</span> dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
 <span class="sgr36"><span class="sgr1">[ Info: </span></span>We haven&#39;t cleaned this depot up for a bit, running Pkg.gc()...
 <span class="sgr32"><span class="sgr1">      Active</span></span> manifest files: 3 found
-<span class="sgr32"><span class="sgr1">      Active</span></span> artifact files: 3 found
+<span class="sgr32"><span class="sgr1">      Active</span></span> artifact files: 1 found
 <span class="sgr32"><span class="sgr1">      Active</span></span> scratchspaces: 2 found
 <span class="sgr32"><span class="sgr1">     Deleted</span></span> no artifacts, repos, packages or scratchspaces</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; Pkg.develop(&quot;QuantumESPRESSO&quot;)</code><code class="nohighlight hljs ansi" style="display:block;"><span class="sgr32"><span class="sgr1">     Cloning</span></span> git-repo `https://github.com/MineralsCloud/QuantumESPRESSO.jl.git`
 <span class="sgr32"><span class="sgr1">   Resolving</span></span> package versions...
 <span class="sgr32"><span class="sgr1">    Updating</span></span> `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl/docs/Project.toml`
-  <span class="sgr90">[95228164] </span><span class="sgr93">~ QuantumESPRESSO v0.10.1 `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl` ⇒ v0.10.1 `~/.julia/dev/QuantumESPRESSO`</span>
+  <span class="sgr90">[95228164] </span><span class="sgr93">~ QuantumESPRESSO v0.10.1 `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl` ⇒ v0.11.0 `~/.julia/dev/QuantumESPRESSO`</span>
 <span class="sgr32"><span class="sgr1">    Updating</span></span> `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl/docs/Manifest.toml`
-  <span class="sgr90">[95228164] </span><span class="sgr93">~ QuantumESPRESSO v0.10.1 `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl` ⇒ v0.10.1 `~/.julia/dev/QuantumESPRESSO`</span></code></pre><p>Then the package will be cloned to your local machine. On *nix systems, the default path is <code>~/.julia/dev/QuantumESPRESSO</code> unless you modify the <a href="http://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_DEPOT_PATH-1"><code>JULIA_DEPOT_PATH</code></a> environment variable. If you&#39;re on Windows, this will be <code>C:\\Users\\&lt;my_name&gt;\\.julia\\dev\\QuantumESPRESSO</code>. In the following text, we will call it <code>PKGROOT</code>.</p><p>Go to <code>PKGROOT</code>, start a new Julia session, and run</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Pkg</code><code class="nohighlight hljs ansi" style="display:block;"></code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; Pkg.instantiate()</code><code class="nohighlight hljs ansi" style="display:block;"><span class="sgr32"><span class="sgr1">Precompiling</span></span> project...
+  <span class="sgr90">[95228164] </span><span class="sgr93">~ QuantumESPRESSO v0.10.1 `~/work/QuantumESPRESSO.jl/QuantumESPRESSO.jl` ⇒ v0.11.0 `~/.julia/dev/QuantumESPRESSO`</span></code></pre><p>Then the package will be cloned to your local machine. On *nix systems, the default path is <code>~/.julia/dev/QuantumESPRESSO</code> unless you modify the <a href="http://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_DEPOT_PATH-1"><code>JULIA_DEPOT_PATH</code></a> environment variable. If you&#39;re on Windows, this will be <code>C:\\Users\\&lt;my_name&gt;\\.julia\\dev\\QuantumESPRESSO</code>. In the following text, we will call it <code>PKGROOT</code>.</p><p>Go to <code>PKGROOT</code>, start a new Julia session, and run</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using Pkg</code><code class="nohighlight hljs ansi" style="display:block;"></code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; Pkg.instantiate()</code><code class="nohighlight hljs ansi" style="display:block;"><span class="sgr32"><span class="sgr1">Precompiling</span></span> project...
 <span class="sgr33">  ✓ </span>QuantumESPRESSO
-  1 dependency successfully precompiled in 4 seconds. 83 already precompiled.
+  1 dependency successfully precompiled in 3 seconds. 59 already precompiled.
   <span class="sgr33">1</span> dependency precompiled but a different version is currently loaded. Restart julia to access the new version</code></pre><p>to instantiate the project.</p><h3 id="Step-4:-checkout-a-new-branch"><a class="docs-heading-anchor" href="#Step-4:-checkout-a-new-branch">Step 4: checkout a new branch</a><a id="Step-4:-checkout-a-new-branch-1"></a><a class="docs-heading-anchor-permalink" href="#Step-4:-checkout-a-new-branch" title="Permalink"></a></h3><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>In the following, replace any instance of <code>GITHUB_ACCOUNT</code> with your GitHub username.</p></div></div><p>The next step is to check out a development branch. In a terminal (or command prompt on Windows), run:</p><pre><code class="language-bash hljs">cd ~/.julia/dev/QuantumESPRESSO
 
 git remote add GITHUB_ACCOUNT https://github.com/GITHUB_ACCOUNT/QuantumESPRESSO.jl.git
@@ -67,4 +60,4 @@ git push -u GITHUB_ACCOUNT my_new_branch</code></pre><p>Then go to <a href="http
 
 git checkout main
 
-git pull</code></pre><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>If you have suggestions to improve this guide, please make a pull request! It&#39;s particularly helpful if you do this after your first pull request because you&#39;ll know all the parts that could be explained better.</p></div></div><p>Thanks for contributing to QuantumESPRESSO!</p></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.1.2 on <span class="colophon-date" title="Saturday 28 October 2023 07:00">Saturday 28 October 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+git pull</code></pre><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>If you have suggestions to improve this guide, please make a pull request! It&#39;s particularly helpful if you do this after your first pull request because you&#39;ll know all the parts that could be explained better.</p></div></div><p>Thanks for contributing to QuantumESPRESSO!</p></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.1.2 on <span class="colophon-date" title="Saturday 28 October 2023 10:33">Saturday 28 October 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
