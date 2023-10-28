@@ -10,9 +10,9 @@ QuantumESPRESSOParser = "a780ab42-b33a-11e9-16c1-a92d75b2a626"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 
 [compat]
-QuantumESPRESSOBase = "0.11, 0.12"
-QuantumESPRESSOFormatter = "0.3, 0.4"
-QuantumESPRESSOParser = "0.4, 0.5"
+QuantumESPRESSOBase = "0.12"
+QuantumESPRESSOFormatter = "0.4"
+QuantumESPRESSOParser = "0.5"
 Reexport = "1"
 julia = "1"
 
