@@ -1,7 +1,9 @@
 using QuantumESPRESSO
 using Documenter
 
-DocMeta.setdocmeta!(QuantumESPRESSO, :DocTestSetup, :(using QuantumESPRESSO); recursive=true)
+DocMeta.setdocmeta!(
+    QuantumESPRESSO, :DocTestSetup, :(using QuantumESPRESSO); recursive=true
+)
 
 makedocs(;
     modules=[QuantumESPRESSO],
@@ -14,12 +16,7 @@ makedocs(;
         edit_link="main",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
 )
 
-deploydocs(;
-    repo="github.com/MineralsCloud/QuantumESPRESSO.jl",
-    devbranch="main",
-)
+deploydocs(; repo="github.com/MineralsCloud/QuantumESPRESSO.jl", devbranch="main")
