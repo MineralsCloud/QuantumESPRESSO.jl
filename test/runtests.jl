@@ -1,5 +1,4 @@
 using QuantumESPRESSO
 using Test
 
-@testset "QuantumESPRESSO.jl" begin
-end
+@testset "QuantumESPRESSO.jl" begin end
